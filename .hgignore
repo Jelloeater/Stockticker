@@ -1,5 +1,4 @@
 syntax: glob
-.classpath
-.project
-.settings*
-target*
+.metadata\
+bin\
+gen\

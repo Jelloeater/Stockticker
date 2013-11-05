@@ -23,7 +23,6 @@ public class App {
             System.out.println("Answerer: " + answerer.text());
         }
     // This is an example parser
-    
     }
 
 }
