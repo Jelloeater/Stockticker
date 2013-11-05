@@ -7,7 +7,7 @@ package jelloeater.StockTicker;
  * @author Jesse
  *
  */
-public class SettingsParser {
+public class SettingsParser extends App{
 
 	private static final int RefreshInterval = 0;
 

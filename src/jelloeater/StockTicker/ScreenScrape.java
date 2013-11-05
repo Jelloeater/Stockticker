@@ -7,37 +7,30 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ScreenScrape extends App{
-	
+public class ScreenScrape extends tickerInfo{
+
+	// This Class exists only to take input and return output.
+	// There does not have to be any objects
+	// It is a simple class
 		
 //	private static final Object TickerInfo = null;
 	
 	
 	
-	ScreenScrape tickerInfo = new ScreenScrape();
-	tickerInfo.price (0);
-	
-		
+			
 	public ScreenScrape() {
 		// TODO Auto-generated constructor stub
-		String TickerSymbol = "SPX";
-		int price = 0;
-		int dailyChange = 0;
+		// 
+//		String TickerSymbol = "SPX";
+//		int price = 0;
+//		int dailyChange = 0;
+//		
+//		ScreenScrape tickerInfo = new ScreenScrape();
 		
 		
 		//ScreenScrape TickerInfo = new ScreenScrape();	
 	}
-	
-	
-	public static Object getInfo(String TickerSymbol) {
-		int TickerPrice = PriceLookup(TickerSymbol);
 		
-		
-				
-		return TickerInfo;
-		// TODO Auto-generated method stub
-	}
-	
 	
 	
 	static int PriceLookup(String Symbol) throws IOException {
@@ -57,6 +50,11 @@ public class ScreenScrape extends App{
 		
 		return price;
 	}
+
+
+
+
+
 }
 
 
