@@ -1,5 +1,8 @@
 #About
-Someone add something
+It's a stock ticker app, some day...
 
 #Build
-Just build with `clean install`
+<s>Just build with `clean install`</s>
+Maven is causing headaches right now.
+No time for fusterclucks.
+Just open in Eclipse.
