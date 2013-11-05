@@ -18,21 +18,29 @@ public class ScreenScrape extends tickerInfo{
 	}
 	
 	
-	static Double PriceLookup(String Symbol) throws IOException {
-		Double price = null;
+	static Double PriceLookup(String symbol) throws IOException {
+		//Use symbol for lookup info
+		Double price = null; // Gets returned at the end
+		//String priceString is price string for parser output, duh.
+		
 	
-		String url = "http://www.marketwatch.com/investing/stock/"+Symbol;
+		String url = "http://www.marketwatch.com/investing/stock/"+symbol;
 	    Document document = Jsoup.connect(url).get();
 	    // Query symbol page
 	    
-	    String question = document.select("#question .post-text").text();
-	    System.out.println("Question: " + question);
+	    
+	    String priceString = document.select("#question .post-text").text(); // Searches for price string
+	    
 	    Elements answerers = document.select("#answers .user-details a");
 	    for (Element answerer : answerers) {
 	        System.out.println("Answerer: " + answerer.text());
 	    }
 		// Above = Work in progress
 		
+	    
+	    
+	    
+	    price = Double.parseDouble(priceString); // Converts string into double for return
 		return price;
 	}
 
@@ -54,11 +62,6 @@ public class ScreenScrape extends tickerInfo{
 		
 		return priceChange;
 	}
-
-
-
-
-
 }
 
 
@@ -66,17 +69,6 @@ public class ScreenScrape extends tickerInfo{
 	
 	
 			
-// This is an example parser
-//	String url = "http://stackoverflow.com/questions/2835505";
-//    Document document = Jsoup.connect(url).get();
-//    String question = document.select("#question .post-text").text();
-//    System.out.println("Question: " + question);
-//    Elements answerers = document.select("#answers .user-details a");
-//    for (Element answerer : answerers) {
-//        System.out.println("Answerer: " + answerer.text());
-//    }
-
-
 //Info to scrape
 //	<div class="lastprice">
 //	<div class="pricewrap">

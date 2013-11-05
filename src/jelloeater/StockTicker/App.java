@@ -24,6 +24,8 @@ public static int refreshInterval = 0; // Stores refresh interval
     	int refreshInterval = SettingsParser.getInterval(); // Gets refresh time for list from XML data file
 		// TODO Get Symbols from XML, load into ArrayList
     	
+    	
+    	
     	tickerInfo myStock = new tickerInfo();
     	myStock.setTickerSymbol("GOOG"); //Setting ticker
     	ticker = myStock.getTickerSymbol();
@@ -31,6 +33,7 @@ public static int refreshInterval = 0; // Stores refresh interval
     	precentChange = myStock.getPrecentChange(ticker);
     	priceChange = myStock.getAmmountChange(ticker);
     	
+    	TickerWindow.main(null); // Calls Main GUI Window
     	
     	
     	
