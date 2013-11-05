@@ -8,33 +8,18 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ScreenScrape extends tickerInfo{
-
 	// This Class exists only to take input and return output.
 	// There does not have to be any objects
-	// It is a simple class
+	// It is a simple class :)
 		
-//	private static final Object TickerInfo = null;
-	
-	
-	
 			
 	public ScreenScrape() {
 		// TODO Auto-generated constructor stub
-		// 
-//		String TickerSymbol = "SPX";
-//		int price = 0;
-//		int dailyChange = 0;
-//		
-//		ScreenScrape tickerInfo = new ScreenScrape();
-		
-		
-		//ScreenScrape TickerInfo = new ScreenScrape();	
 	}
-		
 	
 	
-	static int PriceLookup(String Symbol) throws IOException {
-		int price = 0;
+	static Double PriceLookup(String Symbol) throws IOException {
+		Double price = null;
 	
 		String url = "http://www.marketwatch.com/investing/stock/"+Symbol;
 	    Document document = Jsoup.connect(url).get();
@@ -49,6 +34,25 @@ public class ScreenScrape extends tickerInfo{
 		// Above = Work in progress
 		
 		return price;
+	}
+
+
+
+	public static Double precentLookup(String ticker) {
+		Double precent = null;
+		// TODO Auto-generated method stub
+		// Should scrape ticker to find percent change
+		return precent;
+	}
+
+
+
+	public static Double priceChangeLookup(String ticker) {
+		Double priceChange = null;
+		// TODO Auto-generated method stub
+		// Should scrape ticker to find price change
+		
+		return priceChange;
 	}
 
 

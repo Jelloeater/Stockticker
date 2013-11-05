@@ -3,13 +3,18 @@
  */
 package jelloeater.StockTicker;
 
+import java.io.IOException;
+
 
 public class tickerInfo extends App{
+	// This class creates and updates objects
+	// It is middle management, is it necessary?
+	// Go ask Peter about his TPS reports.
 		
-	private String symbol="TSLA";
-	private Double price=100.0;
-	private Double percentChange=2.3;
-	private Double priceChange=1.99;
+	private String symbol= null;
+	private Double price=null;
+	private Double percentChange=null;
+	private Double priceChange=null;
 		
 	/**
 	 * 
@@ -30,9 +35,23 @@ public class tickerInfo extends App{
 		return symbol;
 	}
 
-	public Double getPrice() {
+	public Double getPrice(String ticker) throws IOException {
 		// TODO Auto-generated method stub
+		price = ScreenScrape.PriceLookup(ticker);
+		
 		return price;
+	}
+
+	public Double getPrecentChange(String ticker) {
+		// TODO Auto-generated method stub
+		percentChange = ScreenScrape.precentLookup(ticker);
+		return percentChange;
+	}
+
+	public Double getAmmountChange(String ticker) {
+		// TODO Auto-generated method stub
+		priceChange = ScreenScrape.priceChangeLookup(ticker);
+		return priceChange;
 	}
 
 }
