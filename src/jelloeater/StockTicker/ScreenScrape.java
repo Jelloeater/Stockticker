@@ -14,14 +14,19 @@ public class ScreenScrape extends tickerInfo{
 	// It is a simple class :)
 		
 			
-	public ScreenScrape() {
+	
+	
+	
+	ScreenScrape(String symbolIN) {
+		super(symbolIN);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+
+
 	static Double PriceLookup(String symbol) throws IOException {
 		//Use symbol for lookup info
-		Double price = null; // Gets returned at the end
+		Double price = 9999.99; // Gets returned at the end SHOULD BE NULL
 		//String priceString is price string for parser output, duh.
 		
 	
@@ -29,6 +34,10 @@ public class ScreenScrape extends tickerInfo{
 	    Document document = Jsoup.connect(url).get();
 	    // Query symbol page
 	    
+	    
+	    
+	    
+	    // Below = Work in progress
 	    
 	    String priceString = document.select("#question .post-text").text(); // Searches for price string
 	    
@@ -40,6 +49,7 @@ public class ScreenScrape extends tickerInfo{
 		
 	    
 	    
+	    priceString = "23"; // TODO Placeholder for missing logic
 	    
 	    price = Double.parseDouble(priceString); // Converts string into double for return
 		return price;
@@ -48,17 +58,16 @@ public class ScreenScrape extends tickerInfo{
 
 
 	public static Double precentLookup(String ticker) {
-		Double precent = null;
-		// TODO Auto-generated method stub
-		// Should scrape ticker to find percent change
+		Double precent = 66.6; // TODO SHOULD BE NULL
+		// Logic goes here Should scrape ticker to find percent change
+		
 		return precent;
 	}
 
 
 
 	public static Double priceChangeLookup(String ticker) {
-		Double priceChange = null;
-		// TODO Auto-generated method stub
+		Double priceChange = -85.3; //TODO SHOULD BE NULL
 		// Should scrape ticker to find price change
 		
 		return priceChange;

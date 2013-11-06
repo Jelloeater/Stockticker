@@ -1,9 +1,8 @@
 package jelloeater.StockTicker;
 
+import java.util.*;
+
 // This is a basic stock ticker app. It ticks stocks n stuff
-
-
-
 
 
 public class App {
@@ -13,17 +12,33 @@ public class App {
              
        Settings settingsStore = new Settings(); // Constructor for settings object
        settingsStore.setQuoteSource("mw"); // default setting for quote source Marketwatch
-       settingsStore.setInterval(30); // default interval 30 seconds
+       settingsStore.setRefreshIntervalSeconds(30); // default interval 30 seconds
+       Settings.saveSettings(); // Saves settings to disk (DOES NOTHING RIGHT NOW)
        
-    	int refreshInterval = Settings.getInterval(); // Gets refresh time for list from XML settings file
+       
+       
+       System.out.println("Refresh intervel input"); // Basic console IO
+       Scanner myScanner = new Scanner(System.in); // System.in is an InputStream
+       settingsStore.setRefreshIntervalSeconds(myScanner.nextInt()); // Sets refresh interval with user input
+       myScanner.close(); //Closes Scanner Stream
+		
+		Settings.saveSettings();
+		// TODO Create proper GUI input
+		
+       
+       
+       
+       /*
+    	int refreshInterval = Settings.getInterval(); // Gets refresh time for list from XML settings file to display in GUI
     	String quoteSource = Settings.getQuoteSource(); // Gets quote source from XML settings file
 		// TODO Get Symbols from XML, load into ArrayList?
-    	
-    	
-    	
-    	tickerInfo myStock = new tickerInfo(); // Constructor for myStock object
-    	myStock.setTickerSymbol("GOOG"); //Setting ticker
-    	
+    	*/
+       
+    	tickerInfo myStock = new tickerInfo("GOOG"); // Constructor for myStock object 
+    	// Also Setting ticker manually
+    	   
+
+
     	
     	String ticker = myStock.getTickerSymbol(); // Get ticker symbol for output, will have validation in setting at some point
     	Double price = myStock.getPrice(ticker); // Get price from ticker, uses scraper
@@ -42,7 +57,7 @@ public class App {
     	
     	
     	
-    	TickerWindow.main(null); // Calls Main GUI Window
+    	// TickerWindow.main(null); // Calls Main GUI Window
     	
 
         
@@ -52,3 +67,11 @@ public class App {
 
 
 }
+
+
+
+
+//    	System.out.println("Type your symbol"); // Basic console IO
+//    	Scanner myScanner2 = new Scanner(System.in); // System.in is an InputStream
+//    	myStock.setTickerSymbol(myScanner2.nextLine()); // Setting ticker with user input
+//    	myScanner2.close(); //Closes Scanner Stream

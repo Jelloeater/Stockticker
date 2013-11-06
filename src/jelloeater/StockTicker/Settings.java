@@ -11,29 +11,31 @@ public class Settings extends App{
 
 	public Settings() {
 	// TODO Auto-generated constructor stub
-		Settings settingsStore = new Settings(); 
-		settingsStore.refreshIntervalSeconds = refreshIntervalSeconds;
-		settingsStore.quoteSource = quoteSource;
 	}
 
-	public static int getInterval() {
-	// TODO Auto-generated method stub
-		int refreshInterval = 0;
-		return refreshInterval;
+	public int getRefreshIntervalSeconds() { // Gets private refresh interval
+		
+		return refreshIntervalSeconds;
+	}
+
+
+	public void setRefreshIntervalSeconds(int refreshIntervalSeconds) { // Sets private refresh interval
+		this.refreshIntervalSeconds = refreshIntervalSeconds;
 	}
 	
-	public void setInterval(int refreshInterval) {
-		// TODO Auto-generated method stub
-		this.refreshIntervalSeconds = refreshInterval;
+
+	public String getQuoteSource() {
+		return quoteSource;
 	}
 
-	public static String getQuoteSource() {
-		// TODO Auto-generated method stub
-			
-		return null;
-	}
 
-	public void setQuoteSource(String quoteSource) {
-		this.quoteSource = quoteSource;
+	public void setQuoteSource(String quoteSourceIN) {
+		this.quoteSource = quoteSourceIN;
 	}
+	
+	public static void saveSettings() { 
+	// TODO Write settings to XML file
+	}
+	
+	
 }
