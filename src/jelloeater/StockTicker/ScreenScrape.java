@@ -8,57 +8,60 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 //import java.util.*;
 
-public class ScreenScrape extends tickerInfo{
+
+
+public class ScreenScrape extends App{
 	// This Class exists only to take input and return output.
 	// There does not have to be any objects
 	// It is a simple class :)
 		
+	// TODO get quote source pick from dialoug in main
+	
+
+	static String PriceLookup(String symbol, String quoteSource) throws IOException {
+		//Use symbol for lookup info
+		String priceString = "23.36"; // Output String 
+		
+		// Data sources"MarketWatch", "Yahoo", "Google"
+		
+		if (quoteSource == "MarketWatch") {
+			
+			String url = "http://www.marketwatch.com/investing/stock/"+symbol;
+		    Document document = Jsoup.connect(url).get();
+		    // Query symbol page
+				
 			
 	
 	
-	
-	ScreenScrape(String symbolIN) {
-		super(symbolIN);
-		// TODO Auto-generated constructor stub
+		    
+		    // Below = Work in progress
+		    
+		    
+		    
+		    String priceString = document.select("#question .post-text").text(); // Searches for price string
+		    
+		    Elements answerers = document.select("#answers .user-details a");
+		    for (Element answerer : answerers) {
+		        System.out.println("Answerer: " + answerer.text());
+		    }
+		    
+		    
+			// Above = Work in progress
+		}
+	    
+	    
+	    
+	    
+	   	return priceString; // Should return a string
 	}
 
 
-
-	static Double PriceLookup(String symbol) throws IOException {
-		//Use symbol for lookup info
-		Double price = 9999.99; // Gets returned at the end SHOULD BE NULL
-		//String priceString is price string for parser output, duh.
-		
 	
-		String url = "http://www.marketwatch.com/investing/stock/"+symbol;
-	    Document document = Jsoup.connect(url).get();
-	    // Query symbol page
-	    
-	    
-	    
-	    
-	    // Below = Work in progress
-	    
-	    String priceString = document.select("#question .post-text").text(); // Searches for price string
-	    
-	    Elements answerers = document.select("#answers .user-details a");
-	    for (Element answerer : answerers) {
-	        System.out.println("Answerer: " + answerer.text());
-	    }
-		// Above = Work in progress
-		
-	    
-	    
-	    priceString = "23"; // TODO Placeholder for missing logic
-	    
-	    price = Double.parseDouble(priceString); // Converts string into double for return
-		return price;
-	}
+	
+	
 
-
-
-	public static Double precentLookup(String ticker) {
-		Double precent = 66.6; // TODO SHOULD BE NULL
+	public static String precentLookup(String ticker, String quoteSource) {
+		String precent = "66.6"; // TODO SHOULD BE NULL DUMMY DATA
 		// Logic goes here Should scrape ticker to find percent change
 		
 		return precent;
@@ -66,8 +69,8 @@ public class ScreenScrape extends tickerInfo{
 
 
 
-	public static Double priceChangeLookup(String ticker) {
-		Double priceChange = -85.3; //TODO SHOULD BE NULL
+	public static String priceChangeLookup(String ticker, String quoteSource) {
+		String priceChange = "-85.3"; //TODO SHOULD BE NULL DUMMY DATA
 		// Should scrape ticker to find price change
 		
 		return priceChange;

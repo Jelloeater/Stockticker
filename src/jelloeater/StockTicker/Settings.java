@@ -4,6 +4,7 @@
 package jelloeater.StockTicker;
 
 public class Settings extends App{
+	// This class hold all the apps settings in an object
 
 	private int refreshIntervalSeconds;
 	private String quoteSource;
@@ -19,8 +20,8 @@ public class Settings extends App{
 	}
 
 
-	public void setRefreshIntervalSeconds(int refreshIntervalSeconds) { // Sets private refresh interval
-		this.refreshIntervalSeconds = refreshIntervalSeconds;
+	public void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
+		this.refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
 	
 

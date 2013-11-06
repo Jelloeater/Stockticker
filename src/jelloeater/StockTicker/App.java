@@ -1,4 +1,5 @@
 package jelloeater.StockTicker;
+import jelloeater.Scrapers.*;
 
 import java.util.*;
 
@@ -11,21 +12,39 @@ public class App {
     	// This runs first
              
        Settings settingsStore = new Settings(); // Constructor for settings object
-       settingsStore.setQuoteSource("mw"); // default setting for quote source Marketwatch
+       
+       settingsStore.setQuoteSource("MarketWatch"); // default setting for quote source Marketwatch
        settingsStore.setRefreshIntervalSeconds(30); // default interval 30 seconds
        Settings.saveSettings(); // Saves settings to disk (DOES NOTHING RIGHT NOW)
        
        
        
+       // TODO Create proper GUI input
 
-       String INPUT = JOptionPane.showInputDialog("Set Interval"); //Can only take Strings
-       settingsStore.setRefreshIntervalSeconds(Integer.parseInt(INPUT)); //Parses ints from strings
-       // Also sets object
+       settingsStore.setRefreshIntervalSeconds(
+    		   (Integer.parseInt(
+    		   (JOptionPane.showInputDialog("Set Interval", 5)))
+    		   )
+    	); //Sets setter with GUI box
+       
+       
+       
+       
+       String[] quoteSourceChoices = { "MarketWatch", "Yahoo", "Google"}; 
+       // Dialog box choices array
+       settingsStore.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
+           "Choose Quote Source", JOptionPane.QUESTION_MESSAGE, null, 
+           quoteSourceChoices, // Array of choices
+           quoteSourceChoices[0])); // Initial choice
+       
+ 
+       
+       
+       
+       
 		
+		Settings.saveSettings(); // TODO Write XML writer for settings file
 		
-		
-		Settings.saveSettings();
-		// TODO Create proper GUI input
 		
        
        
@@ -36,31 +55,32 @@ public class App {
 		// TODO Get Symbols from XML, load into ArrayList?
     	*/
        
+		
+		
+		
     	tickerInfo myStock = new tickerInfo(
-    			JOptionPane.showInputDialog("Set Symbol")); // Basic input diag
-    	// Constructor for myStock object 
-    	// Also Setting ticker manually
-    	   
-
+    			JOptionPane.showInputDialog("Set Symbol"), settingsStore.getQuoteSource()); // Basic input box
+    	// Constructor for myStock object
+    	// Also Passes quote source
+    	// Holds all of the ticker data for each iteration
 
     	
-    	String ticker = myStock.getTickerSymbol(); // Get ticker symbol for output, will have validation in setting at some point
-    	Double price = myStock.getPrice(ticker); // Get price from ticker, uses scraper
-    	Double percentChange = myStock.getPercentChange(ticker); // Get percent change from ticker, uses scraper
-    	Double priceChange = myStock.getAmmountChange(ticker);
-    	// Output of ticker data
+    	// OUTPUT BELOW!!!
     		
 
     	JOptionPane.showMessageDialog(null, 
-    			"Symbol: "+ticker +"\n"+
-    			"Price: " +price +"\n"+
-    			"% Change: "+ percentChange+"\n"+
-    			"Price Change: "+ priceChange
+    			"Symbol: "+myStock.getTickerSymbol() +"\n"+
+    			"Price: " +myStock.getPrice() +"\n"+
+    			"% Change: "+ myStock.getPercentChange()+"\n"+
+    			"Price Change: "+ myStock.getAmmountChange()
     			,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
     	//Display a message dialog box, NULL = No specific position on screen
     	// TODO Replace with Proper GUI
     	
+    	// TODO Write update method to loop getting info
     	
+    	System.out.println("meh");  
+    	//TODO DELETE ME
     	
     	
     	// TickerWindow.main(null); // Calls Main GUI Window
