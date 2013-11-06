@@ -29,10 +29,9 @@ public class tickerInfo {
 	}
 
 	
-	public Double getPrice() throws NumberFormatException, IOException{
-		// Looks up price using ticker symbol
-		price = Double.parseDouble(ScreenScrape.PriceLookup(symbol, quoteSource));
-		
+	public Double getPrice() {
+			price = Double.parseDouble(ScreenScrape.priceLookup(symbol, quoteSource));
+
 		return price;
 	}
 

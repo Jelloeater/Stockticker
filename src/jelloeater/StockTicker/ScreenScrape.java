@@ -26,7 +26,7 @@ public class ScreenScrape{
 
 
 
-	static String PriceLookup(String symbol, String quoteSource) throws IOException {
+	static String priceLookup(String symbol, String quoteSource) throws Throwable{
 		//Use symbol for lookup info
 		String priceString = null; // Output String 
 		
@@ -45,14 +45,7 @@ public class ScreenScrape{
 		    JOptionPane.showMessageDialog(null, priceString); 
 			// TODO Remove debug output
 		}
-		    
-			
-			
 
-		
-		
-	
-		
 		
 		if (quoteSource == "Yahoo") {
 			// TODO Yahoo price parser
@@ -61,6 +54,8 @@ public class ScreenScrape{
 			
 			priceString = "999.99";
 		}
+		
+		
 		
 		if (quoteSource == "Google") {
 			// TODO Google price parser
@@ -130,7 +125,6 @@ public class ScreenScrape{
 	
 
 	public static String precentLookup(String ticker, String quoteSource) {
-		String precent = "66.6"; // TODO SHOULD BE NULL DUMMY DATA
 		// Logic goes here Should scrape ticker to find percent change
 		
 		if (quoteSource == "Google") {
@@ -141,8 +135,8 @@ public class ScreenScrape{
 			
 		}
 			
-			
-		return precent;
+		String percent= null;
+		return percent ;
 	}
 
 

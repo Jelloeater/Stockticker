@@ -66,14 +66,21 @@ public class App {
 
     	
     	// OUTPUT BELOW!!!
-    		
-
     	JOptionPane.showMessageDialog(null, 
     			"Symbol: "+myStock.getTickerSymbol() +"\n"+
     			"Price: " +myStock.getPrice() +"\n"+
     			"% Change: "+ myStock.getPercentChange()+"\n"+
     			"Price Change: "+ myStock.getAmmountChange()
     			,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
+    
+    	
+    	
+    	
+    
+    	
+    	
+    	
+    	
     	//Display a message dialog box, NULL = No specific position on screen
     	// TODO Replace with Proper GUI
     	
