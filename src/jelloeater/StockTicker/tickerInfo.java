@@ -18,6 +18,7 @@ public class tickerInfo extends App {
 	
 	 tickerInfo(String symbolIN, String sourceIN) {
 		// Sets up ticker with basic symbol
+		 // TODO Add validation for valid symbol
 		 this.symbol = symbolIN;
 		 this.quoteSource = sourceIN;
 	 }
@@ -27,8 +28,7 @@ public class tickerInfo extends App {
 
 	public String getTickerSymbol() {
 		// Returns symbol user entered
-		// TODO Add validation for valid symbol
-		
+
 		return symbol;
 	}
 
