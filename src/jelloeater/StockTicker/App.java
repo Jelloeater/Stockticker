@@ -35,7 +35,7 @@ public class App {
        settingsStore.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
            "Choose Quote Source", JOptionPane.QUESTION_MESSAGE, null, 
            quoteSourceChoices, // Array of choices
-           quoteSourceChoices[0])); // Initial choice
+           quoteSourceChoices[2])); // Initial choice
        
  
        

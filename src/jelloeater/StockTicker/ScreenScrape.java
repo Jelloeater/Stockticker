@@ -5,8 +5,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-//import java.util.*;
+import java.util.regex.*;
+
+
 import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 
 
 public class ScreenScrape{
@@ -14,8 +19,12 @@ public class ScreenScrape{
 	// There does not have to be any objects
 	// It is a simple class :)
 		
-	// TODO get quote source pick from dialoug in main
+	// TODO get quote source pick from dialogue in main
 	
+
+	private static final String String = null;
+
+
 
 	static String PriceLookup(String symbol, String quoteSource) throws IOException {
 		//Use symbol for lookup info
@@ -30,29 +39,90 @@ public class ScreenScrape{
 				
 
    
-		    String priceString = document.select("#question .post-text").text(); // Searches for price string
+		    priceString = document.select("#pricewrap .data bgLast").text(); // Searches for price string
+		    //			<p class="data bgLast">1,026.00</p>
 		    
-		    Elements answerers = document.select("#answers .user-details a");
-		    for (Element answerer : answerers) {
-		        System.out.println("Answerer: " + answerer.text());
-		    }
-		    
-		    
-			// Above = Work in progress
+		    JOptionPane.showMessageDialog(null, priceString); 
+			// TODO Remove debug output
 		}
+		    
+			
+			
+
+		
+		
+	
 		
 		
 		if (quoteSource == "Yahoo") {
 			// TODO Yahoo price parser
+			// https://finance.google.com/finance/info?client=ig&q=JCP
+			
+			
 			priceString = "999.99";
 		}
 		
 		if (quoteSource == "Google") {
 			// TODO Google price parser
-			priceString = "666.66";
+			
+			String url = "http://finance.google.com/finance/info?client=ig&q="+symbol;
+		    Document document = Jsoup.connect(url).get();
+		    // Query symbol page
+				
+
+   
+		    String quertyString = document.select("*").text(); // Parses for price string
+		    
+		    /*
+		     * // [ { "id": "26944" ,"t" : "JCP" ,"e" : "NYSE" ,"l" : "8.31" ,"l_cur" : "8.31" ,"s": "2" ,"ltt":"4:00PM EST" ,"lt" : "Nov 5, 4:00PM EST" ,"c" : "-0.05" ,"cp" : "-0.60" ,"ccol" : "chr" ,"el": "8.26" ,"el_cur": "8.26" ,"elt" : "Nov 5, 7:59PM EST" ,"ec" : "-0.05" ,"ecp" : "-0.60" ,"eccol" : "chr" ,"div" : "" ,"yld" : "" } ] 
+		     */
+
+		    String txt = quertyString; // Sets Regex string
+		    
+		    String re1=".*?";	// Non-greedy match on filler
+		    String re2="\".*?\"";	// Uninteresting: string
+		    String re3=".*?";	// Non-greedy match on filler
+		    String re4="\".*?\"";	// Uninteresting: string
+		    String re5=".*?";	// Non-greedy match on filler
+		    String re6="\".*?\"";	// Uninteresting: string
+		    String re7=".*?";	// Non-greedy match on filler
+		    String re8="\".*?\"";	// Uninteresting: string
+		    String re9=".*?";	// Non-greedy match on filler
+		    String re10="\".*?\"";	// Uninteresting: string
+		    String re11=".*?";	// Non-greedy match on filler
+		    String re12="\".*?\"";	// Uninteresting: string
+		    String re13=".*?";	// Non-greedy match on filler
+		    String re14="\".*?\"";	// Uninteresting: string
+		    String re15=".*?";	// Non-greedy match on filler
+		    String re16="(\".*?\")";	// Double Quote String 1
+
+		    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14+re15+re16,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		    Matcher m = p.matcher(txt);
+		    if (m.find())
+		    {
+		        String string1=m.group(1);
+		        priceString=string1.toString();
+		    }
+
+		         
+		      
+		
+		    
+		    
+		    
+		    // JOptionPane.showMessageDialog(null,url);
+		    JOptionPane.showMessageDialog(null, priceString); 
+			// TODO Remove debug output
 		}    
-	return priceString; // Should return a string
+	
+		
+		return priceString; // Should return a string
 	}
+		    
+			
+		    
+	
+	
 
 
 	
@@ -63,6 +133,15 @@ public class ScreenScrape{
 		String precent = "66.6"; // TODO SHOULD BE NULL DUMMY DATA
 		// Logic goes here Should scrape ticker to find percent change
 		
+		if (quoteSource == "Google") {
+			// TODO Google percent parser
+			
+			
+			
+			
+		}
+			
+			
 		return precent;
 	}
 
@@ -81,25 +160,10 @@ public class ScreenScrape{
 	
 	
 			
-//Info to scrape
-//	<div class="lastprice">
-//	<div class="pricewrap">
-//			<p class="currency">$</p>			
-//			<p class="data bgLast">1,026.00</p>
-//		</div>
-//	<p style="clear:left" class="priceclear"></p>
-//</div>
-//<div class="lastpricedetails">
-//	<p class="vertelement column">Change</p>
-//	<p class="lastcolumn data">
+			
+
+
 //		<span class="bgChange">-0.11</span>
 //		<span class="bgPercentChange">-0.01%</span>
-//	</p>
-//<p class="column vertelement">Volume</p>
-//<p class="lastcolumn data"><span class="horzelement">Volume </span><span>70,776</span></p>
-// <p class="lastcolumn bgTimestamp longformat">Nov 4, 2013, 6:22 p.m.</p>
-//<p class="lastcolumn vertelement">Quotes are delayed by 20 min</p>
-//</div>
-//The default URL is 
-//http://www.marketwatch.com/investing/stock/GOOG
+
 
