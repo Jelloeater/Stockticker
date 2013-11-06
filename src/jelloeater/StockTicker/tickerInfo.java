@@ -42,7 +42,7 @@ public class tickerInfo extends App{
 		return price;
 	}
 
-	public Double getPrecentChange(String ticker) {
+	public Double getPercentChange(String ticker) {
 		// TODO Auto-generated method stub
 		percentChange = ScreenScrape.precentLookup(ticker);
 		return percentChange;

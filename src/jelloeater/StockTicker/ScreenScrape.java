@@ -6,6 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+//import java.util.*;
 
 public class ScreenScrape extends tickerInfo{
 	// This Class exists only to take input and return output.

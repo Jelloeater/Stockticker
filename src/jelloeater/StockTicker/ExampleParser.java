@@ -6,9 +6,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.*;
+//import java.util.*;
 
-public class ExampleParser extends App{
+public class ExampleParser{
 
 	/**
 	 * @param args
