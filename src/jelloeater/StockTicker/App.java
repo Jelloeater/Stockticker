@@ -3,7 +3,7 @@ package jelloeater.StockTicker;
 import java.util.*;
 
 // This is a basic stock ticker app. It ticks stocks n stuff
-
+import javax.swing.JOptionPane; // Just for debugging, actual GUI is in its own class
 
 public class App {
 	
@@ -17,10 +17,12 @@ public class App {
        
        
        
-       System.out.println("Refresh intervel input"); // Basic console IO
-       Scanner myScanner = new Scanner(System.in); // System.in is an InputStream
-       settingsStore.setRefreshIntervalSeconds(myScanner.nextInt()); // Sets refresh interval with user input
-       myScanner.close(); //Closes Scanner Stream
+
+       String INPUT = JOptionPane.showInputDialog("Set Interval"); //Can only take Strings
+       settingsStore.setRefreshIntervalSeconds(Integer.parseInt(INPUT)); //Parses ints from strings
+       // Also sets object
+		
+		
 		
 		Settings.saveSettings();
 		// TODO Create proper GUI input
@@ -34,7 +36,9 @@ public class App {
 		// TODO Get Symbols from XML, load into ArrayList?
     	*/
        
-    	tickerInfo myStock = new tickerInfo("GOOG"); // Constructor for myStock object 
+    	tickerInfo myStock = new tickerInfo(
+    			JOptionPane.showInputDialog("Set Symbol")); // Basic input diag
+    	// Constructor for myStock object 
     	// Also Setting ticker manually
     	   
 
@@ -47,13 +51,15 @@ public class App {
     	// Output of ticker data
     		
 
+    	JOptionPane.showMessageDialog(null, 
+    			"Symbol: "+ticker +"\n"+
+    			"Price: " +price +"\n"+
+    			"% Change: "+ percentChange+"\n"+
+    			"Price Change: "+ priceChange
+    			,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
+    	//Display a message dialog box, NULL = No specific position on screen
+    	// TODO Replace with Proper GUI
     	
-    	System.out.println(ticker);
-    	System.out.println(price);
-    	System.out.println(percentChange);
-    	System.out.println(priceChange);
-    	// Console output
-    	// TODO Replace with GUI
     	
     	
     	
