@@ -6,9 +6,9 @@ public class tickerInfo {
 	// This class creates and updates objects for each ticker object
 		
 	private String symbol;
-	private Double price;
-	private Double percentChange;
-	private Double priceChange;
+	private String price;
+	private String percentChange;
+	private String priceChange;
 	private String quoteSource;
 		
 	
@@ -29,23 +29,23 @@ public class tickerInfo {
 	}
 
 	
-	public Double getPrice() {
-			price = Double.parseDouble(ScreenScrape.priceLookup(symbol, quoteSource));
+	public String getPrice() throws Throwable{
+			price = ScreenScrape.priceLookup(symbol, quoteSource);
 
-		return price;
+		return "$"+price; // Add USD to return
 	}
 
 
 	
-	public Double getPercentChange() {
+	public String getPercentChange() throws Throwable{
 		// Looks up percent change using ticker symbol
-		percentChange = Double.parseDouble(ScreenScrape.precentLookup(symbol, quoteSource));
+		percentChange = ScreenScrape.precentLookup(symbol, quoteSource);
 		return percentChange;
 	}
 
-	public Double getAmmountChange() {
+	public String getAmmountChange() throws Throwable{
 		// Looks up amount change using ticker symbol
-		priceChange = Double.parseDouble(ScreenScrape.priceChangeLookup(symbol, quoteSource));
+		priceChange = ScreenScrape.priceChangeLookup(symbol, quoteSource);
 		return priceChange;
 	}
 

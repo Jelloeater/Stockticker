@@ -3,12 +3,13 @@ package jelloeater.StockTicker;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import java.io.IOException;
+//import org.jsoup.nodes.Element;
+//import org.jsoup.select.Elements;
 import java.util.regex.*;
 
 
-import java.io.IOException;
+//import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
@@ -22,17 +23,14 @@ public class ScreenScrape{
 	// TODO get quote source pick from dialogue in main
 	
 
-	private static final String String = null;
 
-
-
-	static String priceLookup(String symbol, String quoteSource) throws Throwable{
+	static String priceLookup(String symbol, String quoteSource) throws Throwable{ // Jsoup needs a throw, should look into why
 		//Use symbol for lookup info
 		String priceString = null; // Output String 
 		
 		
 		if (quoteSource == "MarketWatch") {
-			
+			//TODO Finish MarketWatch price parser
 			String url = "http://www.marketwatch.com/investing/stock/"+symbol;
 		    Document document = Jsoup.connect(url).get();
 		    // Query symbol page
@@ -58,22 +56,19 @@ public class ScreenScrape{
 		
 		
 		if (quoteSource == "Google") {
-			// TODO Google price parser
 			
 			String url = "http://finance.google.com/finance/info?client=ig&q="+symbol;
 		    Document document = Jsoup.connect(url).get();
 		    // Query symbol page
 				
-
-   
-		    String quertyString = document.select("*").text(); // Parses for price string
+		    String quertyString = document.select("*").text(); 
+		    // Gets page text
 		    
-		    /*
-		     * // [ { "id": "26944" ,"t" : "JCP" ,"e" : "NYSE" ,"l" : "8.31" ,"l_cur" : "8.31" ,"s": "2" ,"ltt":"4:00PM EST" ,"lt" : "Nov 5, 4:00PM EST" ,"c" : "-0.05" ,"cp" : "-0.60" ,"ccol" : "chr" ,"el": "8.26" ,"el_cur": "8.26" ,"elt" : "Nov 5, 7:59PM EST" ,"ec" : "-0.05" ,"ecp" : "-0.60" ,"eccol" : "chr" ,"div" : "" ,"yld" : "" } ] 
-		     */
-
+		    
 		    String txt = quertyString; // Sets Regex string
 		    
+		    
+		    // Messy auto generated regex from http://txt2re.com
 		    String re1=".*?";	// Non-greedy match on filler
 		    String re2="\".*?\"";	// Uninteresting: string
 		    String re3=".*?";	// Non-greedy match on filler
@@ -97,21 +92,16 @@ public class ScreenScrape{
 		    {
 		        String string1=m.group(1);
 		        priceString=string1.toString();
-		    }
-
-		         
-		      
-		
+		    }   
 		    
+		    // End of messy auto generated regex from http://txt2re.com
 		    
-		    
-		    // JOptionPane.showMessageDialog(null,url);
-		    JOptionPane.showMessageDialog(null, priceString); 
-			// TODO Remove debug output
+		    priceString = priceString.replaceAll("^\"|\"$", ""); // Trim off quotes
 		}    
-	
 		
-		return priceString; // Should return a string
+		
+		
+		return priceString; // Return price in string format
 	}
 		    
 			
@@ -124,19 +114,40 @@ public class ScreenScrape{
 	
 	
 
-	public static String precentLookup(String ticker, String quoteSource) {
+	public static String precentLookup(String ticker, String quoteSource) throws Throwable {
 		// Logic goes here Should scrape ticker to find percent change
+		String percent= null; // Initialize Variable
 		
 		if (quoteSource == "Google") {
 			// TODO Google percent parser
 			
+			String url = "http://finance.google.com/finance/info?client=ig&q="+ticker;
+		    Document document = Jsoup.connect(url).get();
+		    // Query symbol page
+				
+		    String quertyString = document.select("*").text(); 
+		    // INPUT 
+		    // Gets page text
+
+		    
+		    String txt = quertyString; // Sets Regex string
 			
-			
-			
-		}
-			
-		String percent= null;
-		return percent ;
+		    
+		    
+		    String re1=".*?";	// Non-greedy match on filler
+		    String re2="(\"-0\\.60\")";	// Double Quote String 1
+
+		    Pattern p = Pattern.compile(re1+re2,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		    Matcher m = p.matcher(txt);
+		    if (m.find())
+		    {
+		        String string1=m.group(1);
+		        percent =string1.toString();
+		    }
+		}	
+		
+		// TODO Add additional quote sources
+		return percent;	// OUTPUT
 	}
 
 

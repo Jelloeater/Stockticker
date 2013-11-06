@@ -8,7 +8,7 @@ import javax.swing.JOptionPane; // Just for debugging, actual GUI is in its own 
 
 public class App {
 	
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Throwable {
     	// This runs first
              
        Settings settingsStore = new Settings(); // Constructor for settings object
@@ -39,27 +39,15 @@ public class App {
        
  
        
-       
-       
-       
 		
 		Settings.saveSettings(); // TODO Write XML writer for settings file
 		
 		
-       
-       
-       
-       /*
-    	int refreshInterval = Settings.getInterval(); // Gets refresh time for list from XML settings file to display in GUI
-    	String quoteSource = Settings.getQuoteSource(); // Gets quote source from XML settings file
-		// TODO Get Symbols from XML, load into ArrayList?
-    	*/
-       
-		
+
 		
 		
     	tickerInfo myStock = new tickerInfo(
-    			JOptionPane.showInputDialog("Set Symbol"), settingsStore.getQuoteSource()); // Basic input box
+    			JOptionPane.showInputDialog("Set Symbol","GOOG"), settingsStore.getQuoteSource()); // Basic input box
     	// Constructor for myStock object
     	// Also Passes quote source
     	// Holds all of the ticker data for each iteration
@@ -79,27 +67,33 @@ public class App {
     
     	
     	
+    	System.out.println(""); 
     	
+    	// TODO End of program breakpoint
     	
     	//Display a message dialog box, NULL = No specific position on screen
     	// TODO Replace with Proper GUI
     	
     	// TODO Write update method to loop getting info
-    	
-    	System.out.println("meh");  
-    	//TODO DELETE ME
-    	
-    	
+
     	// TickerWindow.main(null); // Calls Main GUI Window
     	
 
         
     }
-
-
-
-
 }
+
+
+
+
+
+/*
+int refreshInterval = Settings.getInterval(); // Gets refresh time for list from XML settings file to display in GUI
+String quoteSource = Settings.getQuoteSource(); // Gets quote source from XML settings file
+// TODO IDEA Get Symbols from XML, load into ArrayList?
+*/
+
+
 
 
 
@@ -108,3 +102,4 @@ public class App {
 //    	Scanner myScanner2 = new Scanner(System.in); // System.in is an InputStream
 //    	myStock.setTickerSymbol(myScanner2.nextLine()); // Setting ticker with user input
 //    	myScanner2.close(); //Closes Scanner Stream
+
