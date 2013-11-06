@@ -1,6 +1,6 @@
 package jelloeater.StockTicker;
 
-
+import java.io.IOException;
 import java.util.*;
 
 // This is a basic stock ticker app. It ticks stocks n stuff

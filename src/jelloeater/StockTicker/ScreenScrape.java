@@ -1,16 +1,15 @@
 package jelloeater.StockTicker;
 
-import java.io.IOException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 //import java.util.*;
+import java.io.IOException;
 
 
-
-public class ScreenScrape extends App{
+public class ScreenScrape{
 	// This Class exists only to take input and return output.
 	// There does not have to be any objects
 	// It is a simple class :)
@@ -20,9 +19,8 @@ public class ScreenScrape extends App{
 
 	static String PriceLookup(String symbol, String quoteSource) throws IOException {
 		//Use symbol for lookup info
-		String priceString = "23.36"; // Output String 
+		String priceString = null; // Output String 
 		
-		// Data sources"MarketWatch", "Yahoo", "Google"
 		
 		if (quoteSource == "MarketWatch") {
 			
@@ -30,14 +28,8 @@ public class ScreenScrape extends App{
 		    Document document = Jsoup.connect(url).get();
 		    // Query symbol page
 				
-			
-	
-	
-		    
-		    // Below = Work in progress
-		    
-		    
-		    
+
+   
 		    String priceString = document.select("#question .post-text").text(); // Searches for price string
 		    
 		    Elements answerers = document.select("#answers .user-details a");
@@ -48,11 +40,18 @@ public class ScreenScrape extends App{
 		    
 			// Above = Work in progress
 		}
-	    
-	    
-	    
-	    
-	   	return priceString; // Should return a string
+		
+		
+		if (quoteSource == "Yahoo") {
+			// TODO Yahoo price parser
+			priceString = "999.99";
+		}
+		
+		if (quoteSource == "Google") {
+			// TODO Google price parser
+			priceString = "666.66";
+		}    
+	return priceString; // Should return a string
 	}
 
 

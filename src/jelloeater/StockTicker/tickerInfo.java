@@ -1,12 +1,8 @@
-/**
- * 
- */
 package jelloeater.StockTicker;
 
 import java.io.IOException;
 
-
-public class tickerInfo extends App {
+public class tickerInfo {
 	// This class creates and updates objects for each ticker object
 		
 	private String symbol;
@@ -33,7 +29,7 @@ public class tickerInfo extends App {
 	}
 
 	
-	public Double getPrice() throws NumberFormatException, IOException {
+	public Double getPrice() throws NumberFormatException, IOException{
 		// Looks up price using ticker symbol
 		price = Double.parseDouble(ScreenScrape.PriceLookup(symbol, quoteSource));
 		
