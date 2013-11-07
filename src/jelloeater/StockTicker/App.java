@@ -1,7 +1,7 @@
 package jelloeater.StockTicker;
 
-import java.io.IOException;
-import java.util.*;
+//import java.io.IOException;
+//import java.util.*;
 
 // This is a basic stock ticker app. It ticks stocks n stuff
 import javax.swing.JOptionPane; // Just for debugging, actual GUI is in its own class
@@ -11,56 +11,60 @@ public class App {
     public static void main(String[] args) throws Throwable {
     	// This runs first
              
-       Settings settingsStore = new Settings(); // Constructor for settings object
        
-       settingsStore.setQuoteSource("MarketWatch"); // default setting for quote source Marketwatch
-       settingsStore.setRefreshIntervalSeconds(30); // default interval 30 seconds
-       Settings.saveSettings(); // Saves settings to disk (DOES NOTHING RIGHT NOW)
+    	// Settings are something that there should only be one of, no need to make objects.
+    	Settings.setQuoteSource("MarketWatch"); // default setting for quote source Marketwatch
+    	Settings.setRefreshIntervalSeconds(30); // default interval 30 seconds
        
+       
+       Settings.loadSettings();
+       // TODO Write settings read method
        
        
        // TODO Create proper GUI input
 
-       settingsStore.setRefreshIntervalSeconds(
+       Settings.setRefreshIntervalSeconds(
     		   (Integer.parseInt(
-    		   (JOptionPane.showInputDialog("Set Interval", 5)))
+    		   (JOptionPane.showInputDialog("Set Interval", Settings.getRefreshIntervalSeconds()))) // Gets refresh 
     		   )
     	); //Sets setter with GUI box
        
        
        
        
+       
        String[] quoteSourceChoices = { "MarketWatch", "Yahoo", "Google"}; 
        // Dialog box choices array
-       settingsStore.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
+       Settings.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
            "Choose Quote Source", JOptionPane.QUESTION_MESSAGE, null, 
            quoteSourceChoices, // Array of choices
-           quoteSourceChoices[2])); // Initial choice
+           Settings.getQuoteSource())); // Initial choice
        
  
        
 		
-		Settings.saveSettings(); // TODO Write XML writer for settings file
+		Settings.saveSettings(); // TODO Should write on program close
 		
 		
 
 		
 		
     	tickerInfo myStock = new tickerInfo(
-    			JOptionPane.showInputDialog("Set Symbol","GOOG"), settingsStore.getQuoteSource()); // Basic input box
+    			JOptionPane.showInputDialog("Set Symbol","GOOG"), Settings.getQuoteSource()); // Basic input box
     	// Constructor for myStock object
     	// Also Passes quote source
     	// Holds all of the ticker data for each iteration
 
     	
     	// OUTPUT BELOW!!!
+
     	JOptionPane.showMessageDialog(null, 
-    			"Symbol: "+myStock.getTickerSymbol() +"\n"+
-    			"Price: " +myStock.getPrice() +"\n"+
-    			"% Change: "+ myStock.getPercentChange()+"\n"+
-    			"Price Change: "+ myStock.getAmmountChange()
-    			,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
-    
+    		"Symbol: "+myStock.getTickerSymbol() +"\n"+
+    		"Price: " +myStock.getPrice() +"\n"+
+    		"% Change: "+ myStock.getPercentChange()+"\n"+
+    		"Price Change: "+ myStock.getAmmountChange()
+    		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
+
     	
     	
     	

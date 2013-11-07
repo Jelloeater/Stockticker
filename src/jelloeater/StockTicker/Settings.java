@@ -3,40 +3,62 @@
  */
 package jelloeater.StockTicker;
 
+import java.io.*;
+import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 public class Settings extends App{
-	// This class hold all the apps settings in an object
+	// This class holds all the settings of the application, no need for objects, we don't need multiple versions.
+	// HOWEVER, Settings are dependent throughout the program, they are private so we can sanitize data
 
-	private int refreshIntervalSeconds;
-	private String quoteSource;
+	private static int refreshIntervalSeconds;
+	private static String quoteSource;
 	
-
-	public Settings() {
-	// TODO Auto-generated constructor stub
-	}
-
-	public int getRefreshIntervalSeconds() { // Gets private refresh interval
+	public static int getRefreshIntervalSeconds() { // Gets private refresh interval
 		
 		return refreshIntervalSeconds;
 	}
 
 
-	public void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
-		this.refreshIntervalSeconds = refreshIntervalSecondsIN;
+	public static void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
+		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
 	
 
-	public String getQuoteSource() {
+	public static String getQuoteSource() {
 		return quoteSource;
 	}
 
 
-	public void setQuoteSource(String quoteSourceIN) {
-		this.quoteSource = quoteSourceIN;
+	public static void setQuoteSource(String quoteSourceIN) {
+		quoteSource = quoteSourceIN;
 	}
 	
-	public static void saveSettings() { 
-	// TODO Write settings to XML file
+	public static void saveSettings() throws FileNotFoundException { 
+	// Writes settings to file		
+		PrintStream diskWriter = new PrintStream(new File("settings.dat"));
+		diskWriter.print (quoteSource+":"+refreshIntervalSeconds);
+		diskWriter.close();
+		
 	}
+
+
+	public static void loadSettings() throws FileNotFoundException {
+		// Read settings from disk
+		// TODO Finish writing parser
+		
+		Scanner fileParser = new Scanner("settings.dat");
+		
+		fileParser.next();
+		fileParser.close();
+		
+
+		
+		
+	}
+
+
 	
 	
 }

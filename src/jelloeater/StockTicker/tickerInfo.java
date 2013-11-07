@@ -1,6 +1,6 @@
 package jelloeater.StockTicker;
 
-import java.io.IOException;
+//import java.io.IOException;
 
 public class tickerInfo {
 	// This class creates and updates objects for each ticker object
