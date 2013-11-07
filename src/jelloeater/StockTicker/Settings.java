@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-public class Settings extends App{
+public class Settings{
 	// This class holds all the settings of the application, no need for objects, we don't need multiple versions.
 	// HOWEVER, Settings are dependent throughout the program, they are private so we can sanitize data
 

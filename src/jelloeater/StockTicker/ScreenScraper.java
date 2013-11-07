@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 
 
-public class ScreenScrape{
+public class ScreenScraper extends App{
 	// This Class exists only to take input and return output.
 	// There does not have to be any objects
 	// It is a simple class :)
@@ -99,6 +99,11 @@ public class ScreenScrape{
 		    priceString = priceString.replaceAll("^\"|\"$", ""); // Trim off quotes
 		}    
 		
+		
+		if (debugMode=true) {
+			JOptionPane.showMessageDialog(null,"DEBUG priceString "+ priceString);  // Don't mind me, I'm just a debug window
+		}
+		// TODO Remove debug window		
 		
 		
 		return priceString; // Return price in string format

@@ -8,12 +8,17 @@ import javax.swing.JOptionPane; // Just for debugging, actual GUI is in its own 
 
 public class App {
 	
-    public static void main(String[] args) throws Throwable {
+	public static boolean debugMode = true; // Controls debug mode
+	
+	public static void main(String[] args) throws Throwable {
     	// This runs first
+    	
+    	// There should be a minimal amount of methods here, and preferably no variables,
+    	// They should be stored in a class
              
        
     	// Settings are something that there should only be one of, no need to make objects.
-    	Settings.setQuoteSource("MarketWatch"); // default setting for quote source Marketwatch
+    	Settings.setQuoteSource("Google"); // default setting for quote source Google
     	Settings.setRefreshIntervalSeconds(30); // default interval 30 seconds
        
        
@@ -49,10 +54,9 @@ public class App {
 
 		
 		
-    	tickerInfo myStock = new tickerInfo(
-    			JOptionPane.showInputDialog("Set Symbol","GOOG"), Settings.getQuoteSource()); // Basic input box
+    	tickerInfo myStock = new tickerInfo(						// Take only ticker symbol
+    			JOptionPane.showInputDialog("Set Symbol","GOOG")); // Basic input box
     	// Constructor for myStock object
-    	// Also Passes quote source
     	// Holds all of the ticker data for each iteration
 
     	
