@@ -2,5 +2,7 @@ syntax: glob
 .metadata\
 bin\
 gen\
+target\
+
 syntax: regexp
 ^settings\.dat$
