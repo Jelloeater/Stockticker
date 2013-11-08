@@ -8,7 +8,7 @@ import javax.swing.JOptionPane; // Just for debugging, actual GUI is in its own 
 
 public class App {
 	
-	public static boolean debugMode = true; // Controls debug mode
+	public static boolean debugMode = false; // Controls debug mode
 	
 	public static void main(String[] args) throws Throwable {
     	// This runs first
