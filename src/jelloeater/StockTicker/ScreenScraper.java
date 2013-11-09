@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 
 
-public class ScreenScraper extends App{
+class ScreenScraper extends App{
 	// This Class exists only to take input and return output.
 	// There does not have to be any objects
 	// It is a simple class :)
@@ -63,47 +63,31 @@ public class ScreenScraper extends App{
 				
 		    String quertyString = document.select("*").text(); 
 		    // Gets page text
+	    
 		    
 		    
-		    String txt = quertyString; // Sets Regex string
+		    // TODO Remove debug window	
+		    if (debugMode=true) {
+		    	System.err.println("dirty");
+				System.err.println("quertyString: " + quertyString);    	
+		    }
+		    
+		    quertyString=JsonParsing.jsonClean(quertyString); // Cleans the junk off the string
+		    
+		    // TODO Remove debug window	
+		    if (debugMode=true) {
+		    	System.err.println("clean");
+		    	System.err.println("quertyString: " + quertyString);
+			}
 		    
 		    
-		    // Messy auto generated regex from http://txt2re.com
-		    String re1=".*?";	// Non-greedy match on filler
-		    String re2="\".*?\"";	// Uninteresting: string
-		    String re3=".*?";	// Non-greedy match on filler
-		    String re4="\".*?\"";	// Uninteresting: string
-		    String re5=".*?";	// Non-greedy match on filler
-		    String re6="\".*?\"";	// Uninteresting: string
-		    String re7=".*?";	// Non-greedy match on filler
-		    String re8="\".*?\"";	// Uninteresting: string
-		    String re9=".*?";	// Non-greedy match on filler
-		    String re10="\".*?\"";	// Uninteresting: string
-		    String re11=".*?";	// Non-greedy match on filler
-		    String re12="\".*?\"";	// Uninteresting: string
-		    String re13=".*?";	// Non-greedy match on filler
-		    String re14="\".*?\"";	// Uninteresting: string
-		    String re15=".*?";	// Non-greedy match on filler
-		    String re16="(\".*?\")";	// Double Quote String 1
-
-		    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14+re15+re16,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-		    Matcher m = p.matcher(txt);
-		    if (m.find())
-		    {
-		        String string1=m.group(1);
-		        priceString=string1.toString();
-		    }   
-		    
-		    // End of messy auto generated regex from http://txt2re.com
-		    
-		    priceString = priceString.replaceAll("^\"|\"$", ""); // Trim off quotes
+		    // TODO Remove old lookup method
+		    //priceString= googlePriceLookRegex(quertyString); // Old RegEx Lookup
 		}    
 		
+	
 		
-		if (debugMode=true) {
-			JOptionPane.showMessageDialog(null,"DEBUG priceString "+ priceString);  // Don't mind me, I'm just a debug window
-		}
-		// TODO Remove debug window		
+			
 		
 		
 		return priceString; // Return price in string format
@@ -112,14 +96,8 @@ public class ScreenScraper extends App{
 			
 		    
 	
-	
 
-
-	
-	
-	
-
-	public static String precentLookup(String ticker, String quoteSource) throws Throwable {
+	static String precentLookup(String ticker, String quoteSource) throws Throwable {
 		// Logic goes here Should scrape ticker to find percent change
 		String percent= null; // Initialize Variable
 		
@@ -157,18 +135,67 @@ public class ScreenScraper extends App{
 
 
 
-	public static String priceChangeLookup(String ticker, String quoteSource) {
+	static String priceChangeLookup(String ticker, String quoteSource) {
 		String priceChange = "-85.3"; //TODO SHOULD BE NULL DUMMY DATA
 		// Should scrape ticker to find price change
 		
 		return priceChange;
-	}
+		}
+	
+
+	static String googlePriceLookRegex(String quertyString){
+		// TODO Remove me, I'm outdated
+		
+		String priceStringOut = null;
+		String txt = quertyString; // Sets Regex string
+	    
+	    
+	    // Messy auto generated regex from http://txt2re.com
+	    String re1=".*?";	// Non-greedy match on filler
+	    String re2="\".*?\"";	// Uninteresting: string
+	    String re3=".*?";	// Non-greedy match on filler
+	    String re4="\".*?\"";	// Uninteresting: string
+	    String re5=".*?";	// Non-greedy match on filler
+	    String re6="\".*?\"";	// Uninteresting: string
+	    String re7=".*?";	// Non-greedy match on filler
+	    String re8="\".*?\"";	// Uninteresting: string
+	    String re9=".*?";	// Non-greedy match on filler
+	    String re10="\".*?\"";	// Uninteresting: string
+	    String re11=".*?";	// Non-greedy match on filler
+	    String re12="\".*?\"";	// Uninteresting: string
+	    String re13=".*?";	// Non-greedy match on filler
+	    String re14="\".*?\"";	// Uninteresting: string
+	    String re15=".*?";	// Non-greedy match on filler
+	    String re16="(\".*?\")";	// Double Quote String 1
+
+	    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14+re15+re16,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	    Matcher m = p.matcher(txt);
+	    
+		if (m.find())
+	    {
+	        String string1=m.group(1);
+	        priceStringOut=string1.toString();
+	    }   
+	    
+	    // End of messy auto generated regex from http://txt2re.com
+	    
+	    priceStringOut = priceStringOut.replaceAll("^\"|\"$", ""); // Trim off quotes
+	    return priceStringOut;
+	    }
+
+	
+	
 }
 
 
 
 	
 	
+/* JSON DATA EXAMPLE
+
+// [ { "id": "694653" ,"t" : "GOOG" ,"e" : "NASDAQ" ,"l" : "1,016.03" ,"l_fix" : "1016.03" ,"l_cur" : "1,016.03" ,"s": "0" ,"ltt":"4:00PM EST" ,"lt" : "Nov 8, 4:00PM EST" ,"c" : "+8.08" ,"cp" : "0.80" ,"ccol" : "chg" } ] 
+
+*/
 			
 			
 

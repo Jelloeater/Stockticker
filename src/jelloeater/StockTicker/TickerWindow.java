@@ -6,14 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class TickerWindow {
+class TickerWindow {
 
 	private JFrame frame;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	static void main(String[] args) {
 		TickerWindow.setLookAndFeel(); // Sets look and feel
 		
 		EventQueue.invokeLater(new Runnable() {
@@ -31,7 +31,7 @@ public class TickerWindow {
 	/**
 	 * Create the application.
 	 */
-	public TickerWindow() {
+	TickerWindow() {
 		initialize();
 	}
 
@@ -45,7 +45,7 @@ public class TickerWindow {
 	}
 
 	
-	public static void setLookAndFeel(){
+	static void setLookAndFeel(){
 		try {
 	        // Set System L&F
 	        UIManager.setLookAndFeel(

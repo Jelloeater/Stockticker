@@ -6,9 +6,9 @@ package jelloeater.StockTicker;
 // This is a basic stock ticker app. It ticks stocks n stuff
 import javax.swing.JOptionPane; // Just for debugging, actual GUI is in its own class
 
-public class App {
+class App {
 	
-	public static boolean debugMode = false; // Controls debug mode
+	static boolean debugMode = true; // Controls debug mode
 	
 	public static void main(String[] args) throws Throwable {
     	// This runs first

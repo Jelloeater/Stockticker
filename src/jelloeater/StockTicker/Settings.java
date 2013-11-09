@@ -4,47 +4,52 @@
 package jelloeater.StockTicker;
 
 import java.io.*;
+import java.util.Map;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
 
-public class Settings{
+class Settings extends App{
 	// This class holds all the settings of the application, no need for objects, we don't need multiple versions.
 	// HOWEVER, Settings are dependent throughout the program, they are private so we can sanitize data
 
 	private static int refreshIntervalSeconds;
 	private static String quoteSource;
 	
-	public static int getRefreshIntervalSeconds() { // Gets private refresh interval
+	static int getRefreshIntervalSeconds() { // Gets private refresh interval
 		
 		return refreshIntervalSeconds;
 	}
 
 
-	public static void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
+	static void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
 	
 
-	public static String getQuoteSource() {
+	static String getQuoteSource() {
 		return quoteSource;
 	}
 
 
-	public static void setQuoteSource(String quoteSourceIN) {
+	static void setQuoteSource(String quoteSourceIN) {
 		quoteSource = quoteSourceIN;
 	}
 	
-	public static void saveSettings() throws FileNotFoundException { 
-	// Writes settings to file		
+	static void saveSettings() throws FileNotFoundException { 
+	// Writes settings to file in JSON
+		
 		PrintStream diskWriter = new PrintStream(new File("settings.dat"));
-		diskWriter.print (quoteSource+":"+refreshIntervalSeconds);
+		
+//		String settingsData =  new JSONObject().put("JSON", "Hello, World!").toString();
+		
+		String settingsData = "hi";
+		diskWriter.print (settingsData);
 		diskWriter.close();
 		
 	}
 
 
-	public static void loadSettings() throws FileNotFoundException {
+	static void loadSettings() throws FileNotFoundException {
 		// Read settings from disk
 		// TODO Finish writing parser
 		
