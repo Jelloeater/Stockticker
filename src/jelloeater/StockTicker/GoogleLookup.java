@@ -7,23 +7,52 @@ import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-public class GoogleLookup extends StockInfoLookup{ //TODO remove extends (it's only for debugMode)
+
+
+public class GoogleLookup extends App{ //TODO remove extends (it's only for debugMode)
 	
 	
-	public static String price(String symbol) throws IOException {
-		String quertyString=GoogleLookup.getGoogleJSONfromWeb(symbol); // Gets JSON data from web
-	    String priceString = GoogleTickerData.price(quertyString); // Takes JSON Give price
-	    return priceString;
+	public static String price(String rawData) throws IOException {
+	    
+		
+		String priceString = GoogleTickerData.price(rawData); // Takes JSON Give price
+	    
+		
+		
+		
+		
+		
+		
+		
+		return priceString;
 	}
 	
 	
+	
+	
+	
+	public static String percentChange(String rawData) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	public static String priceChange(String rawData) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+	
+
 	/**
 	 * Gets JSON data from Google and cleans it
 	 * @param symbol
 	 * @return
 	 * @throws IOException
 	 */
-	private static String getGoogleJSONfromWeb(String symbol) throws IOException{
+	public static String getGoogleJSONfromWeb(String symbol) throws IOException{
 		String url = "http://finance.google.com/finance/info?client=ig&q="+symbol; // URL to lookup
 	    Document document = Jsoup.connect(url).get(); // Pull in dirty JSON data
 	    String jsonDirtyIN = document.select("*").text(); // Gets page text
@@ -47,6 +76,12 @@ public class GoogleLookup extends StockInfoLookup{ //TODO remove extends (it's o
 	    String finalJsonOutput = jsonCleanOut.replace("[", "").replace("]", ""); //Clean off brackets
 		return finalJsonOutput;
 	}
+
+
+	
+
+
+	
 	
 
 }

@@ -14,15 +14,22 @@ class tickerInfo {
 	private String price;
 	private String percentChange;
 	private String priceChange;
+	private String rawData;
 	
 	/**Constructor for setting up ticker symbol objects
 	 * @throws Throwable */
 	 tickerInfo(String symbolIN) throws Throwable {
-		 // Don't need to extend the App Class
-		 this.symbol = symbolIN;
-		 this.price = StockInfoLookup.priceLookup(symbol);
-		 this.priceChange = StockInfoLookup.priceChangeLookup(symbol);
-		 this.percentChange = StockInfoLookup.precentLookup(symbol);
+		 
+		 if (Settings.getQuoteSource() == "Google") {
+			 this.symbol = symbolIN;
+			 this.rawData= GoogleLookup.getGoogleJSONfromWeb(symbol);
+			 // This is good, we are doing OOP
+			 this.price = GoogleLookup.price(this.rawData);
+			 this.priceChange = GoogleLookup.priceChange(this.rawData);
+			 this.percentChange = GoogleLookup.percentChange(this.rawData);
+		 }
+		 
+	
 		 // TODO Add validation for valid symbol
 	 }
 
@@ -42,6 +49,18 @@ class tickerInfo {
 	
 	public String getPriceChange() {
 		return priceChange;
+	}
+
+
+
+	public String getRawData() {
+		return rawData;
+	}
+
+
+
+	public void setRawData(String rawData) {
+		this.rawData = rawData;
 	}
 
 

@@ -54,8 +54,8 @@ class App {
 
 		
 		
-    	tickerInfo myStock = new tickerInfo(						// Takes ticker symbol
-    			JOptionPane.showInputDialog("Set Symbol","GOOG")); // Basic input bo
+    	tickerInfo myStock = new tickerInfo(	// Takes ticker symbol
+    			JOptionPane.showInputDialog("Set Symbol","GOOG")); // Basic input Box
 
     	
     	// OUTPUT BELOW!!!
