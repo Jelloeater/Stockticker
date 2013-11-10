@@ -1,5 +1,9 @@
 package jelloeater.StockTicker;
 
+
+
+import com.google.gson.*;
+
 public class GoogleTickerData {
 	
 private String id;
@@ -21,10 +25,24 @@ private String ccol;
 		
 	}
 	
-	
+	/**
+	 * Converts JSON data
+	 * @param quertyString
+	 * @return price from JSON
+	 */
 	public static String price(String quertyString) {
 		// TODO Auto-generated method stub
-		return null;
+		String returnPrice = null;
+		
+		Gson gson = new Gson();
+		
+		Object stockTickerData = gson.fromJson(quertyString, Object.class);
+		
+		
+		System.err.println("Break Here");
+		
+		
+		return returnPrice;
 	}
 
 }
