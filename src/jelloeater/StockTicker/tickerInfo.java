@@ -22,11 +22,23 @@ class tickerInfo {
 		 
 		 if (Settings.getQuoteSource() == "Google") {
 			 this.symbol = symbolIN;
-			 this.rawData= GoogleLookup.getGoogleJSONfromWeb(symbol);
+			 this.rawData= GoogleTickerData.getGoogleJSONfromWeb(symbol); // gets JSON data for object
 			 // This is good, we are doing OOP
-			 this.price = GoogleLookup.price(this.rawData);
-			 this.priceChange = GoogleLookup.priceChange(this.rawData);
-			 this.percentChange = GoogleLookup.percentChange(this.rawData);
+			 
+			 GoogleTickerData dataContainer = new GoogleTickerData(rawData);
+			 
+			 
+			 
+			 
+			 
+			 this.price = dataContainer.l;
+			 
+			 System.err.println("id:" + price);
+			 
+			 
+			 //this.price = GoogleTickerData.price(this.rawData);
+			 //this.priceChange = GoogleLookup.priceChange(this.rawData);
+			 //this.percentChange = GoogleLookup.percentChange(this.rawData);
 		 }
 		 
 	
