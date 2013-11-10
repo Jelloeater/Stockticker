@@ -31,12 +31,11 @@ private String ccol;
 	 * @return price from JSON
 	 */
 	public static String price(String quertyString) {
-		// TODO Auto-generated method stub
 		String returnPrice = null;
 		
-		Gson gson = new Gson();
+		Gson gson = new Gson(); // Initializes object
 		
-		Object stockTickerData = gson.fromJson(quertyString, Object.class);
+		GoogleTickerData obj2 = gson.fromJson(quertyString, GoogleTickerData.class); 
 		
 		
 		System.err.println("Break Here");
