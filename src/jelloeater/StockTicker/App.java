@@ -53,27 +53,16 @@ class App {
 		
 
 		
-		
-    	tickerInfo myStock = new tickerInfo(						// Takes ticker symbol
-    			JOptionPane.showInputDialog("Set Symbol","GOOG")); // Basic input bo
+		// STOCK INPUT HERE
+    	tickerInfo myStock = new tickerInfo(	// Takes ticker symbol and makes new object
+    			JOptionPane.showInputDialog("Set Symbol","GOOG"));
+    	// Lookup logic is dependent on Settings.quoteSource
 
     	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+
     	// OUTPUT BELOW!!!
     	
-    	//TODO Come up with nice JSON object type output
-    	
+   	
     	JOptionPane.showMessageDialog(null, 
     		"Symbol: "+myStock.getTickerSymbol() +"\n"+
     		"Price: " +myStock.getPrice() +"\n"+
