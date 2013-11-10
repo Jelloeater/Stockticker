@@ -3,7 +3,8 @@ package jelloeater.StockTicker;
 //import java.io.IOException;
 
 /** tickerInfo
- * 
+ *  Holds all of the ticker data for each iteration
+ *  @param symbol 1-4 Letter stock identifier
  * @author Jesse
  *
  */
@@ -19,9 +20,9 @@ class tickerInfo {
 	 tickerInfo(String symbolIN) throws Throwable {
 		 // Don't need to extend the App Class
 		 this.symbol = symbolIN;
-		 this.price = ScreenScraper.priceLookup(symbol);
-		 this.priceChange = ScreenScraper.priceChangeLookup(symbol);
-		 this.percentChange = ScreenScraper.precentLookup(symbol);
+		 this.price = StockInfoLookup.priceLookup(symbol);
+		 this.priceChange = StockInfoLookup.priceChangeLookup(symbol);
+		 this.percentChange = StockInfoLookup.precentLookup(symbol);
 		 // TODO Add validation for valid symbol
 	 }
 
