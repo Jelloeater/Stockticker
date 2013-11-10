@@ -30,7 +30,7 @@ class App {
 
        Settings.setRefreshIntervalSeconds(
     		   (Integer.parseInt(
-    		   (JOptionPane.showInputDialog("Set Interval", Settings.getRefreshIntervalSeconds()))) // Gets refresh 
+    		   (JOptionPane.showInputDialog("Set Interval", Settings.getRefreshIntervalSeconds()))) // Gets refresh for display
     		   )
     	); //Sets setter with GUI box
        
@@ -61,12 +61,14 @@ class App {
 
     	
     	// OUTPUT BELOW!!!
-
+    	
+    	//TODO Come up with nice JSON object type output
+    	
     	JOptionPane.showMessageDialog(null, 
     		"Symbol: "+myStock.getTickerSymbol() +"\n"+
     		"Price: " +myStock.getPrice() +"\n"+
     		"% Change: "+ myStock.getPercentChange()+"\n"+
-    		"Price Change: "+ myStock.getAmmountChange()
+    		"Price Change: "+ myStock.getPriceChange()
     		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
 
     	

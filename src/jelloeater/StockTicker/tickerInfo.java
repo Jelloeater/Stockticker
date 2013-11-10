@@ -2,52 +2,46 @@ package jelloeater.StockTicker;
 
 //import java.io.IOException;
 
+/** tickerInfo
+ * 
+ * @author Jesse
+ *
+ */
 class tickerInfo {
-	// This class creates and updates objects for each ticker object
 		
 	private String symbol;
 	private String price;
 	private String percentChange;
 	private String priceChange;
-	private String quoteSource;
-		
 	
-	 tickerInfo(String symbolIN) {
-		 // Sets up ticker with basic symbol
-		 // TODO Add validation for valid symbol
+	/**Constructor for setting up ticker symbol objects
+	 * @throws Throwable */
+	 tickerInfo(String symbolIN) throws Throwable {
 		 // Don't need to extend the App Class
 		 this.symbol = symbolIN;
-		 this.quoteSource = Settings.getQuoteSource();
+		 this.price = ScreenScraper.priceLookup(symbol);
+		 this.priceChange = ScreenScraper.priceChangeLookup(symbol);
+		 this.percentChange = ScreenScraper.precentLookup(symbol);
+		 // TODO Add validation for valid symbol
 	 }
 
-	 
 
-
-	String getTickerSymbol() {
-		// Returns symbol user entered
-
+	
+	public String getTickerSymbol() {
 		return symbol;
 	}
-
 	
-	String getPrice() throws Throwable{
-			price = ScreenScraper.priceLookup(symbol, quoteSource);
-
-		return "$"+price; // Add USD to return
+	public String getPrice() {
+		return price;
 	}
-
-
 	
-	String getPercentChange() throws Throwable{
-		// Looks up percent change using ticker symbol
-		percentChange = ScreenScraper.precentLookup(symbol, quoteSource);
+	public String getPercentChange() {
 		return percentChange;
 	}
-
-	String getAmmountChange() throws Throwable{
-		// Looks up amount change using ticker symbol
-		priceChange = ScreenScraper.priceChangeLookup(symbol, quoteSource);
+	
+	public String getPriceChange() {
 		return priceChange;
 	}
+
 
 }

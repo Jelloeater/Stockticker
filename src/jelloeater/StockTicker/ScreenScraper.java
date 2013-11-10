@@ -3,6 +3,8 @@ package jelloeater.StockTicker;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import com.sun.java_cup.internal.runtime.Symbol;
 //import java.io.IOException;
 //import org.jsoup.nodes.Element;
 //import org.jsoup.select.Elements;
@@ -14,119 +16,63 @@ import java.util.regex.*;
 import javax.swing.JOptionPane;
 
 
-
+/**
+ * 	This Class exists only to take input and return output.
+ 	There does not have to be any objects
+	It is a helper class :)
+ * @author Jesse
+ */
 class ScreenScraper extends App{
-	// This Class exists only to take input and return output.
-	// There does not have to be any objects
-	// It is a simple class :)
+
 		
 	// TODO get quote source pick from dialogue in main
 	
 
+	/** Looks up price and returns price in form of a string. 
+	 * 	Uses global Settings preference for quote source
+	 * @param symbol
+	 * @return priceString
+	 * @throws Throwable
+	 * Jsoup needs a throw, should look into why
+	 */
+	static String priceLookup(String symbol) throws Throwable{ 
+		
+		String priceString = "0"; // Output String initializer
 
-	static String priceLookup(String symbol, String quoteSource) throws Throwable{ // Jsoup needs a throw, should look into why
-		//Use symbol for lookup info
-		String priceString = null; // Output String 
-		
-		
-		if (quoteSource == "MarketWatch") {
-			//TODO Finish MarketWatch price parser
-			String url = "http://www.marketwatch.com/investing/stock/"+symbol;
-		    Document document = Jsoup.connect(url).get();
-		    // Query symbol page
-				
-
-   
-		    priceString = document.select("#pricewrap .data bgLast").text(); // Searches for price string
-		    //			<p class="data bgLast">1,026.00</p>
-		    
-		    JOptionPane.showMessageDialog(null, priceString); 
-			// TODO Remove debug output
-		}
-
-		
-		if (quoteSource == "Yahoo") {
-			// TODO Yahoo price parser
-			// https://finance.google.com/finance/info?client=ig&q=JCP
-			
-			
-			priceString = "999.99";
-		}
-		
-		
-		
-		if (quoteSource == "Google") {
-			
-			String url = "http://finance.google.com/finance/info?client=ig&q="+symbol;
-		    Document document = Jsoup.connect(url).get();
-		    // Query symbol page
-				
-		    String quertyString = document.select("*").text(); 
-		    // Gets page text
-	    
-		    
-		    
-		    // TODO Remove debug window	
-		    if (debugMode=true) {
-		    	System.err.println("dirty");
-				System.err.println("quertyString: " + quertyString);    	
-		    }
-		    
-		    quertyString=JsonParsing.jsonClean(quertyString); // Cleans the junk off the string
-		    
-		    // TODO Remove debug window	
-		    if (debugMode=true) {
-		    	System.err.println("clean");
-		    	System.err.println("quertyString: " + quertyString);
-			}
-		    
-		    
-		    // TODO Remove old lookup method
-		    //priceString= googlePriceLookRegex(quertyString); // Old RegEx Lookup
+		if (Settings.getQuoteSource() == "Google") {
+			priceString = GoogleLookup.price(symbol);
 		}    
 		
-	
+		if (Settings.getQuoteSource() == "MarketWatch") {
+			// TODO Write marketwatch parser	
+		}
+
+		if (Settings.getQuoteSource() == "Yahoo") {
+			// TODO Write Yahoo price parser
+			// https://finance.google.com/finance/info?client=ig&q=JCP
+		}
 		
-			
 		
-		
-		return priceString; // Return price in string format
+		return "$"+ priceString; // Return price in string format and adds dollar sign
 	}
 		    
 			
 		    
 	
-
-	static String precentLookup(String ticker, String quoteSource) throws Throwable {
+	/**
+	 * Looks up the percentage change of a ticker symbol
+	 * @param ticker
+	 * @return percent
+	 * @throws Throwable
+	 */
+	static String precentLookup(String ticker) throws Throwable {
 		// Logic goes here Should scrape ticker to find percent change
-		String percent= null; // Initialize Variable
+		String percent= "0"; // Initialize Variable
 		
-		if (quoteSource == "Google") {
+		if (Settings.getQuoteSource() == "Google") {
 			// TODO Google percent parser
 			
-			String url = "http://finance.google.com/finance/info?client=ig&q="+ticker;
-		    Document document = Jsoup.connect(url).get();
-		    // Query symbol page
-				
-		    String quertyString = document.select("*").text(); 
-		    // INPUT 
-		    // Gets page text
-
-		    
-		    String txt = quertyString; // Sets Regex string
 			
-		    
-		    
-		    String re1=".*?";	// Non-greedy match on filler
-		    String re2="(\"-0\\.60\")";	// Double Quote String 1
-
-		    Pattern p = Pattern.compile(re1+re2,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-		    Matcher m = p.matcher(txt);
-		    if (m.find())
-		    {
-		        String string1=m.group(1);
-		        percent =string1.toString();
-		    }
 		}	
 		
 		// TODO Add additional quote sources
@@ -135,9 +81,11 @@ class ScreenScraper extends App{
 
 
 
-	static String priceChangeLookup(String ticker, String quoteSource) {
-		String priceChange = "-85.3"; //TODO SHOULD BE NULL DUMMY DATA
+	static String priceChangeLookup(String ticker) {
+		String priceChange = "0"; // Initialize Variable
 		// Should scrape ticker to find price change
+		
+		
 		
 		return priceChange;
 		}
