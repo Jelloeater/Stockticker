@@ -15,11 +15,11 @@ class StockInfoLookup extends App{
 
 	static String priceLookup(String symbol) throws Throwable{ 
 		String priceString = null;
-		
+		/*
 		if (Settings.getQuoteSource() == "Google") {
 			priceString = GoogleLookup.price(symbol);
 		}    
-		
+		*/
 		if (Settings.getQuoteSource() == "MarketWatch") {
 			// TODO Write marketwatch parser	
 		}

@@ -58,6 +58,18 @@ class App {
     			JOptionPane.showInputDialog("Set Symbol","GOOG")); // Basic input bo
 
     	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     	// OUTPUT BELOW!!!
     	
     	//TODO Come up with nice JSON object type output
@@ -70,12 +82,11 @@ class App {
     		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
 
     	
-    	
+    	System.err.println("END BREAK");
     	
     
     	
     	
-    	System.out.println(""); 
     	
     	// TODO End of program breakpoint
     	
