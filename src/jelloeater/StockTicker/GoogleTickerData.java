@@ -13,18 +13,18 @@ import com.google.gson.*;
 
 public class GoogleTickerData{
 
-	String id;
-	String t;
-	String e;
-	String l;
-	String l_fix;
-	String l_cur;
-	String s;
-	String ltt;
-	String lt;
-	String c;
-	String cp;
-	String ccol;
+	private String id;
+	private String t;
+	private String e;
+	private String l;
+	private String l_fix;
+	private String l_cur;
+	private String s;
+	private String ltt;
+	private String lt;
+	private String c;
+	private String cp;
+	private String ccol;
 
 
 	/**
@@ -36,7 +36,7 @@ public class GoogleTickerData{
 		// TODO Auto-generated constructor stub
 		Gson gson = new Gson(); // Initializes object
 		
-		gson.fromJson(rawData, GoogleTickerData.class);
+		GoogleTickerData obj2 = gson.fromJson(rawData, GoogleTickerData.class); 
 	}
 	
 	

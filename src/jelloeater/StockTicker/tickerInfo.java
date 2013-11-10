@@ -22,27 +22,15 @@ class tickerInfo {
 		 
 		 if (Settings.getQuoteSource() == "Google") {
 			 this.symbol = symbolIN;
+			// TODO Add validation for valid symbol
 			 this.rawData= GoogleTickerData.getGoogleJSONfromWeb(symbol); // gets JSON data for object
 			 // This is good, we are doing OOP
 			 
 			 GoogleTickerData dataContainer = new GoogleTickerData(rawData);
-			 
-			 
-			 
-			 
-			 
-			 this.price = dataContainer.l;
-			 
-			 System.err.println("id:" + price);
-			 
-			 
-			 //this.price = GoogleTickerData.price(this.rawData);
-			 //this.priceChange = GoogleLookup.priceChange(this.rawData);
-			 //this.percentChange = GoogleLookup.percentChange(this.rawData);
-		 }
-		 
-	
-		 // TODO Add validation for valid symbol
+			 this.price = dataContainer.l; // Gets Price from JSON data
+			 this.percentChange = dataContainer.cp; // Gets percent change from JSON data
+			 this.priceChange = dataContainer.c; // Gets price change from JSON data
+		 }	 
 	 }
 
 

@@ -68,6 +68,8 @@ class App {
     		"% Change: "+ myStock.getPercentChange()+"\n"+
     		"Price Change: "+ myStock.getPriceChange()
     		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
+    	
+    	System.err.println("BRAKE");
 
     	
     	
