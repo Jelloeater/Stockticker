@@ -3,6 +3,7 @@ package jelloeater.StockTicker;
 //import java.io.IOException;
 
 /** tickerInfo
+ *  Takes Symbol
  *  Holds all of the ticker data for each iteration
  *  @param symbol 1-4 Letter stock identifier
  * @author Jesse

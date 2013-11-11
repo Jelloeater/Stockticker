@@ -51,17 +51,41 @@ class App {
 		Settings.saveSettings(); // TODO Should write on program close
 		
 		
-
+		// INPUT Section
+		// TODO convert to method
+		
+		String tickerSymbolInput=null;
+		
+		
 		
 		// STOCK INPUT HERE
-    	tickerInfo myStock = new tickerInfo(	// Takes ticker symbol and makes new object
-    			JOptionPane.showInputDialog("Set Symbol","GOOG"));
-    	// Lookup logic is dependent on Settings.quoteSource
+		boolean validSymbolInput = false;
+		while(validSymbolInput=false);{
+		try {
+			
+			tickerSymbolInput= JOptionPane.showInputDialog("Set Symbol","GOOG");
+			
+	    	// Lookup logic is dependent on Settings.quoteSource
+			validSymbolInput=true;
+		} catch (Exception e) {
+			validSymbolInput = false;
+			System.err.println("validInput:" + validSymbolInput);
+			System.err.println("Enter a valid symbol");
+			// TODO: handle exception
+			}
+		}
 
+    	
+		tickerInfo myStock = new tickerInfo(tickerSymbolInput); 
+		//Create ticker info object using symbol, taskes input from window
     	
 
     	// OUTPUT BELOW!!!
     	
+		
+		
+		
+		
    	
     	JOptionPane.showMessageDialog(null, 
     		"Symbol: "+myStock.getTickerSymbol() +"\n"+
@@ -89,6 +113,7 @@ class App {
 
         
     }
+
 }
 
 

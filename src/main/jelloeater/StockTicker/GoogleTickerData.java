@@ -26,7 +26,9 @@ private String c;
 private String cp;
 private String ccol;
 
-
+/**
+ * Hold all the data from a google based lookup
+ */
 	public GoogleTickerData() {
 	
 	}

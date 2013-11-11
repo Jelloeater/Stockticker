@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src/test"/>
+	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/gson-2.2.4.jar" sourcepath="lib/src/gson-2.2.4-sources.jar">
+	<classpathentry kind="lib" path="lib/gson-2.2.4.jar" sourcepath="Y:/Coding Workspace/StockTicker/lib/docs/gson-2.2.4-javadoc.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/StockTicker/lib/docs/gson-2.2.4-javadoc.jar!/"/>
 		</attributes>
@@ -12,5 +13,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/StockTicker/lib/docs/jsoup-1.7.2-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
