@@ -59,6 +59,10 @@ class tickerInfo {
 	public String getPriceChange() {
 		return priceChange;
 	}
+	
+	public String getRawData() {
+		return rawData;
+	}
 
 
 }

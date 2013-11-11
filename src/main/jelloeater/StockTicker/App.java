@@ -30,9 +30,8 @@ class App {
 
        Settings.setRefreshIntervalSeconds(
     		   (Integer.parseInt(
-    		   (JOptionPane.showInputDialog("Set Interval", Settings.getRefreshIntervalSeconds()))) // Gets refresh for display
-    		   )
-    	); //Sets setter with GUI box
+    		   (JOptionPane.showInputDialog("Set Interval", Settings.getRefreshIntervalSeconds()
+    			)))));	//Sets setter with GUI box
        
        
        
@@ -77,7 +76,7 @@ class App {
 
     	
 		tickerInfo myStock = new tickerInfo(tickerSymbolInput); 
-		//Create ticker info object using symbol, taskes input from window
+		//Create ticker info object using symbol, takes input from window
     	
 
     	// OUTPUT BELOW!!!

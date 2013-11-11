@@ -65,7 +65,13 @@ private String ccol;
 	    Document document = Jsoup.connect(url).get(); // Pull in dirty JSON data
 	    String jsonDirtyIN = document.select("*").text(); // Gets page text
 	    
-	    // Cleans JSON data
+	    String finalJsonOutput = cleanGoogleJSONdata(jsonDirtyIN);
+		return finalJsonOutput;
+	}
+	
+	static String cleanGoogleJSONdata(String jsonDirtyIN)
+	{
+		// Cleans JSON data
 	    String jsonCleanOut = null; // Output variable
 		//<regex vodo>
 	    String re1=".*?";	// Non-greedy match on filler
@@ -81,7 +87,8 @@ private String ccol;
 		//</regex vodo>
 		    
 	    String finalJsonOutput = jsonCleanOut.replace("[", "").replace("]", ""); //Clean off brackets
-		return finalJsonOutput;
+		
+		return finalJsonOutput;	
 	}
 
 	
