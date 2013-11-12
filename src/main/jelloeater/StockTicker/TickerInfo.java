@@ -9,7 +9,8 @@ package jelloeater.StockTicker;
  * @author Jesse
  *
  */
-class tickerInfo {
+//TODO Maybe make it an abstract class?
+class TickerInfo {
 		
 	private String symbol;
 	private String price;
@@ -20,11 +21,12 @@ class tickerInfo {
 	/**Constructor for setting up ticker symbol objects
 	 * @throws Throwable 
 	 * */
-	 tickerInfo(String symbolIN) throws Throwable {
+	 TickerInfo(String symbolIN) throws Throwable {
 		 this.symbol = symbolIN;
 		 // TODO Add validation for valid symbol
 		 
 		 if (Settings.getQuoteSource() == "Google") { 
+			 
 			 
 			 this.rawData = GoogleTickerData.getGoogleJSONfromWeb(symbol); // Gets JSON Data
 			 

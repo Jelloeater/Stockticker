@@ -13,6 +13,8 @@ class App {
 	public static void main(String[] args) throws Throwable {
     	// This runs first
     	
+		
+		
     	// There should be a minimal amount of methods here, and preferably no variables,
     	// They should be stored in a class
              
@@ -23,7 +25,7 @@ class App {
        
        
        Settings.loadSettings();
-       // TODO Write settings read method
+       // FIXME Write settings read method
        
        
        // TODO Create proper GUI input
@@ -70,12 +72,12 @@ class App {
 			validSymbolInput = false;
 			System.err.println("validInput:" + validSymbolInput);
 			System.err.println("Enter a valid symbol");
-			// TODO: handle exception
+			// FIXME: handle exception
 			}
 		}
 
     	
-		tickerInfo myStock = new tickerInfo(tickerSymbolInput); 
+		TickerInfo myStock = new TickerInfo(tickerSymbolInput); 
 		//Create ticker info object using symbol, takes input from window
     	
 
@@ -89,7 +91,7 @@ class App {
     	JOptionPane.showMessageDialog(null, 
     		"Symbol: "+myStock.getTickerSymbol() +"\n"+
     		"Price: " +myStock.getPrice() +"\n"+
-    		"% Change: "+ myStock.getPercentChange()+"\n"+
+    		"% Change: "+ myStock.getPercentChange()+"%"+"\n"+
     		"Price Change: "+ myStock.getPriceChange()
     		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
 
@@ -98,7 +100,7 @@ class App {
     	
     
     	
-    	
+    	TickerWindow.launchGui(null);
     	
     	// TODO End of program breakpoint
     	

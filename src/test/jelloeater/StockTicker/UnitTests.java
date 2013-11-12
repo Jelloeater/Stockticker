@@ -34,12 +34,12 @@ public class UnitTests{
 	}
 
 	@Test
-	public void testAppOnline() throws Throwable { // Is the parser broken? Needs to be online
+	public void testAppOnline() throws Throwable { //FIXME Is the parser broken? Needs to be online
 		
 
 		Settings.setQuoteSource("Google");
 		String tickerSymbolInput = "GOOG";
-		tickerInfo myStock = new tickerInfo(tickerSymbolInput); //Create ticker info object using symbol
+		TickerInfo myStock = new TickerInfo(tickerSymbolInput); //Create ticker info object using symbol
 		
 
 		String outputPrice = UnitTests.oldOnlineGoogleWebRegexParser("GOOG");

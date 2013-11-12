@@ -4,3 +4,5 @@ bin\
 gen\
 syntax: regexp
 ^settings\.dat$
+syntax: regexp
+^miglayout-src\.zip$

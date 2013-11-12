@@ -5,22 +5,41 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.SpringLayout;
+import javax.swing.JTextPane;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JMenuBar;
+import java.awt.BorderLayout;
+import javax.swing.JScrollBar;
+import javax.swing.JButton;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-class TickerWindow {
+class TickerWindow extends App{
 
-	private JFrame frame;
+	private JFrame mainWindow;
 
 	/**
 	 * Launch the application.
 	 */
-	static void main(String[] args) {
+	static void launchGui(String[] args) {
 		TickerWindow.setLookAndFeel(); // Sets look and feel
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					TickerWindow window = new TickerWindow();
-					window.frame.setVisible(true);
+					window.mainWindow.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -39,9 +58,27 @@ class TickerWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainWindow = new JFrame();
+		mainWindow.setBounds(100, 100, 250, 450);
+		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainWindow.getContentPane().setLayout(new MigLayout("", "[grow][]", "[211.00,grow][bottom]"));
+		
+		JTextPane textPane = new JTextPane();
+		mainWindow.getContentPane().add(textPane, "cell 0 0,grow");
+		
+		JScrollBar scrollBar = new JScrollBar();
+		mainWindow.getContentPane().add(scrollBar, "cell 1 0,alignx right,growy");
+		
+		JTextPane textPane_1 = new JTextPane();
+		mainWindow.getContentPane().add(textPane_1, "flowx,cell 0 1,growx,aligny bottom");
+		
+		JButton btnNewButton = new JButton("+");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("hi");
+			}
+		});
+		mainWindow.getContentPane().add(btnNewButton, "cell 0 1,alignx right,aligny bottom");
 	}
 
 	
