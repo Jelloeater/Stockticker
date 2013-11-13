@@ -33,39 +33,29 @@ class App {
    
 		Settings.saveSettings(); 
 
-		TickerInfo myStock = App.createNewTicker(); // Input Window
+		
+		
+		TickerInfo myStock = TickerInfo.createNewTickerGui(); // Input Window
+		App.displayGuiInfoWindow(myStock);// Output Window
+		
+		TickerInfo myStock2 = TickerInfo.createNewTickerGui(); // Input Window 
+		App.displayGuiInfoWindow(myStock2);// Output Window
        
-		App.displayInfoWindow(myStock);// Output Window
-       
-		myStock = App.updateTicker(myStock); // Update method
+		myStock = TickerInfo.updateTicker(myStock); // Update method
+		
+		
+		
        
 		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!!
     }
 
-	static TickerInfo updateTicker(TickerInfo myStock) throws Exception {
-		// TODO find better home for method
+	
 
-		String symbol = myStock.getTickerSymbol();
-		
-		
-		if (Settings.getQuoteSource() == "Google") { 
-			 
-			 
-			String rawData = GoogleTickerData.getGoogleJSONfromWeb(symbol); // Gets JSON Data
-			 
-			GoogleTickerData dataStore = new GoogleTickerData(); // Creates dataStore Objects
-			 
-			dataStore=dataStore.mapJsonDataToObject(rawData); // Sends raw data to JSON parser to be converted to object
-			 
-			myStock.setPrice(dataStore.getPrice()); // Sets value for constructor
-			myStock.setPercentChange(dataStore.getPercentChange()); // Sets value for constructor
-			myStock.setPriceChange(dataStore.getPriceChange());// Sets value for constructor	 
-		 }
-		return myStock;
-		
-	}
-
-	static void displayInfoWindow(TickerInfo myStock){
+	/**
+	 * Pop-up window that displays data from myStock Object
+	 * @param TickerInfo Object
+	 */
+	static void displayGuiInfoWindow(TickerInfo myStock){
 		JOptionPane.showMessageDialog(null, 
 	    		"Symbol: "+myStock.getTickerSymbol() +"\n"+
 	    		"Price: " +myStock.getPrice() +"\n"+
@@ -74,30 +64,7 @@ class App {
 	    		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
 	}
 	
-	static TickerInfo createNewTicker() throws Throwable
-	{
-		String tickerSymbolInput=null;
-		boolean validSymbolInput = false;
-		
-		while(validSymbolInput =false);{
-		try {
-			
-			tickerSymbolInput= JOptionPane.showInputDialog("Set Symbol","GOOG");
-			
-	    	// Lookup logic is dependent on Settings.quoteSource
-			validSymbolInput=true;
-		} catch (Exception e) {
-			// validSymbolInput = false;
-			System.err.println("validInput:" + validSymbolInput);
-			System.err.println("Enter a valid symbol");
-			// FIXME: handle exception
-			}
-		}
-		
-		TickerInfo myStock = new TickerInfo(tickerSymbolInput); // Creates object and looks up price
-
-		return myStock;
-	}
+	
 }
 
 

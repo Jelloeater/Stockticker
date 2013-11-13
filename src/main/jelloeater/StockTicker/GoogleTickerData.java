@@ -11,6 +11,13 @@ import org.jsoup.nodes.Document;
 
 import com.google.gson.*;
 
+/**
+ * Holds methods to be used by TickerInfo
+ * Specific to mapping Google supplied JSON data
+ * @see TickerInfo
+ * @author Jesse
+ *
+ */
 public class GoogleTickerData{
 
 
@@ -28,17 +35,21 @@ private String ltt;
 private String lt;
 private String ccol;
 */
-
-/**
- * Hold all the data from a google based lookup
- */
+	/**
+	 * Constructor used to set up object variables
+	 */
 	GoogleTickerData() {
-	
 	}
 	
+	/**
+	 * Maps JSON data to Google Ticker object using Gson library
+	 * 
+	 * @param rawJsonData
+	 * @return tickerDataStore 
+	 */
 	GoogleTickerData mapJsonDataToObject(String rawJsonData){// Takes raw JSON data
 		Gson gson = new Gson(); // Initializes object
-		GoogleTickerData tickerDataStore = gson.fromJson(rawJsonData, GoogleTickerData.class); // Maps JSON to Class vars 
+		GoogleTickerData tickerDataStore = gson.fromJson(rawJsonData, GoogleTickerData.class);
 		return tickerDataStore;
 	}
 	
@@ -55,8 +66,6 @@ private String ccol;
 	}
 	
 	
-
-
 	/**
 	 * Gets JSON data from Google and cleans it
 	 * @param symbol
@@ -72,8 +81,8 @@ private String ccol;
 		return finalJsonOutput;
 	}
 	
-	static String cleanGoogleJSONdata(String jsonDirtyIN)
-	{
+	
+	static String cleanGoogleJSONdata(String jsonDirtyIN){
 		// Cleans JSON data
 	    String jsonCleanOut = null; // Output variable
 		//<regex vodo>
