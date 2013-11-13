@@ -3,65 +3,69 @@ package jelloeater.StockTicker;
 //import java.io.IOException;
 //import java.util.*;
 
-// This is a basic stock ticker app. It ticks stocks n stuff
+import java.net.*;
+
+// This is a basic stock ticker application. It ticks stocks n stuff
 import javax.swing.JOptionPane; // Just for debugging, actual GUI is in its own class
 
 class App {
 	
 	static boolean debugMode = true; // Controls debug mode
 	
+	/**
+	 * This runs first
+	 * There should be a minimal amount of methods here, and preferably no variables,
+	 * They should be stored in a class
+	 * @param args
+	 * @throws Throwable
+	 */
 	public static void main(String[] args) throws Throwable {
-    	// This runs first
+		// TODO Write update method to loop getting info
     	
 		
-		
-    	// There should be a minimal amount of methods here, and preferably no variables,
-    	// They should be stored in a class
-             
-       
-    	// Settings are something that there should only be one of, no need to make objects.
-    	Settings.setQuoteSource("Google"); // default setting for quote source Google
-    	Settings.setRefreshIntervalSeconds(30); // default interval 30 seconds
-       
+       Settings.setDefaults(); 
        
        Settings.loadSettings();
-       // FIXME Write settings read method
-       
-       
-       // TODO Create proper GUI input
-
-       Settings.setRefreshIntervalSeconds(
-    		   (Integer.parseInt(
-    		   (JOptionPane.showInputDialog("Set Interval", Settings.getRefreshIntervalSeconds()
-    			)))));	//Sets setter with GUI box
-       
-       
-       
-       
-       
-       String[] quoteSourceChoices = { "MarketWatch", "Yahoo", "Google"}; 
-       // Dialog box choices array
-       Settings.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
-           "Choose Quote Source", JOptionPane.QUESTION_MESSAGE, null, 
-           quoteSourceChoices, // Array of choices
-           Settings.getQuoteSource())); // Initial choice
-       
  
+       Settings.setRefreshIntervalSecondsGUI();
+
+       Settings.setQuoteSourceGUI();
+   
+       Settings.saveSettings(); 
+
+       TickerInfo myStock = App.createNewTicker();
+		
        
+       App.displayInfoWindow(myStock);
+       
+       App.updateTicker(myStock);
+       
+       TickerWindow.launchGui(null);    
+    }
+
+	static void updateTicker(TickerInfo myStock) {
+		// FIXME Write update Stock method
+		myStock.getTickerSymbol();
 		
-		Settings.saveSettings(); // TODO Should write on program close
 		
 		
-		// INPUT Section
-		// TODO convert to method
-		
+	}
+
+	static void displayInfoWindow(TickerInfo myStock){
+		JOptionPane.showMessageDialog(null, 
+	    		"Symbol: "+myStock.getTickerSymbol() +"\n"+
+	    		"Price: " +myStock.getPrice() +"\n"+
+	    		"% Change: "+ myStock.getPercentChange()+"%"+"\n"+
+	    		"Price Change: "+ myStock.getPriceChange()
+	    		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
+	}
+	
+	static TickerInfo createNewTicker() throws Throwable
+	{
 		String tickerSymbolInput=null;
-		
-		
-		
-		// STOCK INPUT HERE
 		boolean validSymbolInput = false;
-		while(validSymbolInput=false);{
+		
+		while(validSymbolInput =false);{
 		try {
 			
 			tickerSymbolInput= JOptionPane.showInputDialog("Set Symbol","GOOG");
@@ -69,52 +73,17 @@ class App {
 	    	// Lookup logic is dependent on Settings.quoteSource
 			validSymbolInput=true;
 		} catch (Exception e) {
-			validSymbolInput = false;
+			// validSymbolInput = false;
 			System.err.println("validInput:" + validSymbolInput);
 			System.err.println("Enter a valid symbol");
 			// FIXME: handle exception
 			}
 		}
-
-    	
-		TickerInfo myStock = new TickerInfo(tickerSymbolInput); 
-		//Create ticker info object using symbol, takes input from window
-    	
-
-    	// OUTPUT BELOW!!!
-    	
 		
-		
-		
-		
-   	
-    	JOptionPane.showMessageDialog(null, 
-    		"Symbol: "+myStock.getTickerSymbol() +"\n"+
-    		"Price: " +myStock.getPrice() +"\n"+
-    		"% Change: "+ myStock.getPercentChange()+"%"+"\n"+
-    		"Price Change: "+ myStock.getPriceChange()
-    		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
+		TickerInfo myStock = new TickerInfo(tickerSymbolInput); // Creates object and looks up price
 
-    	
-    	System.err.println("END BREAK");
-    	
-    
-    	
-    	TickerWindow.launchGui(null);
-    	
-    	// TODO End of program breakpoint
-    	
-    	//Display a message dialog box, NULL = No specific position on screen
-    	// TODO Replace with Proper GUI
-    	
-    	// TODO Write update method to loop getting info
-
-    	// TickerWindow.main(null); // Calls Main GUI Window
-    	
-
-        
-    }
-
+		return myStock;
+	}
 }
 
 

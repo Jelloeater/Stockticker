@@ -13,18 +13,21 @@ import com.google.gson.*;
 
 public class GoogleTickerData{
 
+
+private String l;
+private String c;
+private String cp;
+/*//Unused but useful JSON values
 private String id;
 private String t;
 private String e;
-private String l;
 private String l_fix;
 private String l_cur;
 private String s;
 private String ltt;
 private String lt;
-private String c;
-private String cp;
 private String ccol;
+*/
 
 /**
  * Hold all the data from a google based lookup
@@ -60,7 +63,7 @@ private String ccol;
 	 * @return
 	 * @throws IOException
 	 */
-	static String getGoogleJSONfromWeb(String symbol) throws IOException{
+	static String getGoogleJSONfromWeb(String symbol) throws Exception {
 		String url = "http://finance.google.com/finance/info?client=ig&q="+symbol; // URL to lookup
 	    Document document = Jsoup.connect(url).get(); // Pull in dirty JSON data
 	    String jsonDirtyIN = document.select("*").text(); // Gets page text

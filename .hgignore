@@ -1,7 +1,8 @@
 syntax: glob
-.metadata\
-bin\
-gen\
+.metadata
+bin
+gen
+target
 syntax: regexp
 ^settings\.dat$
 syntax: regexp
