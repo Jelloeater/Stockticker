@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
  */
 //TODO Maybe make it an abstract class?
 class TickerInfo {
-	
 		
 	private String symbol;
 	private String price;
@@ -21,34 +20,20 @@ class TickerInfo {
 	private String priceChange;
 	private String rawData;
 	
-	/**Constructor for setting up ticker symbol objects
+	/**
+	 * Constructor for creating up TickerInfo objects
 	* @throws Throwable 
 	* */
-	TickerInfo(String symbolIN) throws Throwable {
-		this.symbol = symbolIN;
-		// TODO Add validation for valid symbol
-		
-		if (Settings.getQuoteSource() == "Google") { 	 
-			 
-			this.rawData = GoogleTickerData.getGoogleJSONfromWeb(symbol); // Gets JSON Data
-			 
-			GoogleTickerData dataStore = new GoogleTickerData(); // Creates dataStore Objects
-			 
-			dataStore=dataStore.mapJsonDataToObject(rawData); // Sends raw data to JSON parser to be converted to object
-			 
-			this.setPrice(dataStore.getPrice()); // Sets value for constructor
-			this.setPercentChange(dataStore.getPercentChange()); // Sets value for constructor
-			this.setPriceChange(dataStore.getPriceChange());// Sets value for constructor	 
-		}
+	public TickerInfo() throws Throwable {
 	}
-
+	
 	/**
-	 *  Opens pop-up text box, takes input from text box and feeds it to the TickerInfo constructor,
+	 *  Opens pop-up text box, takes input from text box and create a new object to pass the update method,
 	 *  then returns a myStock object that can be parsed via getters
 	 * @return myStock
 	 * @throws Throwable
 	 */
-	static TickerInfo createNewTickerGui() throws Throwable{
+	public static TickerInfo createNewTickerGui() throws Throwable{
 		String tickerSymbolInput=null;
 		boolean validSymbolInput = false;
 			
@@ -67,10 +52,12 @@ class TickerInfo {
 				}
 			}
 				
-		TickerInfo myStock = new TickerInfo(tickerSymbolInput);
-
+		TickerInfo myStock = new TickerInfo();
+		myStock.setTickerSymbol(tickerSymbolInput);
+		myStock = TickerInfo.updateTicker(myStock);
 		return myStock;
 	}
+	
 	
 	/**
 	 * Updates TickerInfo objects. Each source will have its own unique flow.
@@ -78,7 +65,7 @@ class TickerInfo {
 	 * @return myStock object with updated data
 	 * @throws Exception
 	 */
-	static TickerInfo updateTicker(TickerInfo myStock) throws Exception {
+	public static TickerInfo updateTicker(TickerInfo myStock) throws Exception {
 		String symbol = myStock.getTickerSymbol();
 		
 		if (Settings.getQuoteSource() == "Google") { 
@@ -94,8 +81,12 @@ class TickerInfo {
 			myStock.setPriceChange(dataStore.getPriceChange());// Sets value for constructor	 
 		}
 			
-		return myStock;	
+		return myStock;		
 	}
+	
+	
+	
+	
 	 
 	// Getters and Setter below
 	public String getTickerSymbol() {
@@ -118,7 +109,9 @@ class TickerInfo {
 		return rawData;
 	}
 
-
+	public void setTickerSymbol(String symbol) {
+		this.symbol = symbol;
+	}
 	public void setPrice(String price) {
 		this.price = price;
 	}
