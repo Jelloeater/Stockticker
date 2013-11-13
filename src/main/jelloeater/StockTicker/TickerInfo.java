@@ -36,35 +36,53 @@ class TickerInfo {
 			 
 			 dataStore=dataStore.mapJsonDataToObject(rawData); // Sends raw data to JSON parser to be converted to object
 			 
-			 this.price = dataStore.getPrice(); // Sets value for constructor
-			 this.percentChange = dataStore.getPercentChange(); // Sets value for constructor
-			 this.priceChange = dataStore.getPriceChange();// Sets value for constructor	 
+			 this.setPrice(dataStore.getPrice()); // Sets value for constructor
+			 this.setPercentChange(dataStore.getPercentChange()); // Sets value for constructor
+			 this.setPriceChange(dataStore.getPriceChange());// Sets value for constructor	 
 		 }
 	 
 		 
 	 }
 
-
+	 
 	// Getters and Setter below
-	public String getTickerSymbol() {
+	 public String getTickerSymbol() {
 		return symbol;
 	}
 	
-	public String getPrice() {
+	 public String getPrice() {
 		return price;
 	}
 	
-	public String getPercentChange() {
+	 public String getPercentChange() {
 		return percentChange;
 	}
 	
-	public String getPriceChange() {
+	 public String getPriceChange() {
 		return priceChange;
 	}
 	
-	public String getRawData() {
+	 public String getRawData() {
 		return rawData;
 	}
+
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+
+	public void setPercentChange(String percentChange) {
+		this.percentChange = percentChange;
+	}
+
+
+	public void setPriceChange(String priceChange) {
+		this.priceChange = priceChange;
+	}
+
+
+	
 
 
 }

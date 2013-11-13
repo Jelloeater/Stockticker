@@ -32,25 +32,25 @@ private String ccol;
 /**
  * Hold all the data from a google based lookup
  */
-	public GoogleTickerData() {
+	GoogleTickerData() {
 	
 	}
 	
-	public GoogleTickerData mapJsonDataToObject(String rawJsonData){// Takes raw JSON data
+	GoogleTickerData mapJsonDataToObject(String rawJsonData){// Takes raw JSON data
 		Gson gson = new Gson(); // Initializes object
 		GoogleTickerData tickerDataStore = gson.fromJson(rawJsonData, GoogleTickerData.class); // Maps JSON to Class vars 
 		return tickerDataStore;
 	}
 	
-	public String getPrice(){
+	String getPrice(){
 		return l;
 	}
 	
-	public String getPercentChange(){
+	String getPercentChange(){
 		return cp;
 	}
 
-	public String getPriceChange() {
+	String getPriceChange() {
 		return c;
 	}
 	

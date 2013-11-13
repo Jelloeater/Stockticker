@@ -60,7 +60,7 @@ class Settings extends App{
 		
 		PrintStream diskWriter = new PrintStream(new File("settings.dat"));
 		
-//		String settingsData =  new JSONObject().put("JSON", "Hello, World!").toString();
+		//String settingsData =  new JSONObject().put("JSON", "Hello, World!").toString();
 		
 		String settingsData = "hi";
 		diskWriter.print (settingsData);
@@ -79,7 +79,7 @@ class Settings extends App{
 	}
 
 
-	public static void setQuoteSourceGUI() {
+	static void setQuoteSourceGUI() {
 		String[] quoteSourceChoices = { "MarketWatch", "Yahoo", "Google"}; 
 	       // Dialog box choices array
 	       Settings.setQuoteSource((String) JOptionPane.showInputDialog(null, null,

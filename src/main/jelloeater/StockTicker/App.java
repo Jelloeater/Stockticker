@@ -3,7 +3,7 @@ package jelloeater.StockTicker;
 //import java.io.IOException;
 //import java.util.*;
 
-import java.net.*;
+// import java.net.*; // To be used for net connection checking
 
 // This is a basic stock ticker application. It ticks stocks n stuff
 import javax.swing.JOptionPane; // Just for debugging, actual GUI is in its own class
@@ -23,31 +23,45 @@ class App {
 		// TODO Write update method to loop getting info
     	
 		
-       Settings.setDefaults(); 
+		Settings.setDefaults(); 
        
-       Settings.loadSettings();
+		Settings.loadSettings();
  
-       Settings.setRefreshIntervalSecondsGUI();
+		Settings.setRefreshIntervalSecondsGUI();
 
-       Settings.setQuoteSourceGUI();
+		Settings.setQuoteSourceGUI();
    
-       Settings.saveSettings(); 
+		Settings.saveSettings(); 
 
-       TickerInfo myStock = App.createNewTicker();
-		
+		TickerInfo myStock = App.createNewTicker(); // Input Window
        
-       App.displayInfoWindow(myStock);
+		App.displayInfoWindow(myStock);// Output Window
        
-       App.updateTicker(myStock);
+		myStock = App.updateTicker(myStock); // Update method
        
-       TickerWindow.launchGui(null);    
+		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!!
     }
 
-	static void updateTicker(TickerInfo myStock) {
-		// FIXME Write update Stock method
-		myStock.getTickerSymbol();
+	static TickerInfo updateTicker(TickerInfo myStock) throws Exception {
+		// TODO find better home for method
+
+		String symbol = myStock.getTickerSymbol();
 		
 		
+		if (Settings.getQuoteSource() == "Google") { 
+			 
+			 
+			String rawData = GoogleTickerData.getGoogleJSONfromWeb(symbol); // Gets JSON Data
+			 
+			GoogleTickerData dataStore = new GoogleTickerData(); // Creates dataStore Objects
+			 
+			dataStore=dataStore.mapJsonDataToObject(rawData); // Sends raw data to JSON parser to be converted to object
+			 
+			myStock.setPrice(dataStore.getPrice()); // Sets value for constructor
+			myStock.setPercentChange(dataStore.getPercentChange()); // Sets value for constructor
+			myStock.setPriceChange(dataStore.getPriceChange());// Sets value for constructor	 
+		 }
+		return myStock;
 		
 	}
 

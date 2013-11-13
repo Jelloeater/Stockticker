@@ -68,7 +68,9 @@ class TickerWindow extends App{
 		mainWindow.getContentPane().add(btnNewButton, "cell 0 1,alignx right,aligny bottom");
 	}
 
-	
+	/**
+	 * Sets look and feel to system default
+	 */
 	static void setLookAndFeel(){
 		try {
 	        // Set System L&F
