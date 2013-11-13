@@ -14,7 +14,7 @@ import org.jsoup.nodes.Document;
 import org.junit.Test;
 
 
-public class UnitTests{
+public class GoogleTickerDataTest{
 	
 	public static String readFile(String pathname) throws IOException {
 
@@ -33,25 +33,12 @@ public class UnitTests{
 	    }
 	}
 
-	@Test
-	public void testAppOnline() throws Throwable { //FIXME Is the parser broken? Needs to be online
-		
 
-		Settings.setQuoteSource("Google");
-		String tickerSymbolInput = "GOOG";
-		TickerInfo myStock = new TickerInfo(tickerSymbolInput); //Create ticker info object using symbol
-		
-
-		String outputPrice = UnitTests.oldOnlineGoogleWebRegexParser("GOOG");
-		String correctValue = myStock.getPrice();
-		assertTrue(null, outputPrice.equals(correctValue));		
-		
-	}
-	
 	@Test
-	public void testAppOffline() throws Throwable { // Is the parser broken? 
+	public void testGoogleJsonParser() throws Throwable { // Is the parser broken?
+		//Assumes client is online
 		
-		String dirtyQuertyString= readFile("src/test/jelloeater/StockTicker/rawJsonDataForTesting.txt"); 
+		String dirtyQuertyString= readFile("src/test/jelloeater/StockTicker/rawJsonDataForTesting.txt"); // Reads raw file to string
 		// It's a mess to try storing it in software, JSON has lots of escape characters that makes java throw up
 		String rawQuertyString = GoogleTickerData.cleanGoogleJSONdata(dirtyQuertyString);
         
@@ -62,12 +49,9 @@ public class UnitTests{
 		
 		
 
-		String regexOutputPrice = UnitTests.oldOfflineGoogleWebRegexParser(rawQuertyString);
+		String regexOutputPrice = GoogleTickerDataTest.oldOfflineGoogleWebRegexParser(rawQuertyString);
 		
-		assertTrue(null, regexOutputPrice.equals(correctValue));	
-		
-		
-		
+		assertTrue(null, regexOutputPrice.equals(correctValue));		
 	}
 	
 	

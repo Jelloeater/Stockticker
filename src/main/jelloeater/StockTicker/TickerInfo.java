@@ -67,12 +67,17 @@ class TickerInfo {
 				}
 			}
 				
-		TickerInfo myStock = new TickerInfo(tickerSymbolInput); 
+		TickerInfo myStock = new TickerInfo(tickerSymbolInput);
 
 		return myStock;
 	}
 	
-	
+	/**
+	 * Updates TickerInfo objects. Each source will have its own unique flow.
+	 * @param myStock
+	 * @return myStock object with updated data
+	 * @throws Exception
+	 */
 	static TickerInfo updateTicker(TickerInfo myStock) throws Exception {
 		String symbol = myStock.getTickerSymbol();
 		

@@ -14,6 +14,7 @@ import com.google.gson.*;
 /**
  * Holds methods to be used by TickerInfo
  * Specific to mapping Google supplied JSON data
+ * It is a helper class
  * @see TickerInfo
  * @author Jesse
  *
@@ -42,7 +43,8 @@ private String ccol;
 	}
 	
 	/**
-	 * Maps JSON data to Google Ticker object using Gson library
+	 * Maps JSON data to Google Ticker object using Gson library.
+	 * Uses private class variable names to make the map
 	 * 
 	 * @param rawJsonData
 	 * @return tickerDataStore 
