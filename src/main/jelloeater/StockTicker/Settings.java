@@ -43,18 +43,14 @@ class Settings extends App{
       return singletonRef;
     }
 
-    
-	
-	
-	
+	/** Sets defaults for settings */
 	private void setDefaults(){
 		setQuoteSource("Google"); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
 	}
 	
 	
-	int getRefreshIntervalSeconds() { // Gets private refresh interval
-		
+	int getRefreshIntervalSeconds() {	
 		return refreshIntervalSeconds;
 	}
 
@@ -82,44 +78,41 @@ class Settings extends App{
 	void saveSettings() throws FileNotFoundException {
 		// TODO Should write on program close also
 			
-		PrintStream diskWriter = new PrintStream(new File("settings.cfg")); // Makes new file and assigns object
+		PrintStream diskWriter = new PrintStream(new File("settings.cfg")); // Makes new file / overwrites and assigns object
 		
 		Gson gson = new Gson(); // Initializes object
-		
-		
 		
 		String settingsData = gson.toJson(settingsProperties); // Takes static object variables and converts them
 		
 		diskWriter.print (settingsData); // Writes string to file
 		diskWriter.close();	// Closes process
-		if (debugMode = true )System.err.println("BRAKE");
 	}
 
-	void loadSettings() throws FileNotFoundException {
-		// Reads settings from disk
-		// FIXME Write settings read method
-
-		
+	/**Reads settings from config file 
+	 * @throws IOException 
+	 */
+	void loadSettings() throws IOException {
+	
 		File config = new File("settings.cfg");
 		 
 		  if(config.exists()){
+			  // FIXME Throws error :(
+			  
+			  PrintStream diskReaderInput = new PrintStream(readFile("settings.cfg"));
+			  String diskReaderData = diskReaderInput.toString();
+			  
+			  Gson gson = new Gson(); // Initializes object
+			  
+			  settingsProperties = gson.fromJson(diskReaderData, Settings.class);
+			  
+			  diskReaderInput.close();
 			  
 			  
-			  
-			  /* Just an idea
-			  Scanner fileParser = new Scanner("settings.cfg");
-				
-				fileParser.next();
-				fileParser.close();
-			  */
-			  
-			  // load the settings
-			  if (debugMode= true)System.err.println("loadSettings if");
-		  }else{
+
+		  }else{ // load the settings
 			  settingsProperties.setDefaults();
 			  settingsProperties.saveSettings();
-			  if (debugMode= true)System.err.println("loadSettings Else");
-			  //JOptionPane.showInternalMessageDialog(null, "Config missing, defaults set.");
+			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.");
 		  }	
 	}
 	

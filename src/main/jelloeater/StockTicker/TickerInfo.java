@@ -83,11 +83,8 @@ class TickerInfo extends App{
 		return myStock;		
 	}
 	
-	
-	
-	
 	 
-	// Getters and Setter below
+	// Getters and Setters below
 	public String getTickerSymbol() {
 		return symbol;
 	}
@@ -124,9 +121,6 @@ class TickerInfo extends App{
 	public void setPriceChange(String priceChange) {
 		this.priceChange = priceChange;
 	}
-
-
-	
 
 
 }
