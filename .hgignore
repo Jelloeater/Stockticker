@@ -7,3 +7,6 @@ syntax: regexp
 ^settings\.dat$
 syntax: regexp
 ^miglayout-src\.zip$
+
+syntax: regexp
+^settings\.cfg$

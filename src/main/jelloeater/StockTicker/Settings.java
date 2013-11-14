@@ -9,83 +9,126 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import com.google.gson.Gson;
+
 
  /**
- This class holds all the settings of the application, no need for objects, we don't need multiple versions.
- HOWEVER, Settings are dependent throughout the program, they are private so we can sanitize data
- Settings are something that there should only be one of, no need to make objects.
+ This class allows us to manipulate any settings objects we create.
+ Settings are dependent throughout the program, they are private so we can sanitize data
+ Settings are something that there should only be one of, no need to make more then one object container in the main App class.
+ It is "OBJECT Oriented Programming" after all.
+ Rather then having to pass multiple values through getters, we can just pass the "bag" object
  @method
  {@link saveSettings}
  */
 class Settings extends App{
 
-
-	private static int refreshIntervalSeconds;
-	private static String quoteSource;
+	private int refreshIntervalSeconds;
+	private String quoteSource;
 	
-	static void setDefaults(){
-		Settings.setQuoteSource("Google"); // default setting for quote source Google
-    	Settings.setRefreshIntervalSeconds(30); // default interval 30 seconds
+	Settings(){
+		setDefaults();
+	}
+	
+	private void setDefaults(){
+		setQuoteSource("Google"); // default setting for quote source Google
+    	setRefreshIntervalSeconds(30); // default interval 30 seconds
 	}
 	
 	
-	static int getRefreshIntervalSeconds() { // Gets private refresh interval
+	int getRefreshIntervalSeconds() { // Gets private refresh interval
 		
 		return refreshIntervalSeconds;
 	}
 
 
-	static void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
+	void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
 		// TODO Add try and catch for int
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
 	
-	static void setRefreshIntervalSecondsGUI(){
-		int refreshIntervalSecondsIN = Integer.parseInt( (JOptionPane.showInputDialog("Set Interval", Settings.getRefreshIntervalSeconds())));
+	void setRefreshIntervalSecondsGUI(){
+		int refreshIntervalSecondsIN = Integer.parseInt( (JOptionPane.showInputDialog("Set Interval", getRefreshIntervalSeconds())));
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
 
-	static String getQuoteSource() {
+	String getQuoteSource() {
 		return quoteSource;
 	}
 
 
-	static void setQuoteSource(String quoteSourceIN) {
+	void setQuoteSource(String quoteSourceIN) {
 		quoteSource = quoteSourceIN;
 	}
 	
 	/**Writes settings to file in JSON*/
-	static void saveSettings() throws FileNotFoundException {
-		// TODO Should write on program close
+	void saveSettings() throws FileNotFoundException {
+		// TODO Should write on program close also
+			
+		PrintStream diskWriter = new PrintStream(new File("settings.cfg")); // Makes new file and assigns object
 		
-		PrintStream diskWriter = new PrintStream(new File("settings.dat"));
+		Gson gson = new Gson(); // Initializes object
 		
-		//String settingsData =  new JSONObject().put("JSON", "Hello, World!").toString();
 		
-		String settingsData = "hi";
-		diskWriter.print (settingsData);
-		diskWriter.close();
 		
+		String settingsData = gson.toJson(settingsProperties); // Takes static object variables and converts them
+		
+		diskWriter.print (settingsData); // Writes string to file
+		diskWriter.close();	// Closes process
+		if (debugMode = true )System.err.println("BRAKE");
 	}
 
-	static void loadSettings() throws FileNotFoundException {
+	void loadSettings() throws FileNotFoundException {
 		// Reads settings from disk
 		// FIXME Write settings read method
+
 		
-		Scanner fileParser = new Scanner("settings.dat");
+		File config = new File("settings.cfg");
+		 
+		  if(config.exists()){
+			  
+			  
+			  
+			  /* Just an idea
+			  Scanner fileParser = new Scanner("settings.cfg");
+				
+				fileParser.next();
+				fileParser.close();
+			  */
+			  
+			  // load the settings
+			  if (debugMode= true)System.err.println("loadSettings if");
+		  }else{
+			  settingsProperties.setDefaults();
+			  settingsProperties.saveSettings();
+			  if (debugMode= true)System.err.println("loadSettings Else");
+			  //JOptionPane.showInternalMessageDialog(null, "Config missing, defaults set.");
+		  }	
+	}
+	
+	
+	
+	void deleteSettingsFile(){
+		int option = JOptionPane.showConfirmDialog(null, "Delete settings", null, 2);
 		
-		fileParser.next();
-		fileParser.close();
+		switch (option) {
+		case 0:
+			File file = new File("settings.cfg");
+			file.delete();
+			JOptionPane.showMessageDialog(null, "Settings deleted");
+			break;
+		default:
+			break;
+		}
 	}
 
-
-	static void setQuoteSourceGUI() {
+	void setQuoteSourceGUI() {
 		String[] quoteSourceChoices = { "MarketWatch", "Yahoo", "Google"}; 
 	       // Dialog box choices array
-	       Settings.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
+		settingsProperties.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
 	           "Choose Quote Source", JOptionPane.QUESTION_MESSAGE, null, 
 	           quoteSourceChoices, // Array of choices
-	           Settings.getQuoteSource())); // Initial choice	
+	           settingsProperties.getQuoteSource())); // Initial choice	
 	}
 
 

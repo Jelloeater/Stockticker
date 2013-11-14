@@ -3,8 +3,7 @@ package jelloeater.StockTicker;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+
 import javax.swing.JTextPane;
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
@@ -20,7 +19,6 @@ class TickerWindow extends App{
 	 * Launch the application.
 	 */
 	static void launchGui(String[] args) {
-		TickerWindow.setLookAndFeel(); // Sets look and feel
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -68,27 +66,6 @@ class TickerWindow extends App{
 		mainWindow.getContentPane().add(btnNewButton, "cell 0 1,alignx right,aligny bottom");
 	}
 
-	/**
-	 * Sets look and feel to system default
-	 */
-	static void setLookAndFeel(){
-		try {
-	        // Set System L&F
-	        UIManager.setLookAndFeel(
-	            UIManager.getSystemLookAndFeelClassName());
-	    } 
-	    catch (UnsupportedLookAndFeelException e) {
-	       // handle exception
-	    }
-	    catch (ClassNotFoundException e) {
-	       // handle exception
-	    }
-	    catch (InstantiationException e) {
-	       // handle exception
-	    }
-	    catch (IllegalAccessException e) {
-	       // handle exception
-	    }
-	}
+	
 }
 

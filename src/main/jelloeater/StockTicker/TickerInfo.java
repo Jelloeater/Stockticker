@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  *
  */
 //TODO Maybe make it an abstract class?
-class TickerInfo {
+class TickerInfo extends App{
 		
 	private String symbol;
 	private String price;
@@ -36,7 +36,6 @@ class TickerInfo {
 	public static TickerInfo createNewTickerGui() throws Throwable{
 		String tickerSymbolInput=null;
 		boolean validSymbolInput = false;
-			
 		while(validSymbolInput =false);{
 			try {
 				
@@ -68,7 +67,7 @@ class TickerInfo {
 	public static TickerInfo updateTicker(TickerInfo myStock) throws Exception {
 		String symbol = myStock.getTickerSymbol();
 		
-		if (Settings.getQuoteSource() == "Google") { 
+		if (settingsProperties.getQuoteSource() == "Google") { 
 			 
 			String rawData = GoogleTickerData.getGoogleJSONfromWeb(symbol); // Gets JSON Data
 			 

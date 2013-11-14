@@ -52,6 +52,7 @@ private String ccol;
 	GoogleTickerData mapJsonDataToObject(String rawJsonData){// Takes raw JSON data
 		Gson gson = new Gson(); // Initializes object
 		GoogleTickerData tickerDataStore = gson.fromJson(rawJsonData, GoogleTickerData.class);
+		
 		return tickerDataStore;
 	}
 	

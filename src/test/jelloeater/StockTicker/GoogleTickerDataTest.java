@@ -2,11 +2,11 @@ package jelloeater.StockTicker;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
+//import java.io.File;
 
 import java.io.IOException;
 
-import java.util.Scanner;
+//import java.util.Scanner;
 import java.util.regex.*;
 
 import org.jsoup.Jsoup;
@@ -16,29 +16,11 @@ import org.junit.Test;
 
 public class GoogleTickerDataTest{
 	
-	public static String readFile(String pathname) throws IOException {
-
-	    File file = new File(pathname);
-	    StringBuilder fileContents = new StringBuilder((int)file.length());
-	    Scanner scanner = new Scanner(file);
-	    String lineSeparator = System.getProperty("line.separator");
-
-	    try {
-	        while(scanner.hasNextLine()) {        
-	            fileContents.append(scanner.nextLine() + lineSeparator);
-	        }
-	        return fileContents.toString();
-	    } finally {
-	        scanner.close();
-	    }
-	}
-
-
 	@Test
 	public void testGoogleJsonParser() throws Throwable { // Is the parser broken?
 		//Assumes client is online
-		
-		String dirtyQuertyString= readFile("src/test/jelloeater/StockTicker/rawJsonDataForTesting.txt"); // Reads raw file to string
+	
+		String dirtyQuertyString= App.readFile("src/test/jelloeater/StockTicker/rawJsonDataForTesting.txt"); // Reads raw file to string
 		// It's a mess to try storing it in software, JSON has lots of escape characters that makes java throw up
 		String rawQuertyString = GoogleTickerData.cleanGoogleJSONdata(dirtyQuertyString);
         
@@ -51,7 +33,7 @@ public class GoogleTickerDataTest{
 
 		String regexOutputPrice = GoogleTickerDataTest.oldOfflineGoogleWebRegexParser(rawQuertyString);
 		
-		assertTrue(null, regexOutputPrice.equals(correctValue));		
+		assertTrue(null, regexOutputPrice.equals(correctValue));
 	}
 	
 	

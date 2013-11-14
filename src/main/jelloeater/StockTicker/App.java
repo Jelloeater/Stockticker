@@ -5,12 +5,28 @@ package jelloeater.StockTicker;
 
 // import java.net.*; // To be used for net connection checking
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
+//import javax.imageio.ImageIO;
 // This is a basic stock ticker application. It ticks stocks n stuff
-import javax.swing.JOptionPane; // Just for debugging, actual GUI is in its own class
+import javax.swing.JOptionPane; // For pop-ups
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 
 class App {
 	
-	static boolean debugMode = true; // Controls debug mode
+	/**
+	 * Debug flag
+	 */
+	static boolean debugMode = true;
+	/**
+	 * Holds all the settings for the application
+	 */
+	static Settings settingsProperties = new Settings();
+	
 	
 	/**
 	 * This runs first
@@ -21,20 +37,13 @@ class App {
 	 */
 	public static void main(String[] args) throws Throwable {
 		// TODO Write update method to loop getting info
-    	
+		// TODO IDEA Get Symbols from JSON, load into ArrayList?
 		
-		Settings.setDefaults(); 
-       
-		Settings.loadSettings();
- 
-		Settings.setRefreshIntervalSecondsGUI();
-
-		Settings.setQuoteSourceGUI();
-   
-		Settings.saveSettings(); 
-
+		App.setLookAndFeel(); // Sets look and feel
 		
-		
+				
+		settingsProperties.loadSettings();
+			
 		TickerInfo myStock = TickerInfo.createNewTickerGui(); // Input Window
 		App.displayGuiInfoWindow(myStock);// Output Window
 		
@@ -43,10 +52,11 @@ class App {
        
 		myStock = TickerInfo.updateTicker(myStock); // Update method
 		
-		
-		
        
 		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!!
+		settingsProperties.saveSettings();  // should run on exit
+		if (debugMode=true) settingsProperties.deleteSettingsFile();
+		if (debugMode= true )System.err.println("Brake");
     }
 
 	
@@ -64,26 +74,50 @@ class App {
 	    		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
 	}
 	
+	public static String readFile(String pathname) throws IOException {
+
+	    File file = new File(pathname);
+	    StringBuilder fileContents = new StringBuilder((int)file.length());
+	    Scanner scanner = new Scanner(file);
+	    String lineSeparator = System.getProperty("line.separator");
+
+	    try {
+	        while(scanner.hasNextLine()) {        
+	            fileContents.append(scanner.nextLine() + lineSeparator);
+	        }
+	        return fileContents.toString();
+	    } finally {
+	        scanner.close();
+	    }
+	}
 	
+	
+	
+	/**
+	 * Sets look and feel to system default
+	 */
+	static void setLookAndFeel(){
+		try {
+	        // Set System L&F
+	        UIManager.setLookAndFeel(
+	            UIManager.getSystemLookAndFeelClassName());
+	    } 
+	    catch (UnsupportedLookAndFeelException e) {
+	       // handle exception
+	    }
+	    catch (ClassNotFoundException e) {
+	       // handle exception
+	    }
+	    catch (InstantiationException e) {
+	       // handle exception
+	    }
+	    catch (IllegalAccessException e) {
+	       // handle exception
+	    }
+	}
+	
+	
+	
+// End of the line pal	
 }
-
-
-
-
-
-/*
-int refreshInterval = Settings.getInterval(); // Gets refresh time for list from XML settings file to display in GUI
-String quoteSource = Settings.getQuoteSource(); // Gets quote source from XML settings file
-// TODO IDEA Get Symbols from XML, load into ArrayList?
-*/
-
-
-
-
-
-
-//    	System.out.println("Type your symbol"); // Basic console IO
-//    	Scanner myScanner2 = new Scanner(System.in); // System.in is an InputStream
-//    	myStock.setTickerSymbol(myScanner2.nextLine()); // Setting ticker with user input
-//    	myScanner2.close(); //Closes Scanner Stream
-
+	
