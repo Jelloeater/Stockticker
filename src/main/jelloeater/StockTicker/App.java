@@ -23,9 +23,10 @@ class App {
 	 */
 	static boolean debugMode = true;
 	/**
-	 * Holds all the settings for the application
+	 * Holds all the settings for the application in a singleton object
+	 * You can try and make another, but it won't let you
 	 */
-	static Settings settingsProperties = new Settings();
+	 static Settings settingsProperties = Settings.makeSingleton();
 	
 	
 	/**

@@ -22,13 +22,30 @@ import com.google.gson.Gson;
  {@link saveSettings}
  */
 class Settings extends App{
-
+	
 	private int refreshIntervalSeconds;
 	private String quoteSource;
+	private static Settings singletonRef; // This stores the state of the singleton, and block additional ones from being created
 	
-	Settings(){
+	private Settings(){ // You can't access the constructor
 		setDefaults();
 	}
+	/**
+	 * We set up the singleton with this
+	 * Sets up singleton
+	 * We can only do this once, hence the name
+	 * We can call this our constructor
+	 * @return
+	 */
+	public static Settings makeSingleton() {
+      if (singletonRef == null)
+          singletonRef = new Settings();
+      return singletonRef;
+    }
+
+    
+	
+	
 	
 	private void setDefaults(){
 		setQuoteSource("Google"); // default setting for quote source Google
