@@ -14,11 +14,13 @@ import org.jsoup.nodes.Document;
 import org.junit.Test;
 
 
-public class GoogleTickerDataTest{
+public class GoogleTickerDataTest extends App{
 	
 	@Test
 	public void testGoogleJsonParser() throws Throwable { // Is the parser broken?
 		//Assumes client is online
+		App.setLookAndFeel();
+		debugMode= true;
 	
 		String dirtyQuertyString= App.readFile("src/test/jelloeater/StockTicker/rawJsonDataForTesting.txt"); // Reads raw file to string
 		// It's a mess to try storing it in software, JSON has lots of escape characters that makes java throw up

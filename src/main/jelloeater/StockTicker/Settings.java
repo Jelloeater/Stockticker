@@ -75,10 +75,16 @@ class Settings extends App{
 	}
 	
 	/**Writes settings to file in JSON*/
-	void saveSettings() throws FileNotFoundException {
+	void saveSettings(){
 		// TODO Should write on program close also
 			
-		PrintStream diskWriter = new PrintStream(new File("settings.cfg")); // Makes new file / overwrites and assigns object
+		PrintStream diskWriter = null;
+		try {
+			diskWriter = new PrintStream(new File("settings.cfg"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Makes new file / overwrites and assigns object
 		
 		Gson gson = new Gson(); // Initializes object
 		
@@ -91,24 +97,28 @@ class Settings extends App{
 	/**Reads settings from config file 
 	 * @throws IOException 
 	 */
-	void loadSettings() throws IOException {
+	void loadSettings(){
 	
 		File config = new File("settings.cfg");
 		 
 		  if(config.exists()){
 			  // FIXME Throws error :(
 			  
-			  PrintStream diskReaderInput = new PrintStream(readFile("settings.cfg"));
-			  String diskReaderData = diskReaderInput.toString();
+			  PrintStream diskReaderInput = null;
+			try {
+				diskReaderInput = new PrintStream(readFile("settings.cfg"));
+				String diskReaderData = diskReaderInput.toString();
+				  
+				  Gson gson = new Gson(); // Initializes object
+				  
+				  settingsProperties = gson.fromJson(diskReaderData, Settings.class);
+				  
+				  diskReaderInput.close();
+			} catch (IOException  e) {
+				// TODO Auto-generated catch block
+				if (debugMode=true)e.printStackTrace();
+			}
 			  
-			  Gson gson = new Gson(); // Initializes object
-			  
-			  settingsProperties = gson.fromJson(diskReaderData, Settings.class);
-			  
-			  diskReaderInput.close();
-			  
-			  
-
 		  }else{ // load the settings
 			  settingsProperties.setDefaults();
 			  settingsProperties.saveSettings();

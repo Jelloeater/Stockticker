@@ -4,11 +4,18 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class SaveSettings {
+public class SaveSettings extends App{
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+	public void testNoFile() {
+		App.setLookAndFeel();
+		debugMode= true;
+		
+		settingsProperties.deleteSettingsFile();
+		settingsProperties.saveSettings();
+		settingsProperties.loadSettings();
+		
+		assertNotNull(settingsProperties);
+	}	
 
 }

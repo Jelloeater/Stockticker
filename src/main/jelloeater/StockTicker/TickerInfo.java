@@ -30,30 +30,26 @@ class TickerInfo extends App{
 	/**
 	 *  Opens pop-up text box, takes input from text box and create a new object to pass the update method,
 	 *  then returns a myStock object that can be parsed via getters
+	 *  Lookup logic is dependent on Settings.quoteSource
 	 * @return myStock
 	 * @throws Throwable
 	 */
-	public static TickerInfo createNewTickerGui() throws Throwable{
+	public static TickerInfo createNewTickerGui(){
 		String tickerSymbolInput=null;
-		boolean validSymbolInput = false;
-		while(validSymbolInput =false);{
-			try {
+		TickerInfo myStock = null;
+		// FIXME: handle exception for no Internet access
 				
-				tickerSymbolInput= JOptionPane.showInputDialog("Set Symbol","GOOG");
-				
-		    	// Lookup logic is dependent on Settings.quoteSource
-				validSymbolInput=true;
-			} catch (Exception e) {
-				// validSymbolInput = false;
-				System.err.println("validInput:" + validSymbolInput);
-				System.err.println("Enter a valid symbol");
-				// FIXME: handle exception
-				}
-			}
-				
-		TickerInfo myStock = new TickerInfo();
-		myStock.setTickerSymbol(tickerSymbolInput);
-		myStock = TickerInfo.updateTicker(myStock);
+		tickerSymbolInput= JOptionPane.showInputDialog("Set Symbol","GOOG");
+
+		try {
+			myStock = new TickerInfo();
+			myStock.setTickerSymbol(tickerSymbolInput);
+			myStock = TickerInfo.updateTicker(myStock);
+			
+		} catch (Throwable e) {
+			if (debugMode=true)e.printStackTrace();
+		}
+		
 		return myStock;
 	}
 	
