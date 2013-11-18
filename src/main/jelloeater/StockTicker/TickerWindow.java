@@ -113,11 +113,6 @@ class TickerWindow extends App{
 			mnHelp.add(separator_1);
 			
 			JMenuItem mntmAbout = new JMenuItem("About");
-			mntmAbout.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					JOptionPane.showMessageDialog(null, "Created by Jesse Schoepfer /n Some stuff", "About", 2);
-				}
-			});
 			mnHelp.add(mntmAbout);
 	}
 

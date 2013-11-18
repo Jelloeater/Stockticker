@@ -44,7 +44,8 @@ class Settings extends App{
 
 	/** Sets defaults for settings */
 	void setDefaults(){
-		deleteSettingsFile(configFilePath);
+		// FIXME WTF is this causing a NULL POINTER exception?
+		//deleteSettingsFile(configFilePath); // FUCK YOUUUUUUUUU
 		setQuoteSource("Google"); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
 	}

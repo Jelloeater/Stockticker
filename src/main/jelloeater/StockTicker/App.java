@@ -50,8 +50,9 @@ class App {
 		App.setLookAndFeel(); // Sets look and feel
 	
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
-
+		
 		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!!
+		
 		
 		
 		/*
@@ -61,7 +62,7 @@ class App {
        
 		
 		
-		
+		JOptionPane.showMessageDialog(null, "Created by Jesse Schoepfer /n Some stuff", "About", 2);
 		if (debugMode= true )System.err.println("Brake");
 		
 		// END OF THE LINE
