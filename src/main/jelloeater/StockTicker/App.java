@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
 //import javax.imageio.ImageIO;
 // This is a basic stock ticker application. It ticks stocks n stuff
 import javax.swing.JOptionPane; // For pop-ups
@@ -55,6 +56,7 @@ class App {
 		
 		
 		
+		
 		/*
 		App.displayGuiInfoWindow(myStock);// Output Window
 		myStock = TickerInfo.updateTicker(myStock); // Update method
@@ -62,15 +64,11 @@ class App {
        
 		
 		
-		JOptionPane.showMessageDialog(null, "Created by Jesse Schoepfer /n Some stuff", "About", 2);
+		
 		if (debugMode= true )System.err.println("Brake");
 		
 		// END OF THE LINE
     }
-	
-	static void exitApp(){
-		settingsProperties.saveSettings(configFilePath);
-	}
 	
 	static void addStockToList(){
 		TickerInfo myStock = TickerInfo.createNewTickerGui(); // Input Window
@@ -138,6 +136,16 @@ class App {
 	    catch (IllegalAccessException e) {
 	       // handle exception
 	    }
+	}
+
+	public static int shutdown() {
+		// TODO Auto-generated method stub
+		settingsProperties.saveSettings(configFilePath);
+		System.err.println("we are shuting down now!");
+		System.exit(0);
+		return 0;
+		
+		
 	}
 	
 	
