@@ -14,6 +14,4 @@ Just open in Eclipse.
 
 Jenkins would be cool, but it costs $, and I don't feel like running a server out of my bedroom.
 
-If you want to fork, feel free. But don't change money for this application. 
-
-It is private, but should stay free.
+If you want to fork, feel free. But don't change money for this application. It is private, but should stay free.

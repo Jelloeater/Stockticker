@@ -7,6 +7,7 @@ package jelloeater.StockTicker;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //import javax.imageio.ImageIO;
@@ -27,8 +28,14 @@ class App {
 	 * You can try and make another, but it won't let you
 	 */
 	 static Settings settingsProperties = Settings.makeSingleton();
+	 
+	 /** Global configuration file path, used for various settings operations*/
+	 static String configFilePath = "settings.cfg";
 	
 	
+	 static ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
+
+
 	/**
 	 * This runs first
 	 * There should be a minimal amount of methods here, and preferably no variables,
@@ -41,26 +48,44 @@ class App {
 		// TODO IDEA Get Symbols from JSON, load into ArrayList?
 		
 		App.setLookAndFeel(); // Sets look and feel
+	
+		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
-				
-		settingsProperties.loadSettings();
-			
-		TickerInfo myStock = TickerInfo.createNewTickerGui(); // Input Window
+
+		settingsProperties.setQuoteSourceGUI(); // TODO Add to settings menu
+		settingsProperties.setRefreshIntervalSecondsGUI(); // TODO Add to settings menu
+		
+		App.addStockToList();
+		
+		
+		
+		
+		
+		/*
 		App.displayGuiInfoWindow(myStock);// Output Window
-		
-		TickerInfo myStock2 = TickerInfo.createNewTickerGui(); // Input Window 
-		App.displayGuiInfoWindow(myStock2);// Output Window
-       
 		myStock = TickerInfo.updateTicker(myStock); // Update method
-		
+		*/
        
-		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!!
-		settingsProperties.saveSettings();  // should run on exit
-		if (debugMode=true) settingsProperties.deleteSettingsFile();
+		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!!
+		
+		
+		
+		
+		settingsProperties.saveSettings(configFilePath);  // should run on exit [WORKS]
+		
+		if (debugMode=true) settingsProperties.deleteSettingsFile(configFilePath);
 		if (debugMode= true )System.err.println("Brake");
+		
+		// END OF THE LINE
     }
 
-	
+	static void addStockToList(){
+		TickerInfo myStock = TickerInfo.createNewTickerGui(); // Input Window
+		
+		tickerList.add(myStock);
+		
+		tickerList.set(0, myStock);
+	}
 
 	/**
 	 * Pop-up window that displays data from myStock Object
@@ -75,6 +100,12 @@ class App {
 	    		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
 	}
 	
+	/**
+	 * Just a handy method for reading text files to strings
+	 * @param pathname
+	 * @return String
+	 * @throws IOException
+	 */
 	public static String readFile(String pathname) throws IOException {
 
 	    File file = new File(pathname);
@@ -91,7 +122,6 @@ class App {
 	        scanner.close();
 	    }
 	}
-	
 	
 	
 	/**
@@ -118,7 +148,5 @@ class App {
 	}
 	
 	
-	
-// End of the line pal	
 }
 	

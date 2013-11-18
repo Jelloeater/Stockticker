@@ -5,7 +5,7 @@ package jelloeater.StockTicker;
 
 import java.io.*;
 //import java.util.Map;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -61,10 +61,19 @@ class Settings extends App{
 	}
 	
 	void setRefreshIntervalSecondsGUI(){
-		int refreshIntervalSecondsIN = Integer.parseInt( (JOptionPane.showInputDialog("Set Interval", getRefreshIntervalSeconds())));
-		refreshIntervalSeconds = refreshIntervalSecondsIN;
+		String refreshIntervalSecondsIN = JOptionPane.showInputDialog("Set Interval", settingsProperties.getRefreshIntervalSeconds());
+		refreshIntervalSeconds = Integer.parseInt(refreshIntervalSecondsIN);
 	}
-
+	
+	void setQuoteSourceGUI() {
+		String[] quoteSourceChoices = { "MarketWatch", "Yahoo", "Google"}; // Dialog box choices array
+	       
+		settingsProperties.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
+	           "Choose Quote Source", JOptionPane.QUESTION_MESSAGE, null, 
+	           quoteSourceChoices, // Array of choices
+	           settingsProperties.getQuoteSource())); // Initial choice	
+	}
+	
 	String getQuoteSource() {
 		return quoteSource;
 	}
@@ -74,13 +83,16 @@ class Settings extends App{
 		quoteSource = quoteSourceIN;
 	}
 	
-	/**Writes settings to file in JSON*/
-	void saveSettings(){
+	/**
+	 * Writes the App singleton settingsProperties to the specified configuration file path
+	 * @param configFileName
+	 */
+	void saveSettings(String configFileName){
 		// TODO Should write on program close also
 			
 		PrintStream diskWriter = null;
 		try {
-			diskWriter = new PrintStream(new File("settings.cfg"));
+			diskWriter = new PrintStream(new File(configFileName));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,46 +106,45 @@ class Settings extends App{
 		diskWriter.close();	// Closes process
 	}
 
-	/**Reads settings from config file 
+	/**Reads settings from configuration file and copies them to the singleton in App class
 	 * @throws IOException 
 	 */
-	void loadSettings(){
+	void loadSettings(String configFileName){
 	
-		File config = new File("settings.cfg");
+		File config = new File(configFileName);
 		 
 		  if(config.exists()){
 			  // FIXME Throws error :(
 			  
-			  PrintStream diskReaderInput = null;
+	
 			try {
-				diskReaderInput = new PrintStream(readFile("settings.cfg"));
-				String diskReaderData = diskReaderInput.toString();
+				String diskReaderInput = App.readFile(configFileName);
 				  
 				  Gson gson = new Gson(); // Initializes object
 				  
-				  settingsProperties = gson.fromJson(diskReaderData, Settings.class);
+				  settingsProperties = gson.fromJson(diskReaderInput, Settings.class);
 				  
-				  diskReaderInput.close();
 			} catch (IOException  e) {
 				// TODO Auto-generated catch block
 				if (debugMode=true)e.printStackTrace();
 			}
 			  
-		  }else{ // load the settings
+		  }else{ // load the settings fail safe, this is in case the file path is set wrong
 			  settingsProperties.setDefaults();
-			  settingsProperties.saveSettings();
+			  settingsProperties.saveSettings("settings.cfg");
+			  App.configFilePath = "settings.cfg";
 			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.");
 		  }	
 	}
 	
 	
 	
-	void deleteSettingsFile(){
+	void deleteSettingsFile(String configFilePath){
 		int option = JOptionPane.showConfirmDialog(null, "Delete settings", null, 2);
 		
 		switch (option) {
 		case 0:
-			File file = new File("settings.cfg");
+			File file = new File(configFilePath);
 			file.delete();
 			JOptionPane.showMessageDialog(null, "Settings deleted");
 			break;
@@ -142,14 +153,7 @@ class Settings extends App{
 		}
 	}
 
-	void setQuoteSourceGUI() {
-		String[] quoteSourceChoices = { "MarketWatch", "Yahoo", "Google"}; 
-	       // Dialog box choices array
-		settingsProperties.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
-	           "Choose Quote Source", JOptionPane.QUESTION_MESSAGE, null, 
-	           quoteSourceChoices, // Array of choices
-	           settingsProperties.getQuoteSource())); // Initial choice	
-	}
+	
 
 
 	

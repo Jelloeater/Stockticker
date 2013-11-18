@@ -11,9 +11,9 @@ public class SaveSettings extends App{
 		App.setLookAndFeel();
 		debugMode= true;
 		
-		settingsProperties.deleteSettingsFile();
-		settingsProperties.saveSettings();
-		settingsProperties.loadSettings();
+		settingsProperties.deleteSettingsFile("settings.cfg");
+		settingsProperties.saveSettings("settings.cfg");
+		settingsProperties.loadSettings("settings.cfg");
 		
 		assertNotNull(settingsProperties);
 	}	
