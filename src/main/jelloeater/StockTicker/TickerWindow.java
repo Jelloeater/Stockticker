@@ -10,6 +10,14 @@ import javax.swing.JButton;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JSeparator;
 
 class TickerWindow extends App{
 
@@ -60,12 +68,76 @@ class TickerWindow extends App{
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("hi");
+				App.addStockToList();
 			}
 		});
-		mainWindow.getContentPane().add(btnNewButton, "cell 0 1,alignx right,aligny bottom");
+			mainWindow.getContentPane().add(btnNewButton, "cell 0 1,alignx right,aligny bottom");
+			
+			JMenuBar menuBar = new JMenuBar();
+			mainWindow.setJMenuBar(menuBar);
+			
+			JMenu mnFile = new JMenu("File");
+			menuBar.add(mnFile);
+			
+			JMenuItem mntmExit = new JMenuItem("Exit");
+			mntmExit.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					
+				}
+			});
+			mnFile.add(mntmExit);
+			
+			JMenu mnSettings = new JMenu("Settings");
+			menuBar.add(mnSettings);
+			
+			JMenuItem mntmSetRefresh = new JMenuItem("Set Refresh...");
+			mnSettings.add(mntmSetRefresh);
+			
+			JMenuItem mntmSetSource = new JMenuItem("Set Source...");
+			mnSettings.add(mntmSetSource);
+			
+			JMenu mnHelp = new JMenu("Help");
+			menuBar.add(mnHelp);
+			
+			JMenuItem mntmHelpContents = new JMenuItem("Help Contents");
+			mnHelp.add(mntmHelpContents);
+			
+			JMenuItem mntmRestoreDefaults = new JMenuItem("Restore Defaults");
+			mntmRestoreDefaults.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) { // Sets defaults
+				}
+			});
+			mnHelp.add(mntmRestoreDefaults);
+			
+			JSeparator separator_1 = new JSeparator();
+			mnHelp.add(separator_1);
+			
+			JMenuItem mntmAbout = new JMenuItem("About");
+			mntmAbout.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					JOptionPane.showMessageDialog(null, "Created by Jesse Schoepfer /n Some stuff", "About", 2);
+				}
+			});
+			mnHelp.add(mntmAbout);
 	}
 
 	
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 }
 
