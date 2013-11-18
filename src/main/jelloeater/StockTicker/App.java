@@ -138,12 +138,11 @@ class App {
 	    }
 	}
 
-	public static int shutdown() {
+	public static void shutdown() {
 		// TODO Auto-generated method stub
+		
 		settingsProperties.saveSettings(configFilePath);
 		System.err.println("we are shuting down now!");
-		System.exit(0);
-		return 0;
 		
 		
 	}

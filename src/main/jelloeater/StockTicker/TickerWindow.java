@@ -8,9 +8,6 @@ import javax.swing.JTextPane;
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
 import net.miginfocom.swing.MigLayout;
-
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -31,44 +28,31 @@ class TickerWindow extends App{
 
 	private JFrame mainWindow;
 
+	/** Shutdown Hook, used to override application close behavior*/
+	static void shutdownHook(){
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {	
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				App.shutdown();				
+			}
+		}));
+	}
+	
+	
 	/**
-	 * Launch the application.
+	 * Launch the application. Main GUI Class
 	 */
 	static void launchGui(String[] args) {
+		
+		shutdownHook();
+		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					TickerWindow window = new TickerWindow();
 					window.mainWindow.setVisible(true);
-					window.mainWindow.addComponentListener(new ComponentListener() {
-						
-						@Override
-						public void componentShown(ComponentEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
-						public void componentResized(ComponentEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
-						public void componentMoved(ComponentEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
-						public void componentHidden(ComponentEvent arg0) {
-							// TODO Auto-generated method stub
-							App.shutdown();
-							((JFrame)(arg0.getComponent())).dispose();
-						}
-					});
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -90,38 +74,11 @@ class TickerWindow extends App{
 		
 		
 		mainWindow = new JFrame();
+		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainWindow.setBounds(100, 100, 250, 450);
 		mainWindow.getContentPane().setLayout(new MigLayout("", "[grow][]", "[211.00,grow][bottom]"));
 		JTextPane textPane = new JTextPane();
 		mainWindow.getContentPane().add(textPane, "cell 0 0,grow");
-		mainWindow.addComponentListener(new ComponentListener() {
-			
-			@Override
-			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				App.shutdown();
-				((JFrame)(e.getComponent())).dispose();
-			}
-		});
-		
 		
 		
 		/*
