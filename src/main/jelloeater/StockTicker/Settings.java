@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 
-
  /**
  This class allows us to manipulate any settings objects we create.
  Settings are dependent throughout the program, they are private so we can sanitize data
@@ -49,11 +48,9 @@ class Settings extends App{
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
 	}
 	
-	
 	int getRefreshIntervalSeconds() {	
 		return refreshIntervalSeconds;
 	}
-
 
 	void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
 		// TODO Add try and catch for int
@@ -61,9 +58,26 @@ class Settings extends App{
 	}
 	
 	void setRefreshIntervalSecondsGUI(){
+		// FIXME Loop is broken :(
+		
+		@SuppressWarnings("unused")
+		boolean inputFail = false;
+		do {
+			
 		String refreshIntervalSecondsIN = JOptionPane.showInputDialog("Set Interval", settingsProperties.getRefreshIntervalSeconds());
-		refreshIntervalSeconds = Integer.parseInt(refreshIntervalSecondsIN);
+
+		try {
+			refreshIntervalSeconds = Integer.parseInt(refreshIntervalSecondsIN);
+			inputFail = false;
+			} 
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Please enter a valid number", null, 0);
+			inputFail = true;
+			}
+		} while (inputFail = true);
+		
 	}
+	
 	
 	void setQuoteSourceGUI() {
 		String[] quoteSourceChoices = { "MarketWatch", "Yahoo", "Google"}; // Dialog box choices array
@@ -77,7 +91,6 @@ class Settings extends App{
 	String getQuoteSource() {
 		return quoteSource;
 	}
-
 
 	void setQuoteSource(String quoteSourceIN) {
 		quoteSource = quoteSourceIN;
@@ -114,8 +127,6 @@ class Settings extends App{
 		File config = new File(configFileName);
 		 
 		  if(config.exists()){
-			  // FIXME Throws error :(
-			  
 	
 			try {
 				String diskReaderInput = App.readFile(configFileName);
@@ -129,15 +140,14 @@ class Settings extends App{
 				if (debugMode=true)e.printStackTrace();
 			}
 			  
-		  }else{ // load the settings fail safe, this is in case the file path is set wrong
+		  }else{ 
+			  // load the settings fail safe, this is in case the file path is set wrong
 			  settingsProperties.setDefaults();
 			  settingsProperties.saveSettings("settings.cfg");
 			  App.configFilePath = "settings.cfg";
 			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.");
 		  }	
 	}
-	
-	
 	
 	void deleteSettingsFile(String configFilePath){
 		int option = JOptionPane.showConfirmDialog(null, "Delete settings", null, 2);
@@ -152,10 +162,5 @@ class Settings extends App{
 			break;
 		}
 	}
-
-	
-
-
-	
 	
 }
