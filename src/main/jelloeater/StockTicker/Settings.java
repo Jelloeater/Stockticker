@@ -43,7 +43,8 @@ class Settings extends App{
     }
 
 	/** Sets defaults for settings */
-	private void setDefaults(){
+	void setDefaults(){
+		deleteSettingsFile(configFilePath);
 		setQuoteSource("Google"); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
 	}
@@ -51,8 +52,12 @@ class Settings extends App{
 	int getRefreshIntervalSeconds() {	
 		return refreshIntervalSeconds;
 	}
+	
+	private void setQuoteSource(String quoteSourceIN) {
+		quoteSource = quoteSourceIN;
+	}
 
-	void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
+	private void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
 		// TODO Add try and catch for int
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
@@ -60,7 +65,6 @@ class Settings extends App{
 	void setRefreshIntervalSecondsGUI(){
 		// FIXME Loop is broken :(
 		
-		@SuppressWarnings("unused")
 		boolean inputFail = false;
 		do {
 			String refreshIntervalSecondsIN = JOptionPane.showInputDialog("Set Interval", settingsProperties.getRefreshIntervalSeconds());
@@ -91,9 +95,7 @@ class Settings extends App{
 		return quoteSource;
 	}
 
-	void setQuoteSource(String quoteSourceIN) {
-		quoteSource = quoteSourceIN;
-	}
+	
 	
 	/**
 	 * Writes the App singleton settingsProperties to the specified configuration file path
@@ -148,18 +150,29 @@ class Settings extends App{
 		  }	
 	}
 	
-	void deleteSettingsFile(String configFilePath){
-		int option = JOptionPane.showConfirmDialog(null, "Delete settings", null, 2);
+	private void deleteSettingsFile(String configFilePath){
 		
-		switch (option) {
-		case 0:
 			File file = new File(configFilePath);
 			file.delete();
 			JOptionPane.showMessageDialog(null, "Settings deleted");
+		
+	}
+	
+	
+	void restoreDefaultsGUI(){
+		int option = JOptionPane.showConfirmDialog(null, "Restore Defaults?", null, 2);
+		
+		switch (option) {
+		case 0:
+			settingsProperties.setDefaults();
+			  settingsProperties.saveSettings("settings.cfg");
+			  App.configFilePath = "settings.cfg";
+			  JOptionPane.showMessageDialog(null, "Defaults Restored.");
 			break;
 		default:
 			break;
 		}
 	}
+	
 	
 }

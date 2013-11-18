@@ -50,15 +50,8 @@ class App {
 		App.setLookAndFeel(); // Sets look and feel
 	
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
-		
 
-		settingsProperties.setQuoteSourceGUI(); // TODO Add to settings menu
-		settingsProperties.setRefreshIntervalSecondsGUI(); // TODO Add to settings menu
-		
-		App.addStockToList();
-		
-		
-		
+		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!!
 		
 		
 		/*
@@ -66,19 +59,18 @@ class App {
 		myStock = TickerInfo.updateTicker(myStock); // Update method
 		*/
        
-		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!!
 		
 		
 		
-		
-		settingsProperties.saveSettings(configFilePath);  // should run on exit [WORKS]
-		
-		if (debugMode=true) settingsProperties.deleteSettingsFile(configFilePath);
 		if (debugMode= true )System.err.println("Brake");
 		
 		// END OF THE LINE
     }
-
+	
+	static void exitApp(){
+		settingsProperties.saveSettings(configFilePath);
+	}
+	
 	static void addStockToList(){
 		TickerInfo myStock = TickerInfo.createNewTickerGui(); // Input Window
 		
