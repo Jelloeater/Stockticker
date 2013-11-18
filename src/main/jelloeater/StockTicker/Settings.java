@@ -63,18 +63,17 @@ class Settings extends App{
 		@SuppressWarnings("unused")
 		boolean inputFail = false;
 		do {
-			
-		String refreshIntervalSecondsIN = JOptionPane.showInputDialog("Set Interval", settingsProperties.getRefreshIntervalSeconds());
-
-		try {
-			refreshIntervalSeconds = Integer.parseInt(refreshIntervalSecondsIN);
-			inputFail = false;
-			} 
-		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Please enter a valid number", null, 0);
-			inputFail = true;
-			}
-		} while (inputFail = true);
+			String refreshIntervalSecondsIN = JOptionPane.showInputDialog("Set Interval", settingsProperties.getRefreshIntervalSeconds());
+	
+			try {
+				refreshIntervalSeconds = Integer.parseInt(refreshIntervalSecondsIN);
+				inputFail = false;
+				} 
+			catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Please enter a valid number", null, 0);
+				inputFail = true;
+				}
+		} while (inputFail == true);
 		
 	}
 	
