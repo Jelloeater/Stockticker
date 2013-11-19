@@ -1,29 +1,25 @@
 package jelloeater.StockTicker;
 
-//import java.io.IOException;
-//import java.util.*;
-
 // import java.net.*; // To be used for net connection checking
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import javax.swing.JFrame;
-//import javax.imageio.ImageIO;
-// This is a basic stock ticker application. It ticks stocks n stuff
-import javax.swing.JOptionPane; // For pop-ups
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.JOptionPane;
+
+import jwsUtils.*; // Holds neat bits of code to be reused over time
 
 
+/*
+ * This is a basic stock ticker application. It ticks stocks n stuff
+ */
 class App {
 	
 	/**
 	 * Debug flag
 	 */
 	static boolean debugMode = true;
+	
+	static boolean applicationRunState = true;
 	/**
 	 * Holds all the settings for the application in a singleton object
 	 * You can try and make another, but it won't let you
@@ -35,6 +31,7 @@ class App {
 	
 	
 	 static ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
+	 
 
 
 	/**
@@ -48,26 +45,22 @@ class App {
 		// TODO Write update method to loop getting info
 		// TODO IDEA Get Symbols from JSON, load into ArrayList?
 		
-		App.setLookAndFeel(); // Sets look and feel
+		// TODO implement quit dialogue box
+		while (applicationRunState = false) {
+		}
+		
+		
+		
+		UtilsGUI.setLookAndFeel(); // Sets look and feel
+		addShutdownHook(); // Adds Shutdown hook
 	
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
-		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!!
+		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 		
-		
-		
-		
-		/*
-		App.displayGuiInfoWindow(myStock);// Output Window
-		myStock = TickerInfo.updateTicker(myStock); // Update method
-		*/
-       
-		
-		
-		
-		if (debugMode= true )System.err.println("Brake");
-		
-		// END OF THE LINE
+		//addStockToList();
+			
+		System.err.println("brake");
     }
 	
 	static void addStockToList(){
@@ -78,73 +71,22 @@ class App {
 		tickerList.set(0, myStock);
 	}
 
-	/**
-	 * Pop-up window that displays data from myStock Object
-	 * @param TickerInfo Object
-	 */
-	static void displayGuiInfoWindow(TickerInfo myStock){
-		JOptionPane.showMessageDialog(null, 
-	    		"Symbol: "+myStock.getTickerSymbol() +"\n"+
-	    		"Price: " +myStock.getPrice() +"\n"+
-	    		"% Change: "+ myStock.getPercentChange()+"%"+"\n"+
-	    		"Price Change: "+ myStock.getPriceChange()
-	    		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
-	}
-	
-	/**
-	 * Just a handy method for reading text files to strings
-	 * @param pathname
-	 * @return String
-	 * @throws IOException
-	 */
-	public static String readFile(String pathname) throws IOException {
 
-	    File file = new File(pathname);
-	    StringBuilder fileContents = new StringBuilder((int)file.length());
-	    Scanner scanner = new Scanner(file);
-	    String lineSeparator = System.getProperty("line.separator");
-
-	    try {
-	        while(scanner.hasNextLine()) {        
-	            fileContents.append(scanner.nextLine() + lineSeparator);
-	        }
-	        return fileContents.toString();
-	    } finally {
-	        scanner.close();
-	    }
-	}
-	
-	
-	/**
-	 * Sets look and feel to system default
-	 */
-	static void setLookAndFeel(){
-		try {
-	        // Set System L&F
-	        UIManager.setLookAndFeel(
-	            UIManager.getSystemLookAndFeelClassName());
-	    } 
-	    catch (UnsupportedLookAndFeelException e) {
-	       // handle exception
-	    }
-	    catch (ClassNotFoundException e) {
-	       // handle exception
-	    }
-	    catch (InstantiationException e) {
-	       // handle exception
-	    }
-	    catch (IllegalAccessException e) {
-	       // handle exception
-	    }
-	}
-
-	public static void shutdown() {
-		// TODO Auto-generated method stub
-		
+	public static void shutdown() {	
 		settingsProperties.saveSettings(configFilePath);
-		System.err.println("we are shuting down now!");
+		System.err.println("we are shuting down now!");	
 		
-		
+	}
+	
+	/** Shutdown Hook, used to override application close behavior
+	 * Runs when System.exit(0) is called*/
+	static void addShutdownHook(){
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {	
+			@Override
+			public void run() { // Main Application 
+				App.shutdown();
+				}
+		}));
 	}
 	
 	

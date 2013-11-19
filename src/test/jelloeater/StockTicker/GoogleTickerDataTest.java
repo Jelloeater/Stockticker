@@ -12,6 +12,7 @@ import java.util.regex.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
+import jwsUtils.*;
 
 
 public class GoogleTickerDataTest extends App{
@@ -19,10 +20,10 @@ public class GoogleTickerDataTest extends App{
 	@Test
 	public void testGoogleJsonParser() throws Throwable { // Is the parser broken?
 		//Assumes client is online
-		App.setLookAndFeel();
+		UtilsGUI.setLookAndFeel();
 		debugMode= true;
 	
-		String dirtyQuertyString= App.readFile("src/test/jelloeater/StockTicker/rawJsonDataForTesting.txt"); // Reads raw file to string
+		String dirtyQuertyString= Utils.readFile("src/test/jelloeater/StockTicker/rawJsonDataForTesting.txt"); // Reads raw file to string
 		// It's a mess to try storing it in software, JSON has lots of escape characters that makes java throw up
 		String rawQuertyString = GoogleTickerData.cleanGoogleJSONdata(dirtyQuertyString);
         

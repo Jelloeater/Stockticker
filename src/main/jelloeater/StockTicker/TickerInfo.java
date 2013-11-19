@@ -118,5 +118,18 @@ class TickerInfo extends App{
 		this.priceChange = priceChange;
 	}
 
+	/**
+	 * Pop-up window that displays data from myStock Object
+	 * @param TickerInfo Object
+	 */
+	static void displayTickerInfoDataGUI(TickerInfo myStock){
+		JOptionPane.showMessageDialog(null, 
+	    		"Symbol: "+myStock.getTickerSymbol() +"\n"+
+	    		"Price: " +myStock.getPrice() +"\n"+
+	    		"% Change: "+ myStock.getPercentChange()+"%"+"\n"+
+	    		"Price Change: "+ myStock.getPriceChange()
+	    		,"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE); 
+	}
+
 
 }

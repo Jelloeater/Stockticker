@@ -9,6 +9,8 @@ import java.io.*;
 
 import javax.swing.JOptionPane;
 
+import jwsUtils.Utils;
+
 import com.google.gson.Gson;
 
  /**
@@ -44,8 +46,6 @@ class Settings extends App{
 
 	/** Sets defaults for settings */
 	void setDefaults(){
-		// FIXME WTF is this causing a NULL POINTER exception?
-		//deleteSettingsFile(configFilePath); // FUCK YOUUUUUUUUU
 		setQuoteSource("Google"); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
 	}
@@ -59,13 +59,10 @@ class Settings extends App{
 	}
 
 	private void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
-		// TODO Add try and catch for int
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
 	
-	void setRefreshIntervalSecondsGUI(){
-		// FIXME Loop is broken :(
-		
+	void setRefreshIntervalSecondsGUI(){	
 		boolean inputFail = false;
 		do {
 			String refreshIntervalSecondsIN = JOptionPane.showInputDialog("Set Interval", settingsProperties.getRefreshIntervalSeconds());
@@ -78,8 +75,7 @@ class Settings extends App{
 				JOptionPane.showMessageDialog(null, "Please enter a valid number", null, 0);
 				inputFail = true;
 				}
-		} while (inputFail == true);
-		
+		} while (inputFail == true);		
 	}
 	
 	
@@ -96,7 +92,6 @@ class Settings extends App{
 		return quoteSource;
 	}
 
-	
 	
 	/**
 	 * Writes the App singleton settingsProperties to the specified configuration file path
@@ -131,7 +126,7 @@ class Settings extends App{
 		  if(config.exists()){
 	
 			try {
-				String diskReaderInput = App.readFile(configFileName);
+				String diskReaderInput = Utils.readFile(configFileName);
 				  
 				  Gson gson = new Gson(); // Initializes object
 				  
@@ -152,11 +147,8 @@ class Settings extends App{
 	}
 	
 	private void deleteSettingsFile(String configFilePath){
-		
 			File file = new File(configFilePath);
-			file.delete();
-			JOptionPane.showMessageDialog(null, "Settings deleted");
-		
+			file.delete();		
 	}
 	
 	
@@ -165,10 +157,11 @@ class Settings extends App{
 		
 		switch (option) {
 		case 0:
+			settingsProperties.deleteSettingsFile(configFilePath);
 			settingsProperties.setDefaults();
-			  settingsProperties.saveSettings("settings.cfg");
-			  App.configFilePath = "settings.cfg";
-			  JOptionPane.showMessageDialog(null, "Defaults Restored.");
+			settingsProperties.saveSettings("settings.cfg");
+			App.configFilePath = "settings.cfg";
+			JOptionPane.showMessageDialog(null, "Defaults Restored.");
 			break;
 		default:
 			break;

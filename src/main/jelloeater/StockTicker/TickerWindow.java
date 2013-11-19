@@ -8,16 +8,8 @@ import javax.swing.JTextPane;
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
 import net.miginfocom.swing.MigLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-
-import javax.swing.JPopupMenu;
-import java.awt.Component;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
@@ -28,25 +20,11 @@ class TickerWindow extends App{
 
 	private JFrame mainWindow;
 
-	/** Shutdown Hook, used to override application close behavior*/
-	static void shutdownHook(){
-		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {	
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				App.shutdown();				
-			}
-		}));
-	}
-	
-	
+
 	/**
 	 * Launch the application. Main GUI Class
 	 */
 	static void launchGui(String[] args) {
-		
-		shutdownHook();
-		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -110,7 +88,7 @@ class TickerWindow extends App{
 			JMenuItem mntmExit = new JMenuItem("Exit");
 			mntmExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					App.shutdown();
+					System.exit(0);
 				}
 			});
 			mnFile.add(mntmExit);
@@ -160,7 +138,7 @@ class TickerWindow extends App{
 			mnHelp.add(mntmAbout);
 	}
 
-	
+	/*
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -178,5 +156,7 @@ class TickerWindow extends App{
 			}
 		});
 	}
+	*/
+	
 }
 
