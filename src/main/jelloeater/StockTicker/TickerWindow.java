@@ -15,6 +15,10 @@ import javax.swing.JMenu;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 class TickerWindow extends App{
 
@@ -52,19 +56,29 @@ class TickerWindow extends App{
 		
 		
 		mainWindow = new JFrame();
-		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainWindow.setBounds(100, 100, 250, 450);
 		mainWindow.getContentPane().setLayout(new MigLayout("", "[grow][]", "[211.00,grow][bottom]"));
 		JTextPane textPane = new JTextPane();
 		mainWindow.getContentPane().add(textPane, "cell 0 0,grow");
 		
 		
-		/*
-		WindowListener l = null;
-		mainWindow.addWindowListener(l);
-		//l.windowClosing();
+		/**
+		 * On a window close, spawns dialogue box to check if you really want to close that window
+		 * NOTE if you close all the windows, the shutdown hooks will kick in
+		 * It listens to the status of the specified JFrame
 		 */
+		mainWindow.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentHidden(ComponentEvent e){
+				if (App.shutdownWindow()== 0) {
+					((JFrame)(e.getComponent())).dispose();
+				} else {
+					((JFrame)(e.getComponent())).setVisible(true);
+				}	
+			}
+		});
 		
+			
 		JScrollBar scrollBar = new JScrollBar();
 		mainWindow.getContentPane().add(scrollBar, "cell 1 0,alignx right,growy");
 		
@@ -85,10 +99,13 @@ class TickerWindow extends App{
 			JMenu mnFile = new JMenu("File");
 			menuBar.add(mnFile);
 			
+			/**
+			 * When clicked, opens shutdown window
+			 */
 			JMenuItem mntmExit = new JMenuItem("Exit");
 			mntmExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					System.exit(0);
+					if (App.shutdownWindow()== 0) System.exit(0); // Ends up calling hooks
 				}
 			});
 			mnFile.add(mntmExit);

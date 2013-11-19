@@ -48,9 +48,7 @@ class App {
 		// TODO implement quit dialogue box
 		while (applicationRunState = false) {
 		}
-		
-		
-		
+	
 		UtilsGUI.setLookAndFeel(); // Sets look and feel
 		addShutdownHook(); // Adds Shutdown hook
 	
@@ -72,23 +70,24 @@ class App {
 	}
 
 
-	public static void shutdown() {	
-		settingsProperties.saveSettings(configFilePath);
-		System.err.println("we are shuting down now!");	
-		
+	public static void shutdownScript() {	
+		settingsProperties.saveSettings(configFilePath);	
 	}
 	
 	/** Shutdown Hook, used to override application close behavior
-	 * Runs when System.exit(0) is called*/
+	 * Runs when System.exit(0) is called or all windows have been disposed of*/
 	static void addShutdownHook(){
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {	
 			@Override
-			public void run() { // Main Application 
-				App.shutdown();
+			public void run() { // Main Application class name
+				shutdownScript(); // Executes shutdown script
 				}
 		}));
 	}
 	
-	
+	public static int shutdownWindow(){
+		int shutdownCode = JOptionPane.showConfirmDialog(null, "Do you want to quit?", null, 0);
+		return shutdownCode;
+	}
 }
 	
