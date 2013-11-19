@@ -17,8 +17,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 class TickerWindow extends App{
 
@@ -70,6 +68,7 @@ class TickerWindow extends App{
 		mainWindow.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent e){
+				//TODO Should figure out how this works
 				if (App.shutdownWindow()== 0) {
 					((JFrame)(e.getComponent())).dispose();
 				} else {
@@ -154,26 +153,6 @@ class TickerWindow extends App{
 			});
 			mnHelp.add(mntmAbout);
 	}
-
-	/*
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-	}
-	*/
 	
 }
 

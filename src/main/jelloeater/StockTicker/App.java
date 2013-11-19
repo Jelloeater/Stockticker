@@ -36,27 +36,22 @@ class App {
 
 	/**
 	 * This runs first
-	 * There should be a minimal amount of methods here, and preferably no variables,
-	 * They should be stored in a class
+	 * There should be a minimal amount of methods here, variables should be in objects
 	 * @param args
 	 * @throws Throwable
 	 */
 	public static void main(String[] args) throws Throwable {
 		// TODO Write update method to loop getting info
 		// TODO IDEA Get Symbols from JSON, load into ArrayList?
-		
-		// TODO implement quit dialogue box
-		while (applicationRunState = false) {
-		}
-	
+
 		UtilsGUI.setLookAndFeel(); // Sets look and feel
 		addShutdownHook(); // Adds Shutdown hook
-	
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
-		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
+		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 		
-		//addStockToList();
+		
+		addStockToList();
 			
 		System.err.println("brake");
     }
@@ -71,7 +66,7 @@ class App {
 
 
 	public static void shutdownScript() {	
-		settingsProperties.saveSettings(configFilePath);	
+		settingsProperties.saveSettings(configFilePath);
 	}
 	
 	/** Shutdown Hook, used to override application close behavior
