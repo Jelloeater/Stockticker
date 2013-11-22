@@ -54,15 +54,10 @@ class App {
 		
 		
 		
-		TickerInfo indexTicker = new TickerInfo();
 		
-		indexTicker=TickerInfo.createNewTicker(settingsProperties.getIndexSymbol()); // Sets the index symbol from settings
-		System.err.println(indexTicker.getTickerSymbol()+"\n");
-		
-		
-		TickerInfo testTicker = new TickerInfo();
-		testTicker=TickerInfo.createNewTickerGui();
-		TickerInfo.displayTickerInfoDataGUI(testTicker);
+		TickerInfo testTicker = new TickerInfo("GOOG");
+		testTicker.updateTicker(testTicker);
+		testTicker.displayTickerInfoDataGUI(testTicker);
 		
 		
 		
@@ -71,8 +66,6 @@ class App {
 		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 		
 		
-		String indexTickerOutput = indexTicker.getTickerSymbol()+indexTicker.getPrice()+indexTicker.getPriceChange()+indexTicker.getPercentChange();
-		System.out.println(indexTickerOutput);
 		
 		//addStockToList();
 			

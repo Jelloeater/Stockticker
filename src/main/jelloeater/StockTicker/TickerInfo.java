@@ -27,17 +27,27 @@ class TickerInfo extends App{
 	public TickerInfo(){
 	}
 
-    public TickerInfo(String tickerSymbol)
+    public TickerInfo(String tickerSymbol) throws Exception
     {
         this.symbol = tickerSymbol;
-        // FIXME: handle exception for no Internet access
+        this.rawData = GoogleTickerData.getGoogleJSONfromWeb(tickerSymbol);
+        
+        GoogleTickerData tempObj = GoogleTickerData.mapJsonDataToObject(rawData);
+        this.percentChange= tempObj.getPercentChange();
+        this.price= tempObj.getPrice();
+        this.priceChange= tempObj.getPriceChange();
        
+        
+        
+        // FIXME: handle exception for no Internet access
+        /*
         try {
         	this.updateTicker(this);
 
         } catch (Throwable e) {
             if (debugMode=true)e.printStackTrace();
         }
+        */
     }
 	
 	/**
