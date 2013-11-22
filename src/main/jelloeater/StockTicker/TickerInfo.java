@@ -24,8 +24,21 @@ class TickerInfo extends App{
 	 * Constructor for creating up TickerInfo objects
 	* @throws Throwable 
 	* */
-	public TickerInfo() throws Throwable {
+	public TickerInfo(){
 	}
+
+    public TickerInfo(String tickerSymbol)
+    {
+        this.symbol = tickerSymbol;
+        // FIXME: handle exception for no Internet access
+       
+        try {
+        	this.updateTicker(this);
+
+        } catch (Throwable e) {
+            if (debugMode=true)e.printStackTrace();
+        }
+    }
 	
 	/**
 	 *  Opens pop-up text box, takes input from text box and create a new object to pass the update method,
@@ -44,7 +57,25 @@ class TickerInfo extends App{
 		try {
 			myStock = new TickerInfo();
 			myStock.setTickerSymbol(tickerSymbolInput);
-			myStock = TickerInfo.updateTicker(myStock);
+			myStock = myStock.updateTicker(myStock);
+			
+		} catch (Throwable e) {
+			if (debugMode=true)e.printStackTrace();
+		}
+		
+		return myStock;
+	}
+	
+	
+	public static TickerInfo createNewTicker(String tickerSymbolInput){
+		TickerInfo myStock = null;
+		// FIXME: handle exception for no Internet access
+				
+
+		try {
+			myStock = new TickerInfo();
+			myStock.setTickerSymbol(tickerSymbolInput);
+			myStock = myStock.updateTicker(myStock);
 			
 		} catch (Throwable e) {
 			if (debugMode=true)e.printStackTrace();
@@ -60,7 +91,7 @@ class TickerInfo extends App{
 	 * @return myStock object with updated data
 	 * @throws Exception
 	 */
-	public static TickerInfo updateTicker(TickerInfo myStock) throws Exception {
+	public TickerInfo updateTicker(TickerInfo myStock) throws Exception {
 		String symbol = myStock.getTickerSymbol();
 		
 		if (settingsProperties.getQuoteSource() == "Google") { 

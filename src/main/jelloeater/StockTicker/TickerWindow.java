@@ -128,6 +128,14 @@ class TickerWindow extends App{
 			});
 			mnSettings.add(mntmSetSource);
 			
+			JMenuItem mntmSetIndex = new JMenuItem("Set Index...");
+			mntmSetIndex.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					settingsProperties.setIndexSymbolGUI();
+				}
+			});
+			mnSettings.add(mntmSetIndex);
+			
 			JMenu mnHelp = new JMenu("Help");
 			menuBar.add(mnHelp);
 			

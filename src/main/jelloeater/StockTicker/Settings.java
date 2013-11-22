@@ -27,6 +27,7 @@ class Settings extends App{
 	private int refreshIntervalSeconds;
 	private String quoteSource;
 	private static Settings singletonRef; // This stores the state of the singleton, and block additional ones from being created
+	private String indexSymbol;
 	
 	private Settings(){ // You can't access the constructor
 		setDefaults();
@@ -48,6 +49,18 @@ class Settings extends App{
 	void setDefaults(){
 		setQuoteSource("Google"); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
+    	setIndexSymbol("GOOG");
+	}
+	
+
+	public String getIndexSymbol() {
+		//FIXME Clicking cancel erased string from object
+		return indexSymbol;
+	}
+	
+	
+	private void setIndexSymbol(String indexSymbolIN) {
+		indexSymbol = indexSymbolIN;
 	}
 	
 	int getRefreshIntervalSeconds() {	
@@ -60,6 +73,12 @@ class Settings extends App{
 
 	private void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
+	}
+	
+	void setIndexSymbolGUI(){	
+		// TODO Needs symbol verification
+		 indexSymbol = JOptionPane.showInputDialog("Set Index Symbol", settingsProperties.getIndexSymbol());
+			
 	}
 	
 	void setRefreshIntervalSecondsGUI(){	

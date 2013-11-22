@@ -15,22 +15,25 @@ import jwsUtils.*; // Holds neat bits of code to be reused over time
 class App {
 	
 	/**
-	 * Debug flag
-	 */
+	* Debug flag
+	*/
 	static boolean debugMode = true;
 	
 	static boolean applicationRunState = true;
 	/**
-	 * Holds all the settings for the application in a singleton object
-	 * You can try and make another, but it won't let you
-	 */
-	 static Settings settingsProperties = Settings.makeSingleton();
+	* Holds all the settings for the application in a singleton object
+	* You can try and make another, but it won't let you
+	*/
+	static Settings settingsProperties = Settings.makeSingleton();
 	 
-	 /** Global configuration file path, used for various settings operations*/
-	 static String configFilePath = "settings.cfg";
+	/** Global configuration file path, used for various settings operations*/
+	static String configFilePath = "settings.cfg";
 	
 	
-	 static ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
+	static ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
+	
+	
+	 
 	 
 
 
@@ -48,10 +51,30 @@ class App {
 		addShutdownHook(); // Adds Shutdown hook
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
+		
+		
+		
+		TickerInfo indexTicker = new TickerInfo();
+		
+		indexTicker=TickerInfo.createNewTicker(settingsProperties.getIndexSymbol()); // Sets the index symbol from settings
+		System.err.println(indexTicker.getTickerSymbol()+"\n");
+		
+		
+		TickerInfo testTicker = new TickerInfo();
+		testTicker=TickerInfo.createNewTickerGui();
+		TickerInfo.displayTickerInfoDataGUI(testTicker);
+		
+		
+		
+		
+		
 		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 		
 		
-		addStockToList();
+		String indexTickerOutput = indexTicker.getTickerSymbol()+indexTicker.getPrice()+indexTicker.getPriceChange()+indexTicker.getPercentChange();
+		System.out.println(indexTickerOutput);
+		
+		//addStockToList();
 			
 		System.err.println("brake");
     }
