@@ -3,10 +3,13 @@ package jelloeater.StockTicker;
 // import java.net.*; // To be used for net connection checking
 
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
 import jwsUtils.*; // Holds neat bits of code to be reused over time
+
+import java.util.Timer;
 
 
 /*
@@ -19,7 +22,6 @@ class App {
 	*/
 	static boolean debugMode = true;
 	
-	static boolean applicationRunState = true;
 	/**
 	* Holds all the settings for the application in a singleton object
 	* You can try and make another, but it won't let you
@@ -52,26 +54,38 @@ class App {
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
 		
+		// FIXME Look at PDF for answers, also Timer class in examples folder
+		updateStuff myTask = new updateStuff(); // Makes new task
+		Timer indexTimer = new Timer(); // Makes new timer
 		
 		
-		
-		TickerInfo testTicker = new TickerInfo("GOOG");
-		testTicker.updateTicker(testTicker);
+		TickerInfo testTicker = new TickerInfo("TSLA");
 		testTicker.displayTickerInfoDataGUI(testTicker);
 		
 		
 		
 		
+		indexTimer.scheduleAtFixedRate(myTask, 2, 20);
+		
+		
+		
+		
+		testTicker.updateTicker(testTicker);
+		
 		
 		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
-		
-		
-		
+			
 		//addStockToList();
 			
-		System.err.println("brake");
+		//System.err.println("brake");
+		System.exit(0); // Makes sure program ends
     }
 	
+	class updateStuff extends TimerTask{
+		public void run(){
+			System.err.println("Meow");
+		}
+	}
 	static void addStockToList(){
 		TickerInfo myStock = TickerInfo.createNewTickerGui(); // Input Window
 		

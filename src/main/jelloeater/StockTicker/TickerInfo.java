@@ -163,7 +163,7 @@ class TickerInfo extends App{
 	 * Pop-up window that displays data from myStock Object
 	 * @param TickerInfo Object
 	 */
-	static void displayTickerInfoDataGUI(TickerInfo myStock){
+	void displayTickerInfoDataGUI(TickerInfo myStock){
 		JOptionPane.showMessageDialog(null, 
 	    		"Symbol: "+myStock.getTickerSymbol() +"\n"+
 	    		"Price: " +myStock.getPrice() +"\n"+

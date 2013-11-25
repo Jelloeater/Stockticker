@@ -1,4 +1,4 @@
-package jelloeater.StockTicker;
+
 /*
  * Copyright (C) 2011 Google Inc.
  *
