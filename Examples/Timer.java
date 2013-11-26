@@ -9,7 +9,6 @@ import java.util.concurrent.ScheduledFuture;
        Executors.newScheduledThreadPool(1);
     
     public static void main(String[] args) {
-		// TODO Auto-generated method stub
     	Timer taskTimer = new Timer();
     	taskTimer.task();
     	

@@ -12,6 +12,7 @@ import jwsUtils.*; // Holds neat bits of code to be reused over time
 import java.util.Timer;
 
 
+
 /*
  * This is a basic stock ticker application. It ticks stocks n stuff
  */
@@ -54,18 +55,33 @@ class App {
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
 		
+		
+		
 		// FIXME Look at PDF for answers, also Timer class in examples folder
-		updateStuff myTask = new updateStuff(); // Makes new task
+		//updateStuff myTask = new updateStuff(); // Makes new task
 		Timer indexTimer = new Timer(); // Makes new timer
 		
 		
+		
+		
+		
+		
 		TickerInfo testTicker = new TickerInfo("TSLA");
-		testTicker.displayTickerInfoDataGUI(testTicker);
+		testTicker.getTickerInfoDataGUI(testTicker);
+		
+		
+		TickerInfo testTickerGUI = new TickerInfo();
+		testTickerGUI=testTickerGUI.setTickerViaGui(); // GUI based constructor
+		testTickerGUI.getTickerInfoDataGUI(testTickerGUI);
 		
 		
 		
 		
-		indexTimer.scheduleAtFixedRate(myTask, 2, 20);
+		
+		
+		//indexTimer.scheduleAtFixedRate(myTask, 2, 20);
+		
+		
 		
 		
 		
@@ -86,8 +102,20 @@ class App {
 			System.err.println("Meow");
 		}
 	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
 	static void addStockToList(){
-		TickerInfo myStock = TickerInfo.createNewTickerGui(); // Input Window
+		// TODO Needs symbol verification, try and catch?
+		TickerInfo myStock = new TickerInfo(); // Input Window
+		myStock.setTickerViaGui();
 		
 		tickerList.add(myStock);
 		

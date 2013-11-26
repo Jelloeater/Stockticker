@@ -76,7 +76,7 @@ class Settings extends App{
 	}
 	
 	void setIndexSymbolGUI(){	
-		// TODO Needs symbol verification
+		// TODO Needs symbol verification, try and catch?
 		 indexSymbol = JOptionPane.showInputDialog("Set Index Symbol", settingsProperties.getIndexSymbol());
 			
 	}
@@ -117,13 +117,11 @@ class Settings extends App{
 	 * @param configFileName
 	 */
 	void saveSettings(String configFileName){
-		// TODO Should write on program close also
 			
 		PrintStream diskWriter = null;
 		try {
 			diskWriter = new PrintStream(new File(configFileName));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} // Makes new file / overwrites and assigns object
 		
@@ -152,8 +150,7 @@ class Settings extends App{
 				  settingsProperties = gson.fromJson(diskReaderInput, Settings.class);
 				  
 			} catch (IOException  e) {
-				// TODO Auto-generated catch block
-				if (debugMode=true)e.printStackTrace();
+				e.printStackTrace();
 			}
 			  
 		  }else{ 
