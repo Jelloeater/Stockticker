@@ -28,6 +28,7 @@ class Settings extends App{
 	private String quoteSource;
 	private static Settings singletonRef; // This stores the state of the singleton, and block additional ones from being created
 	private String indexSymbol;
+	private boolean refreshEnabled;
 	
 	private Settings(){ // You can't access the constructor
 		setDefaults();
@@ -53,6 +54,12 @@ class Settings extends App{
 	}
 	
 
+	boolean isRefreshEnabled() {
+		return refreshEnabled;
+	}
+	private void setRefreshEnabled(boolean refreshEnabled) {
+		this.refreshEnabled = refreshEnabled;
+	}
 	public String getIndexSymbol() {
 		//FIXME Clicking cancel erased string from object
 		return indexSymbol;
