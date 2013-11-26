@@ -60,6 +60,9 @@ class Settings extends App{
 	private void setRefreshEnabled(boolean refreshEnabled) {
 		this.refreshEnabled = refreshEnabled;
 	}
+	
+	
+	
 	public String getIndexSymbol() {
 		//FIXME Clicking cancel erased string from object
 		return indexSymbol;
