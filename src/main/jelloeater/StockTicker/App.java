@@ -57,22 +57,19 @@ class App {
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
 		
-	
+				// If you declare it as a static class instead, 
+				// then it's a "nested" class, which doesn't need a particular object instance.
+				/*
+				TickerInfo testTickerGUI = new TickerInfo();
+				testTickerGUI=testTickerGUI.setTickerViaGui(); // GUI based constructor
+				testTickerGUI.getTickerInfoDataGUI(testTickerGUI);
+				*/
 		
 		
 		
 		
 		
-		/*
-		TickerInfo testTickerGUI = new TickerInfo();
-		testTickerGUI=testTickerGUI.setTickerViaGui(); // GUI based constructor
-		testTickerGUI.getTickerInfoDataGUI(testTickerGUI);
-		*/
 
-		// If you declare it as a static class instead, 
-		// then it's a "nested" class, which doesn't need a particular object instance.
-		
-		setUpIndexTask();
 		
 		
 		
@@ -81,53 +78,25 @@ class App {
 		
 		
 		
-		//testTicker.updateTicker(testTicker);
+		
+		
 		
 		
 		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 			
-		//addStockToList();
+		addStockToList();
 			
 		
 		
-		//System.err.println("brake");
+		System.err.println("brake");
 		
 		//TODO re-enable when GUI is working
 		//System.exit(0); // Makes sure program ends
     }
 
-
-	private static void setUpIndexTask() throws Exception {
-		TickerInfo indexTicker = new TickerInfo(settingsProperties.getIndexSymbol());
-		MyTimerTask refreshIndexTickerInfo = new MyTimerTask(); // Creates a new task
-		Timer myTimer = new Timer(); // Creates a new timer
-		refreshIndexTickerInfo.updateTickerTimer(indexTicker);
-		myTimer.scheduleAtFixedRate(refreshIndexTickerInfo, 0, settingsProperties.getRefreshIntervalSeconds()*1000);
-	}
 	
-	static class MyTimerTask extends TimerTask{
-		private TickerInfo dataForTask = null;
 		
-		/**
-		 * Takes TickerInfo Object, updates, should call output method
-		 * @param indexTickerInfo
-		 */
-		public void updateTickerTimer(TickerInfo indexTickerInfo){
-		dataForTask = indexTickerInfo; // Sets local object
-		}
-		public void run(){
-			if (settingsProperties.isRefreshEnabled()==true){
-				try {
-				dataForTask=dataForTask.updateTicker(dataForTask);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			System.err.println(dataForTask.getPrice());
-			}
-			
-			
-		}
-	}
+	
 	
 
 	
