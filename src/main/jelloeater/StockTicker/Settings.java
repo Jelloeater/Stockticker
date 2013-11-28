@@ -28,7 +28,7 @@ class Settings extends App{
 	private String quoteSource;
 	private static Settings singletonRef; // This stores the state of the singleton, and block additional ones from being created
 	private String indexSymbol;
-	private boolean refreshEnabled;
+	//private boolean refreshEnabled; // Might enable in the future
 	
 	private Settings(){ // You can't access the constructor
 		setDefaults();
@@ -53,16 +53,17 @@ class Settings extends App{
     	setIndexSymbol("GOOG");
 	}
 	
-
+	/*
+	// TODO Implement in the future, maybe...
 	boolean isRefreshEnabled() {
 		return refreshEnabled;
 	}
+	
 	private void setRefreshEnabled(boolean refreshEnabled) {
 		this.refreshEnabled = refreshEnabled;
 	}
-	
-	
-	
+	*/
+
 	public String getIndexSymbol() {
 		//FIXME Clicking cancel erased string from object
 		return indexSymbol;
@@ -77,7 +78,7 @@ class Settings extends App{
 		return refreshIntervalSeconds;
 	}
 	
-	private void setQuoteSource(String quoteSourceIN) {
+	void setQuoteSource(String quoteSourceIN) {
 		quoteSource = quoteSourceIN;
 	}
 
@@ -107,16 +108,7 @@ class Settings extends App{
 		} while (inputFail == true);		
 	}
 	
-	
-	void setQuoteSourceGUI() {
-		String[] quoteSourceChoices = { "MarketWatch", "Yahoo", "Google"}; // Dialog box choices array
-	       
-		settingsProperties.setQuoteSource((String) JOptionPane.showInputDialog(null, null,
-	           "Choose Quote Source", JOptionPane.QUESTION_MESSAGE, null, 
-	           quoteSourceChoices, // Array of choices
-	           settingsProperties.getQuoteSource())); // Initial choice	
-	}
-	
+			
 	String getQuoteSource() {
 		return quoteSource;
 	}

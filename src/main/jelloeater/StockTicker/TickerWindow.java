@@ -17,10 +17,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.ButtonGroup;
 
 class TickerWindow extends App{
 
 	private JFrame mainWindow;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 
 	/**
@@ -119,15 +123,7 @@ class TickerWindow extends App{
 				}
 			});
 			mnSettings.add(mntmSetRefresh);
-			
-			JMenuItem mntmSetSource = new JMenuItem("Set Source...");
-			mntmSetSource.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					settingsProperties.setQuoteSourceGUI();
-				}
-			});
-			mnSettings.add(mntmSetSource);
-			
+									
 			JMenuItem mntmSetIndex = new JMenuItem("Set Index...");
 			mntmSetIndex.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -135,6 +131,30 @@ class TickerWindow extends App{
 				}
 			});
 			mnSettings.add(mntmSetIndex);
+			
+			JMenu mnNewMenu = new JMenu("Quote Source");
+			mnSettings.add(mnNewMenu);
+			
+			JRadioButtonMenuItem rdbtnmntmGoogle = new JRadioButtonMenuItem("Google");
+			rdbtnmntmGoogle.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					settingsProperties.setQuoteSource("Google");
+				}
+			});
+			buttonGroup.add(rdbtnmntmGoogle);
+			mnNewMenu.add(rdbtnmntmGoogle);
+			
+			/*
+			JRadioButtonMenuItem rdbtnmntmNewRadioItem = new JRadioButtonMenuItem("Yahoo");
+			buttonGroup.add(rdbtnmntmNewRadioItem);
+			mnNewMenu.add(rdbtnmntmNewRadioItem);
+			
+			JRadioButtonMenuItem rdbtnmntmMarketwatch = new JRadioButtonMenuItem("MarketWatch");
+			mnNewMenu.add(rdbtnmntmMarketwatch);
+			
+			JCheckBoxMenuItem chckbxmntmNewCheckItem = new JCheckBoxMenuItem("Refresh Enabled");
+			mnSettings.add(chckbxmntmNewCheckItem);
+			*/
 			
 			JMenu mnHelp = new JMenu("Help");
 			menuBar.add(mnHelp);

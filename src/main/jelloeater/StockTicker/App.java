@@ -5,13 +5,11 @@ package jelloeater.StockTicker;
 
 
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
 import jwsUtils.*; // Holds neat bits of code to be reused over time
 
-import java.util.Timer;
 
 
 
@@ -68,7 +66,7 @@ class App {
 		
 		
 		
-		
+		Scheduler.startTasks();
 
 		
 		
@@ -82,7 +80,7 @@ class App {
 		
 		
 		
-		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
+		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 			
 		addStockToList();
 			
