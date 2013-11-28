@@ -1,16 +1,9 @@
 package jelloeater.StockTicker;
 
 // import java.net.*; // To be used for net connection checking
-
-
-
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
-
 import jwsUtils.*; // Holds neat bits of code to be reused over time
-
-
 
 
 /*
@@ -35,10 +28,6 @@ class App {
 	
 	static ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
 	
-	
-	 
-	 
-
 
 	/**
 	 * This runs first
@@ -72,7 +61,8 @@ class App {
 		
 		
 		
-		
+		addStockToList(); // Should get called by + button in GUI
+		// TODO write code to print out contents of ArrayList to console as a test
 		
 		
 		
@@ -82,7 +72,7 @@ class App {
 		
 		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 			
-		addStockToList();
+		
 			
 		
 		
@@ -107,8 +97,8 @@ class App {
 	
 	static void addStockToList(){
 		// TODO Needs symbol verification, try and catch?
-		TickerInfo myStock = new TickerInfo(); // Input Window
-		myStock.setTickerViaGui();
+		TickerInfo myStock = new TickerInfo(); 
+		myStock=myStock.setTickerViaGui(); // Input Window
 		
 		tickerList.add(myStock);
 		
@@ -118,6 +108,7 @@ class App {
 
 	public static void shutdownScript() {	
 		settingsProperties.saveSettings(configFilePath);
+		// TODO Add code for shutting down threads 
 	}
 	
 	/** Shutdown Hook, used to override application close behavior
