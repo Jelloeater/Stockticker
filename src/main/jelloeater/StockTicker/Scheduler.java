@@ -12,14 +12,24 @@ import java.util.concurrent.ScheduledFuture;
     
 	
     public static void startTasks() {
-    	Scheduler taskTimerThread = new Scheduler();
-    	taskTimerThread.task();
-    	Scheduler someTaskThread = new Scheduler();
-    	someTaskThread.task2();
-    	someTaskThread.shutdownScheduler();
+    	Scheduler taskThread1 = new Scheduler();
+    	Scheduler taskThread2 = new Scheduler();
+    	taskThread1.task();
+    	taskThread2.task2();
+    	taskThread2.shutdownThread();
 		}
     
+    public void setKillTask(boolean killTask) {
+		this.killTask = killTask;
+	}
+    
+    boolean isSetKillTaskEnabled() {
+		return killTask;
+	}
+    
+    
     public void task() {
+    	
         final Runnable taskToRun = new Runnable() {
         	public void run() { 
         		System.out.println("Party!"); //What code to run
@@ -40,7 +50,9 @@ import java.util.concurrent.ScheduledFuture;
         ScheduledFuture<?> taskTimerHandle=scheduler.scheduleAtFixedRate(taskToRun, 1, 2, SECONDS);
         if (killTask==true) taskTimerHandle.cancel(true);
     }
-    public void shutdownScheduler(){
+
+    
+    public void shutdownThread(){
     	// Need to shutdown before quitting
     	final Runnable shutdownTaskScript = new Runnable() {
         	public void run() { 
@@ -53,12 +65,6 @@ import java.util.concurrent.ScheduledFuture;
         if (killTask==true) taskTimerHandle.cancel(true);
     }
     
-    public void setKillTask(boolean killTask) {
-		this.killTask = killTask;
-	}
-    
-    boolean isSetKillTaskEnabled() {
-		return killTask;
-	}
+   
     
 }
