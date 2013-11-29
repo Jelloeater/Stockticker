@@ -134,7 +134,7 @@ class TickerWindow extends App{
 			JMenu mnNewMenu = new JMenu("Quote Source");
 			mnSettings.add(mnNewMenu);
 			
-			JRadioButtonMenuItem rdbtnmntmGoogle = new JRadioButtonMenuItem("Google");
+			JRadioButtonMenuItem rdbtnmntmGoogle = new JRadioButtonMenuItem("Google",settingsProperties.isSourceGoogle());
 			rdbtnmntmGoogle.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					settingsProperties.setSourceGoogle(true);

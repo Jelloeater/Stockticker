@@ -26,7 +26,7 @@ class Settings extends App{
 	
 	private static Settings singletonRef; // This stores the state of the singleton, and block additional ones from being created
 	private int refreshIntervalSeconds;
-	private boolean sourceGoogle;
+	private boolean sourceGoogle; // Used for selection logic
 	private String indexSymbol;
 	//private boolean refreshEnabled; // Might enable in the future
 	
