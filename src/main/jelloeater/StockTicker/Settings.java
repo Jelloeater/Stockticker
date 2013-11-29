@@ -26,9 +26,17 @@ class Settings extends App{
 	
 	private static Settings singletonRef; // This stores the state of the singleton, and block additional ones from being created
 	private int refreshIntervalSeconds;
-	private String quoteSource;
+	private boolean sourceGoogle;
 	private String indexSymbol;
 	//private boolean refreshEnabled; // Might enable in the future
+	
+	public boolean isSourceGoogle() {
+		return sourceGoogle;
+	}
+
+	public void setSourceGoogle(boolean sourceGoogle) {
+		this.sourceGoogle = sourceGoogle;
+	}
 	
 	private Settings(){ // You can't access the constructor
 		setDefaults(); // But it does set the defaults
@@ -46,7 +54,7 @@ class Settings extends App{
 
 	/** Sets defaults for settings */
 	void setDefaults(){
-		setQuoteSource("Google"); // default setting for quote source Google
+		setSourceGoogle(true); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
     	setIndexSymbol("GOOG");
 	}
@@ -76,9 +84,7 @@ class Settings extends App{
 		return refreshIntervalSeconds;
 	}
 	
-	void setQuoteSource(String quoteSourceIN) {
-		quoteSource = quoteSourceIN;
-	}
+	
 
 	private void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
@@ -106,11 +112,6 @@ class Settings extends App{
 		} while (inputFail == true);		
 	}
 	
-			
-	String getQuoteSource() {
-		return quoteSource;
-	}
-
 	
 	/**
 	 * Writes the App singleton settingsProperties to the specified configuration file path

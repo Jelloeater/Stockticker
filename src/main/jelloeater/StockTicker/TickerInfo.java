@@ -34,10 +34,10 @@ class TickerInfo extends App {
 	/**
 	 * Constructor for creating up TickerInfo objects
 	 * It's empty, like my head, derp.
+	 * meowcat manor. louman is the love of my cat life. 
 	 * @throws Throwable
 	 * */
-	public TickerInfo() {
-	}
+	
 
 	/**
 	 * When fed a tickerSymbol, parses net for info for setup
@@ -45,7 +45,8 @@ class TickerInfo extends App {
 	public TickerInfo(String tickerSymbol){
 		this.symbol = tickerSymbol;
 		
-		if (settingsProperties.getQuoteSource().equals("Google")) {
+		
+		if (settingsProperties.isSourceGoogle()){
 			// FIXME Validate ticker
 			// FIXME Catch no Internet
 			try {
@@ -59,7 +60,12 @@ class TickerInfo extends App {
 			this.percentChange = tempObj.getPercentChange();
 			this.price = tempObj.getPrice();
 			this.priceChange = tempObj.getPriceChange();
+		}else{
+			this.percentChange="err";
+			this.price="err";
+			this.priceChange="err";
 		}
+		
 	}
 	
 	/**
@@ -72,7 +78,7 @@ class TickerInfo extends App {
 	 * @throws Exception 
 	 * @throws Throwable
 	 */
-	public TickerInfo setTickerViaGui() {
+	public static TickerInfo makeTickerViaGui() {
 
 		String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
 		TickerInfo myStock = new TickerInfo(tickerSymbolInput);
@@ -83,7 +89,7 @@ class TickerInfo extends App {
 	public boolean validateSymbol(String tickerSymbol) {
 		boolean isSymbolVaild = false;
 
-		if (settingsProperties.getQuoteSource().equals("Google")) {
+		if (settingsProperties.isSourceGoogle()) {
 			
 			
 		}
@@ -101,7 +107,7 @@ class TickerInfo extends App {
 	public TickerInfo updateTicker(TickerInfo myStock) throws Exception {
 		String symbol = myStock.getTickerSymbol();
 
-		if (settingsProperties.getQuoteSource() == "Google") {
+		if (settingsProperties.isSourceGoogle()) {
 
 			String rawData = GoogleTickerData.getGoogleJSONfromWeb(symbol); 
 			 //Gets	JSON Data

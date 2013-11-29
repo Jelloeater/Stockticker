@@ -39,15 +39,6 @@ class App {
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
 		
-				// If you declare it as a static class instead, 
-				// then it's a "nested" class, which doesn't need a particular object instance.
-				/*
-				TickerInfo testTickerGUI = new TickerInfo();
-				testTickerGUI=testTickerGUI.setTickerViaGui(); // GUI based constructor
-				testTickerGUI.getTickerInfoDataGUI(testTickerGUI);
-				*/
-		
-		
 		
 		
 		//Scheduler updateIndex = new Scheduler();
@@ -60,7 +51,9 @@ class App {
 		
 		
 		
-
+		TickerInfo testStock = TickerInfo.makeTickerViaGui();
+		testStock.getTickerInfoDataGUI(testStock);
+		// Still works :)
 		
 		
 		
@@ -69,17 +62,11 @@ class App {
 		// TODO write code to print out contents of ArrayList to console as a test
 		
 		
-		
-		
-		
-		
+	
 		
 		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 			
-		
-			
-		
-		
+
 		System.err.println("brake");
 		
 		//TODO re-enable when GUI is working
@@ -87,21 +74,9 @@ class App {
     }
 
 	
-		
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
+   /////////////////////////////////////////////////////
 	static void addStockToList(){
-		TickerInfo myStock = new TickerInfo(); 
-		myStock=myStock.setTickerViaGui(); // Input Window
+		TickerInfo myStock=TickerInfo.makeTickerViaGui(); // Input Window
 		
 		tickerList.add(myStock);
 		
