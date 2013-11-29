@@ -42,19 +42,23 @@ class App {
 		
 		
 		//Scheduler updateIndex = new Scheduler();
-		
+		/*
 		Scheduler exampleTicker = new Scheduler();
 		exampleTicker.updateSymbol();
 		exampleTicker.task2();
-		
+		*/
 		//exampleTicker.shutdownThread();
 		
 		
-		
+				
 		TickerInfo testStock = TickerInfo.makeTickerViaGui();
 		testStock.getTickerInfoDataGUI(testStock);
 		// Still works :)
 		
+		
+
+		
+			
 		
 		
 		

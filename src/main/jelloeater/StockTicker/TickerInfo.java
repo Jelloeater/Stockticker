@@ -44,29 +44,50 @@ class TickerInfo extends App {
 	 */
 	public TickerInfo(String tickerSymbol){
 		this.symbol = tickerSymbol;
-		
+		int retryCounter = 0;
+		int maxRetry = 3;
 		
 		if (settingsProperties.isSourceGoogle()){
-			// FIXME Validate ticker
-			// FIXME Catch no Internet
-			try {
-				this.rawData = GoogleTickerData.getGoogleJSONfromWeb(tickerSymbol);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 
+			do {
+				try {
+					this.rawData = GoogleTickerData.getGoogleJSONfromWeb(tickerSymbol);
+					// FIXME Validate ticker
+					break;
+				} catch (IOException e) {
+					//e.printStackTrace();
+					System.err.println("Connection Failure - Retry: " + retryCounter);
+					retryCounter ++;
+					try {
+						Thread.sleep(2000); // Wait 2 seconds
+						// TODO is this okay when we go multi-thread?
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+						System.err.println("OH SHIT!!!");
+						System.err.println("This is a problem related to the thread sleep, I think?");
+					}
+				}
+			} while (retryCounter <= maxRetry);
+
+			if (retryCounter <= maxRetry ){
 			GoogleTickerData tempObj = GoogleTickerData
 					.mapJsonDataToObject(rawData);
 			this.percentChange = tempObj.getPercentChange();
 			this.price = tempObj.getPrice();
 			this.priceChange = tempObj.getPriceChange();
-		}else{
+			}else{
+				JOptionPane.showMessageDialog(null, "Internet Connection Failure", "Error", 0);
+			}
+			
+		}else{ // If quote source is not set in settingsProperties
 			this.percentChange="err";
 			this.price="err";
 			this.priceChange="err";
+			JOptionPane.showMessageDialog(null, "Quote source error", "Error", 0);
 		}
-		
+	
 	}
+	
 	
 	/**
 	 * Opens pop-up text box, takes input from text box and create a new object
