@@ -5,30 +5,26 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 
+	/**
+	 * Sets up threads and runs tasks
+	 * @author Jesse
+	 *
+	 */
 	class Scheduler extends App{
-	 
-		private boolean killTask = false;  
-		private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
-    
-	
-    public static void startTasks() {
-    	Scheduler taskThread1 = new Scheduler();
-    	Scheduler taskThread2 = new Scheduler();
-    	taskThread1.task();
-    	taskThread2.task2();
-    	taskThread2.shutdownThread();
-		}
-    
+
+		private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+		private static boolean killAllTasks = false; 
+		
     public void setKillTask(boolean killTask) {
-		this.killTask = killTask;
+		Scheduler.killAllTasks = killTask;
 	}
     
     boolean isSetKillTaskEnabled() {
-		return killTask;
+		return killAllTasks;
 	}
     
     
-    public void task() {
+    public void updateSymbol() {
     	
         final Runnable taskToRun = new Runnable() {
         	public void run() { 
@@ -36,9 +32,10 @@ import java.util.concurrent.ScheduledFuture;
         	}
         };
         
-        ScheduledFuture<?> taskTimerHandle=scheduler.scheduleAtFixedRate(taskToRun, 0, 1, SECONDS);
-        if (killTask==true) taskTimerHandle.cancel(true);
+        scheduler.scheduleAtFixedRate(taskToRun, 0, 500, MILLISECONDS);
+        // Good for only doing one set of actions per thread
     }
+    
     
     public void task2() {
         final Runnable taskToRun = new Runnable() {
@@ -47,24 +44,20 @@ import java.util.concurrent.ScheduledFuture;
         	}
         };
         
-        ScheduledFuture<?> taskTimerHandle=scheduler.scheduleAtFixedRate(taskToRun, 1, 2, SECONDS);
-        if (killTask==true) taskTimerHandle.cancel(true);
+        ScheduledFuture<?> taskTimerHandle=scheduler.scheduleAtFixedRate(taskToRun, 1, 3, SECONDS);
+        if (killAllTasks==true) taskTimerHandle.cancel(false);
+        // Good for queuing multiple tasks in one thread that can be canceled on a task by task basis
     }
-
+	
     
     public void shutdownThread(){
-    	// Need to shutdown before quitting
-    	final Runnable shutdownTaskScript = new Runnable() {
-        	public void run() { 
-        		scheduler.shutdown();
-        		System.err.println("nightnight");
-        	}
-        };
-        
-        ScheduledFuture<?> taskTimerHandle=scheduler.scheduleAtFixedRate(shutdownTaskScript, 10, 1, SECONDS);
-        if (killTask==true) taskTimerHandle.cancel(true);
+    	scheduler.shutdown();
+    	if (debugMode==true) System.err.println("nightnight");
     }
+        
+    }
+
+	
     
    
     
-}

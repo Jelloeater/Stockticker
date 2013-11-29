@@ -72,7 +72,6 @@ class TickerWindow extends App{
 		mainWindow.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent e){
-				//TODO Should figure out how this works
 				if (App.shutdownWindow()== 0) {
 					((JFrame)(e.getComponent())).dispose();
 				} else {

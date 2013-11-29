@@ -24,21 +24,19 @@ import com.google.gson.Gson;
  */
 class Settings extends App{
 	
+	private static Settings singletonRef; // This stores the state of the singleton, and block additional ones from being created
 	private int refreshIntervalSeconds;
 	private String quoteSource;
-	private static Settings singletonRef; // This stores the state of the singleton, and block additional ones from being created
 	private String indexSymbol;
 	//private boolean refreshEnabled; // Might enable in the future
 	
 	private Settings(){ // You can't access the constructor
-		setDefaults();
+		setDefaults(); // But it does set the defaults
 	}
+	
 	/**
-	 * We set up the singleton with this
-	 * Sets up singleton
-	 * We can only do this once, hence the name
-	 * We can call this our constructor
-	 * @return
+	 * Singleton constructor
+	 * @return Settings Object
 	 */
 	public static Settings makeSingleton() {
       if (singletonRef == null)
@@ -86,8 +84,8 @@ class Settings extends App{
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
 	
-	void setIndexSymbolGUI(){	
-		// TODO Needs symbol verification, try and catch?
+	void setIndexSymbolGUI(){
+		// TODO Might need to get moved or reworked
 		 indexSymbol = JOptionPane.showInputDialog("Set Index Symbol", settingsProperties.getIndexSymbol());
 			
 	}

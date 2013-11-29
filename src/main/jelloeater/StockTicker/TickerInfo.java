@@ -5,6 +5,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import javax.swing.JOptionPane;
+
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,12 +42,17 @@ class TickerInfo extends App {
 	/**
 	 * When fed a tickerSymbol, parses net for info for setup
 	 */
-	public TickerInfo(String tickerSymbol) throws Exception {
+	public TickerInfo(String tickerSymbol){
 		this.symbol = tickerSymbol;
-		// FIXME: handle exception for no Internet access
+		
 		if (settingsProperties.getQuoteSource().equals("Google")) {
-			//TODO Validate ticker
-			this.rawData = GoogleTickerData.getGoogleJSONfromWeb(tickerSymbol);
+			// FIXME Validate ticker
+			// FIXME Catch no Internet
+			try {
+				this.rawData = GoogleTickerData.getGoogleJSONfromWeb(tickerSymbol);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 			GoogleTickerData tempObj = GoogleTickerData
 					.mapJsonDataToObject(rawData);
@@ -62,20 +69,14 @@ class TickerInfo extends App {
 	 * Basically the same thing as calling the constructor with a ticker symbol
 	 * 
 	 * @return myStock
+	 * @throws Exception 
 	 * @throws Throwable
 	 */
 	public TickerInfo setTickerViaGui() {
 
 		String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
-		TickerInfo myStock = null;
-		// FIXME: handle exception for no Internet access
-		try {
-			myStock = new TickerInfo(tickerSymbolInput);
-			// Passes input to constructor
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		TickerInfo myStock = new TickerInfo(tickerSymbolInput);
+		
 		return myStock;
 	}
 
@@ -237,7 +238,7 @@ class TickerInfo extends App {
 		 * @return
 		 * @throws java.io.IOException
 		 */
-		private static String getGoogleJSONfromWeb(String symbol) throws Exception {
+		private static String getGoogleJSONfromWeb(String symbol) throws IOException {
 			String url = "http://finance.google.com/finance/info?client=ig&q="
 					+ symbol; // URL to lookup
 			Document document = Jsoup.connect(url).get(); // Pull in dirty JSON

@@ -11,21 +11,16 @@ import jwsUtils.*; // Holds neat bits of code to be reused over time
  */
 class App {
 	
-	/**
-	* Debug flag
-	*/
+	/** Debug flag*/
 	static boolean debugMode = true;
 	
-	/**
-	* Holds all the settings for the application in a singleton object
-	* You can try and make another, but it won't let you
-	*/
+	/** Holds all the settings for the application in a singleton object */
 	static Settings settingsProperties = Settings.makeSingleton();
 	 
-	/** Global configuration file path, used for various settings operations*/
+	/** Global configuration file path, used for various settings operations */
 	static String configFilePath = "settings.cfg";
 	
-	
+	/** Holds all the tickerInfo Objects */
 	static ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
 	
 
@@ -55,7 +50,16 @@ class App {
 		
 		
 		
-		Scheduler.startTasks();
+		//Scheduler updateIndex = new Scheduler();
+		
+		Scheduler exampleTicker = new Scheduler();
+		exampleTicker.updateSymbol();
+		exampleTicker.task2();
+		
+		//exampleTicker.shutdownThread();
+		
+		
+		
 
 		
 		
@@ -96,7 +100,6 @@ class App {
 	
 	
 	static void addStockToList(){
-		// TODO Needs symbol verification, try and catch?
 		TickerInfo myStock = new TickerInfo(); 
 		myStock=myStock.setTickerViaGui(); // Input Window
 		
