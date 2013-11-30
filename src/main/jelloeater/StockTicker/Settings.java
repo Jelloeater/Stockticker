@@ -124,6 +124,7 @@ class Settings extends App{
 			diskWriter = new PrintStream(new File(configFileName));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			System.err.println("Save settings to disk didn't work");
 		} // Makes new file / overwrites and assigns object
 		
 		Gson gson = new Gson(); // Initializes object

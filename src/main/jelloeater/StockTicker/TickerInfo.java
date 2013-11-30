@@ -31,18 +31,12 @@ class TickerInfo extends App {
 	private String priceChange;
 	private String rawData;
 
-	/**
-	 * Constructor for creating up TickerInfo objects
-	 * It's empty, like my head, derp.
-	 * meowcat manor. louman is the love of my cat life. 
-	 * @throws Throwable
-	 * */
-	
 
 	/**
 	 * When fed a tickerSymbol, parses net for info for setup
+	 * @param displayGUI 
 	 */
-	public TickerInfo(String tickerSymbol){
+	private TickerInfo(String tickerSymbol, boolean displayGUI){
 		this.symbol = tickerSymbol;
 		int retryCounter = 0;
 		int maxRetry = 3;
@@ -52,7 +46,7 @@ class TickerInfo extends App {
 			do {
 				try {
 					this.rawData = GoogleTickerData.getGoogleJSONfromWeb(tickerSymbol);
-					// FIXME Validate ticker
+					// FIXME Validate ticker call
 					break;
 				} catch (IOException e) {
 					//e.printStackTrace();
@@ -70,43 +64,46 @@ class TickerInfo extends App {
 			} while (retryCounter <= maxRetry);
 
 			if (retryCounter <= maxRetry ){
-			GoogleTickerData tempObj = GoogleTickerData
-					.mapJsonDataToObject(rawData);
+			GoogleTickerData tempObj = GoogleTickerData.mapJsonDataToObject(rawData);
 			this.percentChange = tempObj.getPercentChange();
 			this.price = tempObj.getPrice();
 			this.priceChange = tempObj.getPriceChange();
 			}else{
-				JOptionPane.showMessageDialog(null, "Internet Connection Failure", "Error", 0);
-			}
-			
-		}else{ // If quote source is not set in settingsProperties
+				if (displayGUI == true) JOptionPane.showMessageDialog(null, "Internet Connection Failure", "Error", 0);
+			}	
+		}
+		
+		else{ // If quote source is not set in settingsProperties
 			this.percentChange="err";
 			this.price="err";
 			this.priceChange="err";
-			JOptionPane.showMessageDialog(null, "Quote source error", "Error", 0);
+			if (displayGUI == true) JOptionPane.showMessageDialog(null, "Quote source error", "Error", 0);
 		}
-	
 	}
 	
 	
-	/**
-	 * Opens pop-up text box, takes input from text box and create a new object
-	 * to pass the update method, then returns a myStock object that can be
-	 * parsed via getters Lookup logic is dependent on Settings.quoteSource
-	 * Basically the same thing as calling the constructor with a ticker symbol
-	 * 
-	 * @return myStock
-	 * @throws Exception 
-	 * @throws Throwable
-	 */
+	
+	/** Creates symbol input box
+	 * @return TickerInfo*/
 	public static TickerInfo makeTickerViaGui() {
-
+		boolean displayGUI = true;
 		String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
-		TickerInfo myStock = new TickerInfo(tickerSymbolInput);
+		TickerInfo myStock = new TickerInfo(tickerSymbolInput, displayGUI);
 		
 		return myStock;
 	}
-
+	
+	/** Creates ticker object, due to constructor being private
+	 * @param tickerSymbolInput
+	 * @return TickerInfo*/
+	public static TickerInfo makeTicker(String tickerSymbolInput) {
+		boolean displayGUI = false;
+		TickerInfo myStock = new TickerInfo(tickerSymbolInput, displayGUI);
+		
+		return myStock;
+	}
+	
+	// FIXME Validate ticker method
 	public boolean validateSymbol(String tickerSymbol) {
 		boolean isSymbolVaild = false;
 
@@ -203,6 +200,14 @@ class TickerInfo extends App {
 						+ myStock.getPercentChange() + "%" + "\n"
 						+ "Price Change: " + myStock.getPriceChange(),
 				"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	void getTickerInfoDataConsole(TickerInfo myStock) {
+		System.out.println(
+				"Symbol: " + myStock.getTickerSymbol() + "\n" + "Price: "
+						+ myStock.getPrice() + "\n" + "% Change: "
+						+ myStock.getPercentChange() + "%" + "\n"
+						+ "Price Change: " + myStock.getPriceChange());
 	}
 
 	/**

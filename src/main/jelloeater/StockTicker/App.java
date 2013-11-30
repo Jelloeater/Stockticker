@@ -50,9 +50,11 @@ class App {
 		//exampleTicker.shutdownThread();
 		
 		
-				
 		TickerInfo testStock = TickerInfo.makeTickerViaGui();
 		testStock.getTickerInfoDataGUI(testStock);
+		
+		TickerInfo testStock2 = TickerInfo.makeTicker("GOOG");
+		testStock2.getTickerInfoDataConsole(testStock2);
 		// Still works :)
 		
 		
