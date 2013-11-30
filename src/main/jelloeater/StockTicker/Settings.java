@@ -84,16 +84,14 @@ class Settings extends App{
 		return refreshIntervalSeconds;
 	}
 	
-	
-
 	private void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
 	
+	/** Only sets string value, doesn't actually set object*/
 	void setIndexSymbolGUI(){
 		// TODO Might need to get moved or reworked
-		 indexSymbol = JOptionPane.showInputDialog("Set Index Symbol", settingsProperties.getIndexSymbol());
-			
+		indexSymbol = JOptionPane.showInputDialog("Set Index Symbol", settingsProperties.getIndexSymbol());		
 	}
 	
 	void setRefreshIntervalSecondsGUI(){	

@@ -85,7 +85,7 @@ class TickerInfo extends App {
 	
 	/** Creates symbol input box
 	 * @return TickerInfo*/
-	public static TickerInfo makeTickerViaGui() {
+	public static TickerInfo makeTickerObjectViaGui() {
 		boolean displayGUI = true;
 		String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
 		TickerInfo myStock = new TickerInfo(tickerSymbolInput, displayGUI);
@@ -96,7 +96,7 @@ class TickerInfo extends App {
 	/** Creates ticker object, due to constructor being private
 	 * @param tickerSymbolInput
 	 * @return TickerInfo*/
-	public static TickerInfo makeTicker(String tickerSymbolInput) {
+	public static TickerInfo makeTickerObject(String tickerSymbolInput) {
 		boolean displayGUI = false;
 		TickerInfo myStock = new TickerInfo(tickerSymbolInput, displayGUI);
 		
@@ -122,7 +122,7 @@ class TickerInfo extends App {
 	 * @return myStock object with updated data
 	 * @throws Exception
 	 */
-	public TickerInfo updateTicker(TickerInfo myStock) throws Exception {
+	public TickerInfo updateTickerObject(TickerInfo myStock) throws Exception {
 		String symbol = myStock.getTickerSymbol();
 
 		if (settingsProperties.isSourceGoogle()) {

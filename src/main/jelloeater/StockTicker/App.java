@@ -23,6 +23,9 @@ class App {
 	/** Holds all the tickerInfo Objects */
 	static ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
 	
+	/** Sets up ticker index object*/
+	static TickerInfo indexTicker;
+	
 
 	/**
 	 * This runs first
@@ -38,6 +41,8 @@ class App {
 		addShutdownHook(); // Adds Shutdown hook
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
+		indexTicker = TickerInfo.makeTickerObject(settingsProperties.getIndexSymbol()); // creates initial index
+		// FIXME update index along with arrayList
 		
 		
 		
@@ -50,10 +55,10 @@ class App {
 		//exampleTicker.shutdownThread();
 		
 		
-		TickerInfo testStock = TickerInfo.makeTickerViaGui();
+		TickerInfo testStock = TickerInfo.makeTickerObjectViaGui();
 		testStock.getTickerInfoDataGUI(testStock);
 		
-		TickerInfo testStock2 = TickerInfo.makeTicker("GOOG");
+		TickerInfo testStock2 = TickerInfo.makeTickerObject("GOOG");
 		testStock2.getTickerInfoDataConsole(testStock2);
 		// Still works :)
 		
@@ -65,8 +70,7 @@ class App {
 		
 		
 		addStockToList(); // Should get called by + button in GUI
-		// TODO write code to print out contents of ArrayList to console as a test
-		
+		// FIXME write code to print out contents of ArrayList to console as a test	
 		
 	
 		
@@ -82,7 +86,7 @@ class App {
 	
    /////////////////////////////////////////////////////
 	static void addStockToList(){
-		TickerInfo myStock=TickerInfo.makeTickerViaGui(); // Input Window
+		TickerInfo myStock=TickerInfo.makeTickerObjectViaGui(); // Input Window
 		
 		tickerList.add(myStock);
 		
