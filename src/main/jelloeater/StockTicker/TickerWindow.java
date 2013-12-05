@@ -75,8 +75,9 @@ class TickerWindow extends App{
 				if (App.shutdownWindow()== 0) {
 					((JFrame)(e.getComponent())).dispose();
 				} else {
-					((JFrame)(e.getComponent())).setVisible(true);
-				}	
+					e.getComponent().setVisible(true);
+					// You only need to cast once
+				}
 			}
 		});
 		

@@ -12,9 +12,9 @@ import java.util.concurrent.ScheduledFuture;
 	 */
 	class Scheduler extends App{
 
-		private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-		private static boolean killAllTasks = false; 
-		
+        private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        private static boolean killAllTasks = false;
+
     public void setKillTask(boolean killTask) {
 		Scheduler.killAllTasks = killTask;
 	}
@@ -45,14 +45,14 @@ import java.util.concurrent.ScheduledFuture;
         };
         
         ScheduledFuture<?> taskTimerHandle=scheduler.scheduleAtFixedRate(taskToRun, 1, 3, SECONDS);
-        if (killAllTasks==true) taskTimerHandle.cancel(false);
+        if (killAllTasks) taskTimerHandle.cancel(false);
         // Good for queuing multiple tasks in one thread that can be canceled on a task by task basis
     }
 	
     
     public void shutdownThread(){
     	scheduler.shutdown();
-    	if (debugMode==true) System.err.println("nightnight");
+    	if (debugMode) System.err.println("nightnight");
     }
         
     }

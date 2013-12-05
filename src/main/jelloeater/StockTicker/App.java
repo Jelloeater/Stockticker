@@ -111,8 +111,7 @@ class App {
 	}
 	
 	public static int shutdownWindow(){
-		int shutdownCode = JOptionPane.showConfirmDialog(null, "Do you want to quit?", null, 0);
-		return shutdownCode;
+		return JOptionPane.showConfirmDialog(null, "Do you want to quit?", null, JOptionPane.YES_NO_OPTION);
 	}
 }
 	

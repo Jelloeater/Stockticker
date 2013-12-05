@@ -69,7 +69,7 @@ class TickerInfo extends App {
 			this.price = tempObj.getPrice();
 			this.priceChange = tempObj.getPriceChange();
 			}else{
-				if (displayGUI == true) JOptionPane.showMessageDialog(null, "Internet Connection Failure", "Error", 0);
+				if (displayGUI) JOptionPane.showMessageDialog(null, "Internet Connection Failure", "Error", JOptionPane.ERROR_MESSAGE);
 			}	
 		}
 		
@@ -77,30 +77,28 @@ class TickerInfo extends App {
 			this.percentChange="err";
 			this.price="err";
 			this.priceChange="err";
-			if (displayGUI == true) JOptionPane.showMessageDialog(null, "Quote source error", "Error", 0);
+			if (displayGUI) JOptionPane.showMessageDialog(null, "Quote source error", "Error", 0);
 		}
 	}
 	
 	
 	
-	/** Creates symbol input box
+	/**Creates symbol input box
+     * Flag on call sets popup logic
 	 * @return TickerInfo*/
 	public static TickerInfo makeTickerObjectViaGui() {
-		boolean displayGUI = true;
 		String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
-		TickerInfo myStock = new TickerInfo(tickerSymbolInput, displayGUI);
-		
-		return myStock;
+
+        return new TickerInfo(tickerSymbolInput, true); // Call and return
 	}
 	
-	/** Creates ticker object, due to constructor being private
+	/**Creates ticker object, due to constructor being private
+     * Flag on call sets popup logic
 	 * @param tickerSymbolInput
 	 * @return TickerInfo*/
 	public static TickerInfo makeTickerObject(String tickerSymbolInput) {
-		boolean displayGUI = false;
-		TickerInfo myStock = new TickerInfo(tickerSymbolInput, displayGUI);
-		
-		return myStock;
+
+        return new TickerInfo(tickerSymbolInput, false);
 	}
 	
 	// FIXME Validate ticker method
@@ -245,10 +243,9 @@ class TickerInfo extends App {
 		private static GoogleTickerData mapJsonDataToObject(String rawJsonData) {
 			// Takes raw JSON data
 			Gson gson = new Gson(); // Initializes object
-			GoogleTickerData tickerDataStore = gson.fromJson(rawJsonData,
-					GoogleTickerData.class);
 
-			return tickerDataStore;
+            // Call and return
+            return gson.fromJson(rawJsonData, GoogleTickerData.class);
 		}
 
 		private String getPrice() {
@@ -277,8 +274,7 @@ class TickerInfo extends App {
 															// data
 			String jsonDirtyIN = document.select("*").text(); // Gets page text
 
-			String finalJsonOutput = cleanGoogleJSONdata(jsonDirtyIN);
-			return finalJsonOutput;
+            return cleanGoogleJSONdata(jsonDirtyIN);
 		}
 
 		private static String cleanGoogleJSONdata(String jsonDirtyIN) {
@@ -297,10 +293,10 @@ class TickerInfo extends App {
 			}
 			// </regex vodo>
 
-			String finalJsonOutput = jsonCleanOut.replace("[", "").replace("]",
-					""); // Clean off brackets
 
-			return finalJsonOutput;
+
+			return jsonCleanOut.replace("[", "").replace("]", "");
+			// Clean off brackets
 		}
 
 	}

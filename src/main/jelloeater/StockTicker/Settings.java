@@ -30,14 +30,6 @@ class Settings extends App{
 	private String indexSymbol;
 	//private boolean refreshEnabled; // Might enable in the future
 	
-	public boolean isSourceGoogle() {
-		return sourceGoogle;
-	}
-
-	public void setSourceGoogle(boolean sourceGoogle) {
-		this.sourceGoogle = sourceGoogle;
-	}
-	
 	private Settings(){ // You can't access the constructor
 		setDefaults(); // But it does set the defaults
 	}
@@ -56,9 +48,18 @@ class Settings extends App{
 	void setDefaults(){
 		setSourceGoogle(true); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
+    	// Yes it's a magic number, yes I don't care -_-
     	setIndexSymbol("GOOG");
 	}
-	
+
+	public boolean isSourceGoogle() {
+		return sourceGoogle;
+	}
+
+	public void setSourceGoogle(boolean sourceGoogle) {
+		this.sourceGoogle = true; //Changed to self reference
+	}
+
 	/*
 	// TODO Implement in the future, maybe...
 	boolean isRefreshEnabled() {
@@ -107,7 +108,7 @@ class Settings extends App{
 				JOptionPane.showMessageDialog(null, "Please enter a valid number", null, 0);
 				inputFail = true;
 				}
-		} while (inputFail == true);		
+		} while (inputFail);
 	}
 	
 	

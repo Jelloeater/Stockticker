@@ -44,8 +44,8 @@ public class GoogleTickerDataTest extends App{
 	}
 	*/
 	
-	public static String oldOfflineGoogleWebRegexParser(String quertyString) throws IOException{
-		String txt = quertyString; // Sets Regex string
+	public static String oldOfflineGoogleWebRegexParser(String queryString) throws IOException{
+		//String txt = quertyString; // Sets Regex string
 	    
 	    // Messy auto generated regex from http://txt2re.com
 	    String re1=".*?";	// Non-greedy match on filler
@@ -66,7 +66,7 @@ public class GoogleTickerDataTest extends App{
 	    String re16="(\".*?\")";	// Double Quote String 1
 
 	    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14+re15+re16,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-	    Matcher m = p.matcher(txt);
+	    Matcher m = p.matcher(queryString);
 	    String priceString = null;
 		if (m.find())
 	    {
@@ -88,8 +88,7 @@ public class GoogleTickerDataTest extends App{
 			
 	    String quertyString = document.select("*").text(); 
 	    // Gets page text
-		
-		String txt = quertyString; // Sets Regex string
+
 	    
 	    
 	    // Messy auto generated regex from http://txt2re.com
@@ -111,7 +110,7 @@ public class GoogleTickerDataTest extends App{
 	    String re16="(\".*?\")";	// Double Quote String 1
 
 	    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14+re15+re16,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-	    Matcher m = p.matcher(txt);
+	    Matcher m = p.matcher(quertyString);
 	    String priceString = null;
 		if (m.find())
 	    {
