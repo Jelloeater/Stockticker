@@ -41,7 +41,8 @@ class App {
 		addShutdownHook(); // Adds Shutdown hook
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
 		
-		indexTicker = TickerInfo.makeTickerObject(settingsProperties.getIndexSymbol()); // creates initial index
+		indexTicker = TickerInfo.makeTickerObject(settingsProperties.getIndexSymbol());
+		// creates initial index
 		// FIXME update index along with arrayList
 		
 		
@@ -55,46 +56,66 @@ class App {
 		//exampleTicker.shutdownThread();
 		
 		
-		TickerInfo testStock = TickerInfo.makeTickerObjectViaGui();
-		testStock.getTickerInfoDataGUI(testStock);
-		
-		TickerInfo testStock2 = TickerInfo.makeTickerObject("GOOG");
-		testStock2.getTickerInfoDataConsole(testStock2);
+		//TickerInfo testStock = TickerInfo.makeTickerObjectViaGui();
+		//testStock.getTickerInfoDataGUI(testStock);
+
+
+        tickerList.add(TickerInfo.makeTickerObject("JCP"));
+        tickerList.add(TickerInfo.makeTickerObject("TSLA"));
+        tickerList.add(TickerInfo.makeTickerObject("GOOG"));
+
+
+		//TickerInfo testStock2 = TickerInfo.makeTickerObject("GOOG");
+		//testStock2.getTickerInfoDataConsole(testStock2);
 		// Still works :)
 		
-		
 
-		
-			
-		
-		
-		
-		addStockToList(); // Should get called by + button in GUI
-		// FIXME write code to print out contents of ArrayList to console as a test	
-		
+		//addStockToListGUI(); // Should get called by + button in GUI
+
+        outputTickerListToConsole();
+        
 	
 		
-		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
-			
+		// TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 
-		System.err.println("brake");
-		
+
+        System.err.println("brake");
+
 		//TODO re-enable when GUI is working
 		//System.exit(0); // Makes sure program ends
     }
 
-	
-   /////////////////////////////////////////////////////
-	static void addStockToList(){
-		TickerInfo myStock=TickerInfo.makeTickerObjectViaGui(); // Input Window
-		
-		tickerList.add(myStock);
-		
-		tickerList.set(0, myStock);
-	}
+    private static void outputTickerListToConsole() {
+        // FIXME write code to print out contents of ArrayList to console as a test
+        // Get tickerList contents with for loop
+        // use getTickerInfoDataConsole for output
+    }
 
 
-	public static void shutdownScript() {	
+    /////////////////////////////////////////////////////
+	static void addStockToListGUI() {
+        // FIXME Add check to see if duplicate symbols exist
+        boolean duplicateSymbol;
+        TickerInfo myStock;
+
+        do {
+            myStock = TickerInfo.makeTickerObjectViaGui();
+            duplicateSymbol = isSymbolDuplicate(myStock.getTickerSymbol());
+        } while (duplicateSymbol == true);
+
+        tickerList.add(myStock);
+
+    }
+
+    private static boolean isSymbolDuplicate(String tickerSymbol) {
+        boolean isDuplicate = false;
+        // TODO Write duplicate checker
+
+        return isDuplicate;
+    }
+
+
+    public static void shutdownScript() {	
 		settingsProperties.saveSettings(configFilePath);
 		// TODO Add code for shutting down threads 
 	}

@@ -91,7 +91,7 @@ class TickerWindow extends App{
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				App.addStockToList();}
+				App.addStockToListGUI();}
 			});
 
 			mainWindow.getContentPane().add(btnNewButton, "cell 0 1,alignx right,aligny bottom");
