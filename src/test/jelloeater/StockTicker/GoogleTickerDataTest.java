@@ -1,24 +1,34 @@
 package jelloeater.StockTicker;
 
-import static org.junit.Assert.*;
-
-//import java.io.File;
-
-import java.io.IOException;
-
-//import java.util.Scanner;
-import java.util.regex.*;
-
-import jelloeater.StockTicker.TickerInfo.GoogleTickerData;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
-import jwsUtils.*;
+
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertTrue;
+
+//import java.io.File;
+//import java.util.Scanner;
 
 
-@SuppressWarnings("unused")
 public class GoogleTickerDataTest extends App{
+
+    @Test
+    public void testTickerOnline() throws Throwable {
+        // Tests if ticker parser still works *NOTE: Needs to be online*
+        TickerInfo test = TickerInfo.makeTickerObject("GOOG");
+        String p = test.getPrice();
+        // TODO Fix Parser for test
+        //float price = Float.parseFloat(p);
+        System.err.println(p);
+        System.err.println("break");
+        //assertTrue(price > .01);
+
+    }
+
 	/*
 	@Test
 	public void testGoogleJsonParser() throws Throwable { // Is the parser broken?
@@ -43,7 +53,9 @@ public class GoogleTickerDataTest extends App{
 		assertTrue(null, regexOutputPrice.equals(correctValue));
 	}
 	*/
-	
+
+    /*
+    @Test
 	public static String oldOfflineGoogleWebRegexParser(String queryString) throws IOException{
 		//String txt = quertyString; // Sets Regex string
 	    
@@ -79,9 +91,10 @@ public class GoogleTickerDataTest extends App{
 	    return priceString = priceString.replaceAll("^\"|\"$", ""); // Trim off quotes
 	    
 	}
-	
+	*/
 
-	public static String oldOnlineGoogleWebRegexParser(String symbol) throws IOException{
+	/*
+    public static String oldOnlineGoogleWebRegexParser(String symbol) throws IOException{
 		String url = "http://finance.google.com/finance/info?client=ig&q="+symbol;
 	    Document document = Jsoup.connect(url).get();
 	    // Query symbol page
@@ -123,6 +136,7 @@ public class GoogleTickerDataTest extends App{
 	    return priceString = priceString.replaceAll("^\"|\"$", ""); // Trim off quotes
 	    
 	}
+	*/
 }
 
 
