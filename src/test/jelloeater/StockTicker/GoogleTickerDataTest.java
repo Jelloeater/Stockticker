@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 //import java.io.File;
 //import java.util.Scanner;
@@ -18,15 +19,14 @@ public class GoogleTickerDataTest extends App{
 
     @Test
     public void testTickerOnline() throws Throwable {
-        // Tests if ticker parser still works *NOTE: Needs to be online*
+        // Tests if ticker parser still works by looking for positive number *NOTE: Needs to be online*
+        double priceMin = .01;
         TickerInfo test = TickerInfo.makeTickerObject("GOOG");
         String p = test.getPrice();
-        // TODO Fix Parser for test
-        //float price = Float.parseFloat(p);
-        System.err.println(p);
-        System.err.println("break");
-        //assertTrue(price > .01);
+        double price = Double.parseDouble(p.replaceAll(",","")); // Remove commas & parse
 
+        if(price > priceMin) assertTrue(true);
+            else {System.err.println("Is network okay?");fail();}
     }
 
 	/*
@@ -37,13 +37,20 @@ public class GoogleTickerDataTest extends App{
 		UtilsGUI.setLookAndFeel();
 		debugMode= true;
 	
-		String dirtyQuertyString= Utils.readFile("src/test/jelloeater/StockTicker/rawJsonDataForTesting.txt"); // Reads raw file to string
-		// It's a mess to try storing it in software, JSON has lots of escape characters that makes java throw up
-		//String rawQuertyString = TickerInfo.GoogleTickerData.cleanGoogleJSONdata(dirtyQuertyString);
+		String dirtyQuertyString=
+		Utils.readFile("src/test/jelloeater/StockTicker/rawJsonDataForTesting.txt");
+		// Reads raw file to string
+		// It's a mess to try storing it in software,
+		// JSON has lots of escape characters that makes java throw up
+		// String rawQuertyString = TickerInfo.GoogleTickerData.cleanGoogleJSONdata(dirtyQuertyString);
         
 		
-		TickerInfo.GoogleTickerData dataStore = new TickerInfo.GoogleTickerData(); // Creates dataStore Objects
-		dataStore=GoogleTickerData.mapJsonDataToObject(rawQuertyString); // Sends raw data to JSON parser to be converted to object
+		TickerInfo.GoogleTickerData dataStore = new TickerInfo.GoogleTickerData();
+		// Creates dataStore Objects
+
+		dataStore=GoogleTickerData.mapJsonDataToObject(rawQuertyString);
+		// Sends raw data to JSON parser to be converted to object
+
 		String correctValue = dataStore.getPrice(); // Gets value from process in tickerInfo
 		
 		
@@ -77,7 +84,8 @@ public class GoogleTickerDataTest extends App{
 	    String re15=".*?";	// Non-greedy match on filler
 	    String re16="(\".*?\")";	// Double Quote String 1
 
-	    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14+re15+re16,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8
+	    +re9+re10+re11+re12+re13+re14+re15+re16,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 	    Matcher m = p.matcher(queryString);
 	    String priceString = null;
 		if (m.find())
@@ -122,7 +130,10 @@ public class GoogleTickerDataTest extends App{
 	    String re15=".*?";	// Non-greedy match on filler
 	    String re16="(\".*?\")";	// Double Quote String 1
 
-	    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14+re15+re16,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6
+	        +re7+re8+re9+re10+re11+re12+re13+re14+re15+re16,
+	        Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+
 	    Matcher m = p.matcher(quertyString);
 	    String priceString = null;
 		if (m.find())
