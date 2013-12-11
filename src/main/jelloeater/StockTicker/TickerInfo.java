@@ -120,27 +120,9 @@ class TickerInfo extends App {
 	 * @return myStock object with updated data
 	 * @throws Exception
 	 */
-	public TickerInfo updateTickerObject(TickerInfo myStock) throws Exception {
+	public TickerInfo updateTickerObject(TickerInfo myStock) {
 		String symbol = myStock.getTickerSymbol();
-
-		if (settingsProperties.isSourceGoogle()) {
-
-			String rawData = GoogleTickerData.getGoogleJSONfromWeb(symbol); 
-			 //Gets	JSON Data
-
-			GoogleTickerData dataStore = new GoogleTickerData(); 
-			// Creates dataStore Objects
-
-			dataStore = GoogleTickerData.mapJsonDataToObject(rawData); 
-			// Sends raw data to JSON parser to be converted to object
-	
-			myStock.setPrice(dataStore.getPrice()); 
-			// Sets value for constructor
-			myStock.setPercentChange(dataStore.getPercentChange()); 
-			// Sets value for constructor
-			myStock.setPriceChange(dataStore.getPriceChange());
-			// Sets value for constructor
-		}
+        myStock = new TickerInfo(symbol,false);
 
 		return myStock;
 	}

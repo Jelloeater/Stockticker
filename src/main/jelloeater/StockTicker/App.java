@@ -50,7 +50,7 @@ class App {
 		//Scheduler updateIndex = new Scheduler();
 		/*
 		Scheduler exampleTicker = new Scheduler();
-		exampleTicker.updateSymbol();
+		exampleTicker.updateListTask();
 		exampleTicker.task2();
 		*/
 		//exampleTicker.shutdownThread();
@@ -63,6 +63,7 @@ class App {
         tickerList.add(TickerInfo.makeTickerObject("JCP"));
         tickerList.add(TickerInfo.makeTickerObject("TSLA"));
         tickerList.add(TickerInfo.makeTickerObject("GOOG"));
+        TickerList.updateTickerList();
 
 
 		//TickerInfo testStock2 = TickerInfo.makeTickerObject("GOOG");
@@ -72,11 +73,11 @@ class App {
 
 		//addStockToListGUI(); // Should get called by + button in GUI
 
-        outputTickerListToConsole();
+        TickerList.outputTickerListToConsole();
         
 	
 		
-		// TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
+		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 
 
         System.err.println("brake");
@@ -85,28 +86,10 @@ class App {
 		//System.exit(0); // Makes sure program ends
     }
 
-    private static void outputTickerListToConsole() {
-        // FIXME write code to print out contents of ArrayList to console as a test
-        // Get tickerList contents with for loop
-        // use getTickerInfoDataConsole for output
-    }
+
 
 
     /////////////////////////////////////////////////////
-	static void addStockToListGUI() {
-        // FIXME Add check to see if duplicate symbols exist
-        boolean duplicateSymbol;
-        TickerInfo myStock;
-
-        do {
-            myStock = TickerInfo.makeTickerObjectViaGui();
-            duplicateSymbol = isSymbolDuplicate(myStock.getTickerSymbol());
-        } while (duplicateSymbol == true);
-
-        tickerList.add(myStock);
-
-    }
-
     private static boolean isSymbolDuplicate(String tickerSymbol) {
         boolean isDuplicate = false;
         // TODO Write duplicate checker
@@ -125,14 +108,58 @@ class App {
 	static void addShutdownHook(){
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {	
 			@Override
-			public void run() { // Main Application class name
+			public void run() {
+			// Main Application class name
 				shutdownScript(); // Executes shutdown script
 				}
 		}));
 	}
 	
 	public static int shutdownWindow(){
-		return JOptionPane.showConfirmDialog(null, "Do you want to quit?", null, JOptionPane.YES_NO_OPTION);
+		return JOptionPane.showConfirmDialog(null, "Do you want to quit?", null,
+                JOptionPane.YES_NO_OPTION);
 	}
+
+    static class TickerList{
+
+        static void addStockToListGUI() {
+            // FIXME Add check to see if duplicate symbols exist
+            boolean duplicateSymbol;
+            TickerInfo myStock;
+
+            do {
+                myStock = TickerInfo.makeTickerObjectViaGui();
+                duplicateSymbol = isSymbolDuplicate(myStock.getTickerSymbol());
+            } while (duplicateSymbol == true);
+
+            tickerList.add(myStock);
+
+        }
+
+        /**
+         * Updates tickerList using for loop
+         * @throws Exception
+         */
+        static void updateTickerList() {
+            for (int i = 0; i < tickerList.size(); i++) {
+                TickerInfo myStock =tickerList.get(i);
+                myStock=myStock.updateTickerObject(myStock);
+                tickerList.set(i,myStock);
+            }
+        }
+
+        static void outputTickerListToConsole() {
+            if (debugMode){
+                for (int i = 0; i < tickerList.size(); i++) {
+                    // Get tickerList contents with for loop
+                    TickerInfo x =tickerList.get(i);
+                    x.getTickerInfoDataConsole(x); // use getTickerInfoDataConsole for output
+                    System.out.println();
+
+                }
+            }
+        }
+    }
+
 }
 	

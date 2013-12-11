@@ -15,7 +15,9 @@ import java.util.concurrent.ScheduledFuture;
         private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         private static boolean killAllTasks = false;
 
-    public void setKillTask(boolean killTask) {
+
+
+        public void setKillTask(boolean killTask) {
 		Scheduler.killAllTasks = killTask;
 	}
     
@@ -24,20 +26,21 @@ import java.util.concurrent.ScheduledFuture;
 	}
     
     
-    public void updateSymbol() {
+    public void updateListTask() {
     	
         final Runnable taskToRun = new Runnable() {
-        	public void run() { 
-        		System.out.println("Party!"); //What code to run
+        	public void run() {
+        		TickerList.updateTickerList();
+                // TODO Methods call for update goes here
         	}
         };
         
         scheduler.scheduleAtFixedRate(taskToRun, 0, 500, MILLISECONDS);
         // Good for only doing one set of actions per thread
     }
-    
-    
-    public void task2() {
+
+
+        public void task2() {
         final Runnable taskToRun = new Runnable() {
         	public void run() { 
         		System.out.println("... all I wanna do is ..."); //What code to run
