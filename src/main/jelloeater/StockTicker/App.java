@@ -43,38 +43,26 @@ class App {
 		
 		indexTicker = TickerInfo.makeTickerObject(settingsProperties.getIndexSymbol());
 		// creates initial index
-		// FIXME update index along with arrayList
-		
-		
-		
-		//Scheduler updateIndex = new Scheduler();
-		/*
-		Scheduler exampleTicker = new Scheduler();
-		exampleTicker.updateListTask();
-		exampleTicker.task2();
-		*/
-		//exampleTicker.shutdownThread();
-		
-		
-		//TickerInfo testStock = TickerInfo.makeTickerObjectViaGui();
-		//testStock.getTickerInfoDataGUI(testStock);
+
+
 
 
         tickerList.add(TickerInfo.makeTickerObject("JCP"));
         tickerList.add(TickerInfo.makeTickerObject("TSLA"));
         tickerList.add(TickerInfo.makeTickerObject("GOOG"));
-        TickerList.updateTickerList();
 
-
-		//TickerInfo testStock2 = TickerInfo.makeTickerObject("GOOG");
-		//testStock2.getTickerInfoDataConsole(testStock2);
-		// Still works :)
+		Scheduler updateTickers = new Scheduler();
+		// Starts Scheduler and runs updates to tickerList
 		
 
 		//addStockToListGUI(); // Should get called by + button in GUI
 
-        TickerList.outputTickerListToConsole();
-        
+        //TickerHelper.outputTickerListToConsole();
+
+
+		//updateTickers.shutdownThread();
+
+
 	
 		
 		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
@@ -84,6 +72,14 @@ class App {
 
 		//TODO re-enable when GUI is working
 		//System.exit(0); // Makes sure program ends
+
+
+
+		//exampleTicker.updateListTask();
+		//exampleTicker.task2();
+		//exampleTicker.shutdownThread();
+
+
     }
 
 
@@ -120,7 +116,7 @@ class App {
                 JOptionPane.YES_NO_OPTION);
 	}
 
-    static class TickerList{
+    static class TickerHelper {
 
         static void addStockToListGUI() {
             // FIXME Add check to see if duplicate symbols exist
@@ -133,7 +129,6 @@ class App {
             } while (duplicateSymbol == true);
 
             tickerList.add(myStock);
-
         }
 
         /**
@@ -147,6 +142,13 @@ class App {
                 tickerList.set(i,myStock);
             }
         }
+		static void updateIndexInfo() {
+			indexTicker = indexTicker.updateTickerObject(indexTicker);
+		}
+
+		static void outputIndexToConsole(){
+			indexTicker.getTickerInfoDataConsole(indexTicker);
+		}
 
         static void outputTickerListToConsole() {
             if (debugMode){
@@ -159,7 +161,6 @@ class App {
                 }
             }
         }
-    }
-
+	}
 }
 	

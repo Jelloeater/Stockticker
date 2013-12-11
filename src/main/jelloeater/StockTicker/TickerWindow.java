@@ -38,7 +38,8 @@ class TickerWindow extends App{
 					TickerWindow window = new TickerWindow();
 					window.mainWindow.setVisible(true);
 
-                    // Task loop goes here?
+
+                    // TODO Task loop goes here?
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -94,7 +95,7 @@ class TickerWindow extends App{
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TickerList.addStockToListGUI();}
+				TickerHelper.addStockToListGUI();}
 			});
 
 			mainWindow.getContentPane().add(btnNewButton, "cell 0 1,alignx right,aligny bottom");
