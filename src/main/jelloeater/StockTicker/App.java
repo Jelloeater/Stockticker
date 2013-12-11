@@ -52,8 +52,13 @@ class App {
         tickerList.add(TickerInfo.makeTickerObject("GOOG"));
 		TickerHelper.outputTickerListToConsole();
 		TickerHelper.outputIndexToConsole();
+		// Good up until here
 
-		Scheduler updateTickers = new Scheduler(); // Swollows the object?
+
+		// FUCK THIS METHOD CALL
+		// WHY YOU NO WORK!?!?!
+		// The solution is probably simple, but I'm tired
+		Scheduler updateTickers = new Scheduler(); // Swallows the object?
 		// Starts Scheduler and runs updates to tickerList
 		
 
@@ -65,7 +70,6 @@ class App {
 		//updateTickers.shutdownThread();
 
 
-	
 		
 		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
 
