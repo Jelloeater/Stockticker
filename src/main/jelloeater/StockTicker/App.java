@@ -50,8 +50,10 @@ class App {
         tickerList.add(TickerInfo.makeTickerObject("JCP"));
         tickerList.add(TickerInfo.makeTickerObject("TSLA"));
         tickerList.add(TickerInfo.makeTickerObject("GOOG"));
+		TickerHelper.outputTickerListToConsole();
+		TickerHelper.outputIndexToConsole();
 
-		Scheduler updateTickers = new Scheduler();
+		//Scheduler updateTickers = new Scheduler();
 		// Starts Scheduler and runs updates to tickerList
 		
 
