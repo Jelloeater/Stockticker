@@ -53,7 +53,7 @@ class App {
 		TickerHelper.outputTickerListToConsole();
 		TickerHelper.outputIndexToConsole();
 
-		//Scheduler updateTickers = new Scheduler();
+		Scheduler updateTickers = new Scheduler(); // Swollows the object?
 		// Starts Scheduler and runs updates to tickerList
 		
 
