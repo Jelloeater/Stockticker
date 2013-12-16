@@ -45,6 +45,7 @@ class App {
         TickerList.addStockToList("TSLA");
 		TickerList.addStockToList("WMT");
 		TickerList.addStockToList("JCP");
+		TickerList.addStockToListGUI();
 
 		TickerList.outputTickerListToConsole();
 		TickerList.outputIndexToConsole();
@@ -112,6 +113,9 @@ class App {
 
 	static class TickerList extends App{
 
+		// FIXME write load method
+		// FIXME write save method
+
 		static void addStockToListGUI() {
 			// FIXME Add check to see if duplicate symbols exist
 			String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
@@ -129,6 +133,15 @@ class App {
 
 			App.tickerList.add(myStock);
 
+		}
+
+		static void removeStockFromList(String stockToRemove){
+			int stockLocationToRemove=0;
+			// TODO write loop to match string and remove object from array
+
+			// LOOP GOES HERE
+
+			App.tickerList.remove(stockLocationToRemove);
 		}
 
 
