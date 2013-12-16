@@ -21,7 +21,7 @@ class Scheduler extends App{
 	public void setKillTask(boolean killTask) {
 		Scheduler.updateListCancel = killTask;
 	}
-    
+
 	boolean isSetKillTaskEnabled() {
 			return updateListCancel;
 	}
@@ -38,8 +38,9 @@ class Scheduler extends App{
 			}
 		};
 
-		schedulerController.scheduleAtFixedRate(taskToRun, 0,
-				settingsProperties.getRefreshIntervalSeconds(), SECONDS);
+//		schedulerController.scheduleAtFixedRate(taskToRun, 0,
+//				settingsProperties.getRefreshIntervalSeconds(), SECONDS);
+		schedulerController.scheduleAtFixedRate(taskToRun, 0,3, SECONDS);
 
 		// Good for only doing one set of actions per thread
 	}
@@ -56,18 +57,19 @@ class Scheduler extends App{
 		if (updateListCancel) taskTimerHandle.cancel(false);
 		// Good for queuing multiple tasks in one thread that can be canceled on a task by task basis
 	}
-	
-    
+
+
     public void shutdownThread(){
 		try {
-			Thread.sleep(2000); // Wait 2 seconds
+			Thread.sleep(10000); // Wait 10 seconds
+			//TODO Change me to 2 seconds when done testing
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		schedulerController.shutdown();
     	if (debugMode) System.err.println("nightnight");
     }
-        
+
     }
 
 	

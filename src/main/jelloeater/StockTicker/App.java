@@ -44,8 +44,7 @@ class App {
 		indexTicker = TickerInfo.makeTickerObject(settingsProperties.getIndexSymbol());
 		// creates initial index
 
-
-
+		
 
         tickerList.add(TickerInfo.makeTickerObject("JCP"));
         tickerList.add(TickerInfo.makeTickerObject("TSLA"));
@@ -53,12 +52,15 @@ class App {
 		TickerHelper.outputTickerListToConsole();
 		TickerHelper.outputIndexToConsole();
 		// Good up until here
+		// Simulate loading list from file
 
 
 		// FUCK THIS METHOD CALL
 		// WHY YOU NO WORK!?!?!
 		// The solution is probably simple, but I'm tired
-		Scheduler updateTickers = new Scheduler(); // Swallows the object?
+		// It was calling the shutdown method at the end of main... DERP!
+
+		Scheduler myScheduler = new Scheduler(); // Starts up Scheduler
 		// Starts Scheduler and runs updates to tickerList
 		
 
@@ -66,12 +68,10 @@ class App {
 
         //TickerHelper.outputTickerListToConsole();
 
+		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
 
-		//updateTickers.shutdownThread();
-
-
-		
-		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI land
+		myScheduler.shutdownThread(); // Shuts down the scheduler
+		// TODO move to shutdown script when done testing
 
 
         System.err.println("brake");
