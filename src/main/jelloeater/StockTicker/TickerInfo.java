@@ -81,16 +81,7 @@ class TickerInfo extends App {
 		}
 	}
 	
-	
-	
-	/**Creates symbol input box
-     * Flag on call sets popup logic
-	 * @return TickerInfo*/
-	public static TickerInfo makeTickerObjectViaGui() {
-		String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
 
-        return new TickerInfo(tickerSymbolInput, true); // Call and return
-	}
 	
 	/**Creates ticker object, due to constructor being private
      * Flag on call sets popup logic

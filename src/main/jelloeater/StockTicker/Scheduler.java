@@ -30,8 +30,8 @@ class Scheduler extends App{
 	public void updateListTask() {
 		final Runnable taskToRun = new Runnable() {
 			public void run() {
-				//TickerHelper.updateTickerList(); // Call update
-				//TickerHelper.updateIndexInfo(); // What it says on the tin
+				//TickerList.updateTickerList(); // Call update
+				//TickerList.updateIndexInfo(); // What it says on the tin
 				// FIXME update index along with arrayList
 
 				System.err.print("party!");
