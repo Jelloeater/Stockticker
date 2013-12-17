@@ -20,14 +20,13 @@ import com.google.gson.Gson;
  It is "OBJECT Oriented Programming" after all.
  Rather then having to pass multiple values through getters, we can just pass the "bag" object
  @method
- {@link saveSettings}
  */
 class Settings extends App{
+	 // TODO eventually remove extends, is it really needed?
 	
 	private static Settings singletonRef; // This stores the state of the singleton, and blocks additional ones from being created
 	private int refreshIntervalSeconds;
 	private boolean sourceGoogle; // Used for selection logic
-	private String indexSymbol;
 	//private boolean refreshEnabled; // Might enable in the future
 	
 	private Settings(){ // You can't access the constructor
@@ -49,7 +48,7 @@ class Settings extends App{
 		setSourceGoogle(true); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
     	// Yes it's a magic number, yes I don't care -_-
-    	setIndexSymbol("GOOG");
+    	App.tickerList.setIndexSymbol("GOOG");
 	}
 
 	public boolean isSourceGoogle() {
@@ -71,30 +70,16 @@ class Settings extends App{
 	}
 	*/
 
-	public String getIndexSymbol() {
-		//FIXME Clicking cancel erased string from object
-		return indexSymbol;
-	}
-	
-	
-	private void setIndexSymbol(String indexSymbolIN) {
-		indexSymbol = indexSymbolIN;
-	}
-	
-	int getRefreshIntervalSeconds() {	
+
+
+	int getRefreshIntervalSeconds() {
 		return refreshIntervalSeconds;
 	}
-	
+
 	private void setRefreshIntervalSeconds(int refreshIntervalSecondsIN) { // Sets private refresh interval
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
-	
-	/** Only sets string value, doesn't actually set object*/
-	void setIndexSymbolGUI(){
-		// TODO Might need to get moved or reworked
-		indexSymbol = JOptionPane.showInputDialog("Set Index Symbol", settingsProperties.getIndexSymbol());		
-	}
-	
+
 	void setRefreshIntervalSecondsGUI(){	
 		boolean inputFail = false;
 		do {

@@ -1,7 +1,6 @@
 package jelloeater.StockTicker;
 
 // import java.net.*; // To be used for net connection checking
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jwsUtils.*; // Holds neat bits of code to be reused over time
 
@@ -14,17 +13,21 @@ class App {
 	/** Debug flag*/
 	static boolean debugMode = true;
 
+
+
+	/** Holds the ticker list, kinda important, should always load first*/
+	static TickerList tickerList = TickerList.makeSingleton();
+
 	/** Holds all the settings for the application in a singleton object */
 	static Settings settingsProperties = Settings.makeSingleton();
+	// Got a null pointer exception, because I tried to set a variable that didn't exist yet
+	// Well fuck me right?
 
 	/** Global configuration file path, used for various settings operations */
-	static String configFilePath = "settings.cfg";
+	static String configFilePath = "settings.cfg"; // Failsafe default
+	public static String tickerListFilePath = "stockList.cfg"; // Failsafe default
 
-	/** Holds all the tickerInfo Objects */
-	static ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
 
-	/** Sets up ticker index object*/
-	static TickerInfo indexTicker;
 	// Cannot initialize early, nothing to load at this point -_-
 
 
@@ -42,13 +45,16 @@ class App {
 
 
 
-        TickerList.addStockToList("TSLA");
-		TickerList.addStockToList("WMT");
-		TickerList.addStockToList("JCP");
-		TickerList.addStockToListGUI();
 
-		TickerList.outputTickerListToConsole();
-		TickerList.outputIndexToConsole();
+        tickerList.addStockToList("TSLA");
+		tickerList.addStockToList("WMT");
+		tickerList.addStockToList("JCP");
+
+
+		tickerList.addStockToListGUI();
+
+		tickerList.outputTickerListToConsole();
+		tickerList.outputIndexToConsole();
 		// Good up until here
 		// Simulate loading list from file
 
@@ -65,6 +71,8 @@ class App {
 		// TODO move to shutdown script when done testing
 
 
+		App.shutdownScript();
+
         System.err.println("brake");
 
 		//TODO re-enable when GUI is working
@@ -79,24 +87,31 @@ class App {
 	private static void startupScript() {
 		UtilsGUI.setLookAndFeel(); // Sets look and feel
 		addShutdownHook(); // Adds Shutdown hook
+		// TODO write failsafe incase load fails w/ null pointer
 		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
-		indexTicker = TickerInfo.makeTickerObject(settingsProperties.getIndexSymbol());
+
+		// FIXME fix casting problem
+		//tickerList.loadList(tickerListFilePath);
+
+		tickerList.indexTicker = TickerInfo.makeTickerObject(tickerList.getIndexSymbol());
 		//tickerList = TickerList.makeTickerList(settingsProperties.getTickerList);
 
 	}
 
 
-
-
-	public static void shutdownScript() {
+	private static void shutdownScript() {
 		settingsProperties.saveSettings(configFilePath);
+
+		//FIXME fix casting problem
+		//tickerList.saveList(tickerListFilePath);
+
 		// TODO Add code for shutting down threads
 	}
 
 
 	/** Shutdown Hook, used to override application close behavior
 	 * Runs when System.exit(0) is called or all windows have been disposed of*/
-	static void addShutdownHook(){
+	private static void addShutdownHook(){
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -111,78 +126,5 @@ class App {
                 JOptionPane.YES_NO_OPTION);
 	}
 
-	static class TickerList extends App{
-
-		// FIXME write load method
-		// FIXME write save method
-
-		static void addStockToListGUI() {
-			// FIXME Add check to see if duplicate symbols exist
-			String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
-			addStockToList(tickerSymbolInput);
-		}
-
-		static void addStockToList(String stockToAdd){
-			boolean duplicateSymbol;
-			TickerInfo myStock;
-
-			do {
-				myStock = TickerInfo.makeTickerObject(stockToAdd);
-				duplicateSymbol = isSymbolDuplicate(myStock.getTickerSymbol());
-			} while (duplicateSymbol == true);
-
-			App.tickerList.add(myStock);
-
-		}
-
-		static void removeStockFromList(String stockToRemove){
-			int stockLocationToRemove=0;
-			// TODO write loop to match string and remove object from array
-
-			// LOOP GOES HERE
-
-			App.tickerList.remove(stockLocationToRemove);
-		}
-
-
-		/**
-		 * Updates tickerList using for loop
-		 * @throws Exception
-		 */
-		static void updateTickerList() {
-			for (int i = 0; i < App.tickerList.size(); i++) {
-				TickerInfo myStock = App.tickerList.get(i);
-				myStock=myStock.updateTickerObject(myStock);
-				App.tickerList.set(i,myStock);
-			}
-		}
-
-		static void updateIndexInfo() {
-			App.indexTicker = App.indexTicker.updateTickerObject(App.indexTicker);
-		}
-
-		static boolean isSymbolDuplicate(String tickerSymbol) {
-			boolean isDuplicate = false;
-			// TODO Write duplicate checker
-
-			return isDuplicate;
-		}
-
-		static void outputIndexToConsole(){
-			App.indexTicker.getTickerInfoDataConsole(App.indexTicker);
-		}
-
-		static void outputTickerListToConsole() {
-			if (App.debugMode){
-				for (int i = 0; i < App.tickerList.size(); i++) {
-					// Get tickerList contents with for loop
-					TickerInfo x = App.tickerList.get(i);
-					x.getTickerInfoDataConsole(x); // use getTickerInfoDataConsole for output
-					System.out.println();
-
-				}
-			}
-		}
-	}
 }
 	
