@@ -48,12 +48,14 @@ class App {
 
 		//tickerList.addStockToList("JCP");
 
-		int exit;
+
 		do {
 			tickerList.addStockToListGUI();
-			exit = JOptionPane.showConfirmDialog(null, "Add another", null, JOptionPane.YES_NO_OPTION);
+			int exit = JOptionPane.showConfirmDialog(null, "Add another", null,
+					JOptionPane.YES_NO_OPTION);
+			if (exit == 1) break;
 		}
-		while (exit == 0);
+		while (true);
 
 		tickerList.outputTickerListToConsole();
 		tickerList.outputIndexToConsole();
