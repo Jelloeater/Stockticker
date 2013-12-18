@@ -4,6 +4,8 @@ package jelloeater.StockTicker;
 import javax.swing.JOptionPane;
 import jwsUtils.*; // Holds neat bits of code to be reused over time
 
+import java.util.concurrent.CountDownLatch;
+
 
 /*
  * This is a basic stock ticker application. It ticks stocks n stuff
@@ -44,14 +46,14 @@ class App {
 		App.startupScript();
 
 
+		//tickerList.addStockToList("JCP");
 
-
-        tickerList.addStockToList("TSLA");
-		tickerList.addStockToList("WMT");
-		tickerList.addStockToList("JCP");
-
-
-		tickerList.addStockToListGUI();
+		int exit;
+		do {
+			tickerList.addStockToListGUI();
+			exit = JOptionPane.showConfirmDialog(null, "Add another", null, JOptionPane.YES_NO_OPTION);
+		}
+		while (exit == 0);
 
 		tickerList.outputTickerListToConsole();
 		tickerList.outputIndexToConsole();
@@ -73,14 +75,30 @@ class App {
 
 		//App.shutdownScript();
 
-        System.err.println("end of main");
+		System.err.println("end of main");
 
 		//TODO re-enable when GUI is working
 		//System.exit(0); // Makes sure program ends
 
 
 
-    }
+		final CountDownLatch latch = new CountDownLatch(1);
+		final Thread t = new Thread(new Runnable() {
+			public void run() {
+				System.out.println("qwerty");
+				latch.countDown();
+			}
+		});
+
+		t.start();
+		latch.await();
+
+		System.out.println("absolutely sure, qwerty as been printed");
+
+
+
+
+	}
 
 	//////////////////////////////////////////////////////
 
