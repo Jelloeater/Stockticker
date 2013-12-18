@@ -71,9 +71,9 @@ class App {
 		// TODO move to shutdown script when done testing
 
 
-		App.shutdownScript();
+		//App.shutdownScript();
 
-        System.err.println("brake");
+        System.err.println("end of main");
 
 		//TODO re-enable when GUI is working
 		//System.exit(0); // Makes sure program ends
@@ -101,6 +101,7 @@ class App {
 
 	private static void shutdownScript() {
 		settingsProperties.saveSettings(configFilePath);
+		System.err.println("shutdownScript");
 
 		//FIXME fix casting problem
 		//tickerList.saveList(tickerListFilePath);

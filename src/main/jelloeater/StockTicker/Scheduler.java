@@ -67,7 +67,7 @@ class Scheduler extends App{
 			e.printStackTrace();
 		}
 		schedulerController.shutdown();
-    	if (debugMode) System.err.println("nightnight");
+    	if (debugMode) System.err.println("shutdownThread");
     }
 
     }
