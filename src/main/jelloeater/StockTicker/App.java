@@ -108,7 +108,10 @@ class App {
 		UtilsGUI.setLookAndFeel(); // Sets look and feel
 		addShutdownHook(); // Adds Shutdown hook
 		// TODO write failsafe incase load fails w/ null pointer
-		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
+
+			settingsProperties.loadSettings(configFilePath);
+			// Loads the program settings from disk, this location is hard coded
+
 
 		// FIXME fix casting problem
 		//tickerList.loadList(tickerListFilePath);
