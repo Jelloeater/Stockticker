@@ -99,13 +99,12 @@ class Settings extends App{
 	
 	/**
 	 * Writes the App singleton settingsProperties to the specified configuration file path
-	 * @param configFileName
 	 */
-	void saveSettings(String configFileName){
+	void saveSettings(){
 			
 		PrintStream diskWriter = null;
 		try {
-			diskWriter = new PrintStream(new File(configFileName));
+			diskWriter = new PrintStream(new File(App.configFilePath));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("Save settings to disk didn't work");
@@ -122,14 +121,14 @@ class Settings extends App{
 	/**Reads settings from configuration file and copies them to the singleton in App class
 	 * @throws IOException 
 	 */
-	void loadSettings(String configFileName){
+	void loadSettings(){
 	
-		File config = new File(configFileName);
+		File config = new File(App.configFilePath);
 		 
 		  if(config.exists()){
 	
 			try {
-				String diskReaderInput = Utils.readFile(configFileName);
+				String diskReaderInput = Utils.readFile(App.configFilePath);
 				  
 				  Gson gson = new Gson(); // Initializes object
 				  
@@ -142,7 +141,7 @@ class Settings extends App{
 		  }else{ 
 			  // load the settings fail safe, this is in case the file path is set wrong
 			  settingsProperties.setDefaults();
-			  settingsProperties.saveSettings("settings.cfg");
+			  settingsProperties.saveSettings();
 			  App.configFilePath = "settings.cfg";
 			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.");
 		  }	
@@ -161,7 +160,7 @@ class Settings extends App{
 		case 0:
 			settingsProperties.deleteSettingsFile(configFilePath);
 			settingsProperties.setDefaults();
-			settingsProperties.saveSettings("settings.cfg");
+			settingsProperties.saveSettings();
 			App.configFilePath = "settings.cfg";
 			JOptionPane.showMessageDialog(null, "Defaults Restored.");
 			break;

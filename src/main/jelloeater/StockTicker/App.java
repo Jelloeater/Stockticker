@@ -27,7 +27,7 @@ class App {
 
 	/** Global configuration file path, used for various settings operations */
 	static String configFilePath = "settings.cfg"; // Failsafe default
-	public static String tickerListFilePath = "stockList.cfg"; // Failsafe default
+	static String tickerListFilePath = "stockList.cfg"; // Failsafe default
 
 
 	// Cannot initialize early, nothing to load at this point -_-
@@ -50,10 +50,10 @@ class App {
 
 
 		do {
-			tickerList.addStockToListGUI();
-			int exit = JOptionPane.showConfirmDialog(null, "Add another", null,
+			int exit = JOptionPane.showConfirmDialog(null, "Add stock to list", null,
 					JOptionPane.YES_NO_OPTION);
 			if (exit == 1) break;
+            tickerList.addStockToListGUI();
 		}
 		while (true);
 
@@ -108,10 +108,10 @@ class App {
 		UtilsGUI.setLookAndFeel(); // Sets look and feel
 		addShutdownHook(); // Adds Shutdown hook
 		// TODO write failsafe incase load fails w/ null pointer
-		settingsProperties.loadSettings(configFilePath); // Loads the program settings from disk
+		//settingsProperties.loadSettings(); // Loads the program settings from disk
 
 		// FIXME fix casting problem
-		//tickerList.loadList(tickerListFilePath);
+		tickerList.loadList();
 
 		tickerList.indexTicker = TickerInfo.makeTickerObject(tickerList.getIndexSymbol());
 		//tickerList = TickerList.makeTickerList(settingsProperties.getTickerList);
@@ -120,11 +120,11 @@ class App {
 
 
 	private static void shutdownScript() {
-		settingsProperties.saveSettings(configFilePath);
+		settingsProperties.saveSettings();
 		System.err.println("shutdownScript");
 
 		//FIXME fix casting problem
-		//tickerList.saveList(tickerListFilePath);
+		tickerList.saveList();
 
 		// TODO Add code for shutting down threads
 	}

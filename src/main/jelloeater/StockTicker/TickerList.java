@@ -123,11 +123,11 @@ public class TickerList{
 
 
 
-	void saveList(String listFileName){
+	void saveList(){
 
 		PrintStream diskWriter = null;
 		try {
-			diskWriter = new PrintStream(new File(listFileName));
+			diskWriter = new PrintStream(new File(App.tickerListFilePath));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("Save settings to disk didn't work");
@@ -142,20 +142,23 @@ public class TickerList{
 	}
 
 
-	void loadList(String listFileName){
+	static void loadList(){
 
-		File config = new File(listFileName);
+		File config = new File(App.tickerListFilePath);
 
 		if(config.exists()){
 
 			try {
-				String diskReaderInput = Utils.readFile(listFileName);
+				String diskReaderInput = Utils.readFile(App.tickerListFilePath);
 
 				Gson gson = new Gson(); // Initializes object
 
-				tickerList = gson.fromJson(diskReaderInput, ArrayList.class);
+                ArrayList <TickerList> tickerList = gson.fromJson(diskReaderInput, ArrayList.class);
 
-			} catch (IOException e) {
+                //App.tickerList=tickerList;
+
+                System.err.print("break here");
+            } catch (IOException e) {
 				e.printStackTrace();
 			}
 
@@ -168,7 +171,7 @@ public class TickerList{
 			//App.tickerListFilePath = "settings.cfg";
 
 
-			JOptionPane.showMessageDialog(null, "Config missing, defaults set.");
+			JOptionPane.showMessageDialog(null, "Portfolio missing, defaults set.");
 		}
 	}
 

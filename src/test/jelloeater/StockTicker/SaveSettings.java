@@ -13,8 +13,8 @@ public class SaveSettings extends App{
 		debugMode= true;
 		
 		settingsProperties.setDefaults();
-		settingsProperties.saveSettings("settings.cfg");
-		settingsProperties.loadSettings("settings.cfg");
+		settingsProperties.saveSettings();
+		settingsProperties.loadSettings();
 		
 		assertNotNull(settingsProperties);
 	}	
