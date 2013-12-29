@@ -48,7 +48,7 @@ class Settings extends App{
 		setSourceGoogle(true); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
     	// Yes it's a magic number, yes I don't care -_-
-    	App.tickerList.setIndexSymbol("GOOG");
+    	App.tickerList.setIndexSymbol("GOOG"); // default index symbol
 	}
 
 	public boolean isSourceGoogle() {
@@ -135,13 +135,26 @@ class Settings extends App{
 				  settingsProperties = gson.fromJson(diskReaderInput, Settings.class);
 				  
 			} catch (IOException  e) {
+				// FIXME handle corrupt JSON file
 				e.printStackTrace();
+				//failsafeLoadSettings();
+				JOptionPane.showMessageDialog(null, "Config Corrupt, defaults set");
 			}
 			  
 		  }else{ 
 			  // load the settings fail safe, this is in case the file path is set wrong
-			  settingsProperties.setDefaults();
+			  failsafeLoadSettings();
+			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.");
+		  }	
+	}
+
+	 private void failsafeLoadSettings() {
+		 settingsProperties.setDefaults();
 			  settingsProperties.saveSettings();
+		 App.configFilePath = "settings.cfg";
+	 }
+
+	 private void deleteSettingsFile(String configFilePath){
 			  App.configFilePath = "settings.cfg";
 			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.");
 		  }	
