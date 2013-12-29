@@ -148,21 +148,18 @@ class Settings extends App{
 		  }	
 	}
 
-	 private void failsafeLoadSettings() {
-		 settingsProperties.setDefaults();
-			  settingsProperties.saveSettings();
-		 App.configFilePath = "settings.cfg";
-	 }
 
-	 private void deleteSettingsFile(String configFilePath){
-			  App.configFilePath = "settings.cfg";
-			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.");
-		  }	
+	private void failsafeLoadSettings() {
+		settingsProperties.setDefaults();
+		App.configFilePath = "settings.cfg";
+		settingsProperties.saveSettings();
 	}
-	
-	private void deleteSettingsFile(String configFilePath){
-			File file = new File(configFilePath);
-			file.delete();		
+
+
+	private void deleteSettingsFile(){
+		File file = new File(App.configFilePath);
+		file.delete();
+		JOptionPane.showMessageDialog(null, "Config file removed");
 	}
 	
 	
@@ -171,10 +168,8 @@ class Settings extends App{
 		
 		switch (option) {
 		case 0:
-			settingsProperties.deleteSettingsFile(configFilePath);
-			settingsProperties.setDefaults();
-			settingsProperties.saveSettings();
-			App.configFilePath = "settings.cfg";
+			settingsProperties.deleteSettingsFile();
+			settingsProperties.failsafeLoadSettings();
 			JOptionPane.showMessageDialog(null, "Defaults Restored.");
 			break;
 		default:
