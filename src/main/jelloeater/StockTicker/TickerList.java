@@ -139,10 +139,12 @@ public class TickerList{
 
 		diskWriter.print (settingsData); // Writes string to file
 		diskWriter.close();	// Closes process
-	}
+
+        System.err.print("SaveList breakpoint");
+    }
 
 
-	static void loadList(){
+    static void loadList(){
 
 		File config = new File(App.tickerListFilePath);
 
@@ -156,6 +158,8 @@ public class TickerList{
                 ArrayList <TickerList> tickerList = gson.fromJson(diskReaderInput, ArrayList.class);
 
                 //App.tickerList=tickerList;
+
+                // FIXME ---(1)--- Fix casting problem when loading list from file                     ----------------
 
                 System.err.print("break here");
             } catch (IOException e) {

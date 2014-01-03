@@ -1,9 +1,10 @@
 package jelloeater.StockTicker;
 
 // import java.net.*; // To be used for net connection checking
-import javax.swing.JOptionPane;
-import jwsUtils.*; // Holds neat bits of code to be reused over time
 
+import jwsUtils.UtilsGUI;
+
+import javax.swing.*;
 import java.util.concurrent.CountDownLatch;
 
 
@@ -26,17 +27,16 @@ class App {
 	// Well fuck me right?
 
 	/** Global configuration file path, used for various settings operations */
-	static String configFilePath = "settings.cfg"; // Failsafe default
-	static String tickerListFilePath = "stockList.cfg"; // Failsafe default
+    static String configFilePath = "settings.cfg"; // Fail safe default
+    static String tickerListFilePath = "stockList.cfg"; // Fail safe default
 
 
-	// Cannot initialize early, nothing to load at this point -_-
+    // Cannot initialize early, nothing to load at this point -_-
 
 
-	/**
+    /**
 	 * This runs first
 	 * There should be a minimal amount of methods here, variables should be in objects
-	 * @param args
 	 * @throws Throwable
 	 */
 	public static void main(String[] args) throws Throwable {
@@ -123,10 +123,10 @@ class App {
 		settingsProperties.saveSettings();
 		System.err.println("shutdownScript");
 
-		//FIXME fix casting problem
-		tickerList.saveList();
+        // FIXME fix casting problem
+        tickerList.saveList();
 
-		// TODO Add code for shutting down threads
+        // TODO Add code for shutting down threads
 	}
 
 
