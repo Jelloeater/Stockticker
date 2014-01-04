@@ -4,10 +4,8 @@ import com.google.gson.Gson;
 import jwsUtils.Utils;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +13,7 @@ import java.util.ArrayList;
  */
 public class TickerList{
 	/** Holds all the tickerInfo Objects */
-	ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
+	ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>(); // Arraylist made up of TickerInfo Objects
 	/** Sets up ticker index object*/
 	TickerInfo indexTicker;
 	private String indexSymbol; // You would think it would be in TickerList, you'd be right
@@ -125,6 +123,7 @@ public class TickerList{
 
 	void saveList(){
 
+		/* Old file save method
 		PrintStream diskWriter = null;
 		try {
 			diskWriter = new PrintStream(new File(App.tickerListFilePath));
@@ -141,42 +140,76 @@ public class TickerList{
 		diskWriter.close();	// Closes process
 
         System.err.print("SaveList breakpoint");
-    }
+		*/
+
+		// Serialize data
+		try {
+
+			FileOutputStream fileOut = new FileOutputStream(App.tickerListFilePath);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(tickerList);
+			out.close();
+			fileOut.close();
+
+			}catch (IOException e){
+			System.err.print("File conversion error");
+			e.printStackTrace();
+		}
+
+		System.err.print("SaveList breakpoint");
+
+	}
 
 
-    static void loadList(){
+	void loadList(){
 
 		File config = new File(App.tickerListFilePath);
 
 		if(config.exists()){
 
+			TickerList tickerListData = null;
+			try
+			{
+				FileInputStream fileIn = new FileInputStream(App.tickerListFilePath);
+				ObjectInputStream in = new ObjectInputStream(fileIn);
+				tickerListData = (TickerList) in.readObject();
+				in.close();
+				fileIn.close();
+			}catch(IOException i)
+			{
+				i.printStackTrace();
+				return;
+			}catch(ClassNotFoundException c)
+			{
+				System.out.println("TickerList class not found");
+				c.printStackTrace();
+			}
+
+
+			/*
 			try {
 				String diskReaderInput = Utils.readFile(App.tickerListFilePath);
-
 				Gson gson = new Gson(); // Initializes object
+				ArrayList <TickerList> tickerList = gson.fromJson(diskReaderInput, ArrayList.class);
+				//App.tickerList=tickerList;
+				// ---(1)--- Fix casting problem when loading list from file                     ----------------
 
-                ArrayList <TickerList> tickerList = gson.fromJson(diskReaderInput, ArrayList.class);
-
-                //App.tickerList=tickerList;
-
-                // FIXME ---(1)--- Fix casting problem when loading list from file                     ----------------
-
-                System.err.print("break here");
-            } catch (IOException e) {
+				System.err.print("break here");
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 		}else{
 			// load the settings fail safe, this is in case the file path is set wrong
 
-			 // TODO might need to tweak this down the road
+			// TODO might need to tweak this down the road
 			//tickerList.setDefaults();
 			//tickerList.saveSettings("settings.cfg");
 			//App.tickerListFilePath = "settings.cfg";
-
-
 			JOptionPane.showMessageDialog(null, "Portfolio missing, defaults set.");
+		*/
 		}
+
 	}
 
 	private void deleteList(String configFilePath){

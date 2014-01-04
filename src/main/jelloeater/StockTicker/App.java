@@ -28,7 +28,7 @@ class App {
 
 	/** Global configuration file path, used for various settings operations */
     static String configFilePath = "settings.cfg"; // Fail safe default
-    static String tickerListFilePath = "stockList.cfg"; // Fail safe default
+    static String tickerListFilePath = "stockList.ser"; // Fail safe default
 
 
     // Cannot initialize early, nothing to load at this point -_-
