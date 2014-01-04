@@ -133,9 +133,23 @@ public class TickerList{
 			System.err.println("Save settings to disk didn't work");
 		} // Makes new file / overwrites and assigns object
 
+
+		ArrayList tickerListData = null; // Initialize array for storing ticker symbols
+
+		// TODO read data from tickerlist
+		for (int i = 0; i < tickerList.size(); i++) {
+			// Get tickerList contents with for loop
+			TickerInfo x = tickerList.get(i);
+			String symbolToStore = x.getTickerSymbol(); // use getTickerSymbol for output
+			tickerListData.add(symbolToStore);
+		}
+		// TODO take tickerList Symbols and store in array
+
 		Gson gson = new Gson(); // Initializes object
 
-		String settingsData = gson.toJson(tickerList); // Takes static object variables and converts them
+
+		String settingsData = gson.toJson(tickerListData); // Takes static object variables and converts them
+
 
 		diskWriter.print (settingsData); // Writes string to file
 		diskWriter.close();	// Closes process

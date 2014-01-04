@@ -111,7 +111,10 @@ class App {
 		//settingsProperties.loadSettings(); // Loads the program settings from disk
 
 		// FIXME fix casting problem
-		tickerList.loadList();
+
+
+		// TODO remove comment out
+		//tickerList.loadList();
 
 		tickerList.indexTicker = TickerInfo.makeTickerObject(tickerList.getIndexSymbol());
 		//tickerList = TickerList.makeTickerList(settingsProperties.getTickerList);
