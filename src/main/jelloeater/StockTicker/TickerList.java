@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Jesse Laptop on 12/17/13.
  */
-public class TickerList{
+public class TickerList extends App{
 	/** Holds all the tickerInfo Objects */
 	ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
 	/** Sets up ticker index object*/
@@ -133,20 +133,26 @@ public class TickerList{
 			System.err.println("Save settings to disk didn't work");
 		} // Makes new file / overwrites and assigns object
 
+		ArrayList<String> tickerListData = new ArrayList<String>();
+		// Initialize array for storing ticker symbols
 
-		ArrayList tickerListData = null; // Initialize array for storing ticker symbols
-
-		// TODO read data from tickerlist
 		for (int i = 0; i < tickerList.size(); i++) {
 			// Get tickerList contents with for loop
 			TickerInfo x = tickerList.get(i);
 			String symbolToStore = x.getTickerSymbol(); // use getTickerSymbol for output
 			tickerListData.add(symbolToStore);
 		}
-		// TODO take tickerList Symbols and store in array
+
+		if (debugMode){
+			System.err.println("Contents of TickerList Symbols");
+		for (int i = 0; i < tickerListData.size(); i++) {
+			// Get tickerList contents with for loop
+			String x = tickerListData.get(i);
+			System.out.println(x);
+		}
+		}
 
 		Gson gson = new Gson(); // Initializes object
-
 
 		String settingsData = gson.toJson(tickerListData); // Takes static object variables and converts them
 
