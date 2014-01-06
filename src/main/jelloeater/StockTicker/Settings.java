@@ -3,17 +3,19 @@
  */
 package jelloeater.StockTicker;
 
-import java.io.*;
+import com.google.gson.Gson;
+import jwsUtils.Utils;
+
+import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+
 //import java.util.Map;
 //import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
-import jwsUtils.Utils;
-
-import com.google.gson.Gson;
-
- /**
+/**
  This class allows us to manipulate any settings objects we create.
  Settings are dependent throughout the program, they are private so we can sanitize data
  Settings are something that there should only be one of, no need to make more then one object container in the main App class.
@@ -22,8 +24,9 @@ import com.google.gson.Gson;
  @method
  */
 class Settings extends App{
-	 // TODO eventually remove extends, is it really needed?
-	
+	// TODO eventually remove extends, is it really needed?
+
+	private String tickerListFilePath = "stockList.cfg"; // Fail safe default
 	private static Settings singletonRef; // This stores the state of the singleton, and blocks additional ones from being created
 	private int refreshIntervalSeconds;
 	private boolean sourceGoogle; // Used for selection logic
@@ -49,6 +52,7 @@ class Settings extends App{
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
     	// Yes it's a magic number, yes I don't care -_-
     	App.tickerList.setIndexSymbol("GOOG"); // default index symbol
+		setTickerListFilePath("stockList.cfg");
 	}
 
 	public boolean isSourceGoogle() {
@@ -70,7 +74,13 @@ class Settings extends App{
 	}
 	*/
 
+	String getTickerListFilePath() {
+		return tickerListFilePath;
+	}
 
+	void setTickerListFilePath(String tickerListFilePathINPUT) {
+		tickerListFilePath = tickerListFilePathINPUT;
+	}
 
 	int getRefreshIntervalSeconds() {
 		return refreshIntervalSeconds;

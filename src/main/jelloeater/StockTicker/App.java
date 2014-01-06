@@ -28,13 +28,12 @@ class App {
 
 	/** Global configuration file path, used for various settings operations */
     static String configFilePath = "settings.cfg"; // Fail safe default
-    static String tickerListFilePath = "stockList.cfg"; // Fail safe default
 
 
-    // Cannot initialize early, nothing to load at this point -_-
+	// Cannot initialize early, nothing to load at this point -_-
 
 
-    /**
+	/**
 	 * This runs first
 	 * There should be a minimal amount of methods here, variables should be in objects
 	 * @throws Throwable
@@ -108,13 +107,13 @@ class App {
 		UtilsGUI.setLookAndFeel(); // Sets look and feel
 		addShutdownHook(); // Adds Shutdown hook
 		// TODO write failsafe incase load fails w/ null pointer
-		//settingsProperties.loadSettings(); // Loads the program settings from disk
+		settingsProperties.loadSettings(); // Loads the program settings from disk
 
 		// FIXME fix casting problem
 
 
 		// TODO remove comment out
-		//tickerList.loadList();
+		tickerList.loadList(settingsProperties.getTickerListFilePath());
 
 		tickerList.indexTicker = TickerInfo.makeTickerObject(tickerList.getIndexSymbol());
 		//tickerList = TickerList.makeTickerList(settingsProperties.getTickerList);
@@ -127,9 +126,9 @@ class App {
 		System.err.println("shutdownScript");
 
         // FIXME fix casting problem
-        tickerList.saveList();
+		tickerList.saveList(settingsProperties.getTickerListFilePath());
 
-        // TODO Add code for shutting down threads
+		// TODO Add code for shutting down threads
 	}
 
 

@@ -122,12 +122,11 @@ public class TickerList extends App{
 	}
 
 
-
-	void saveList(){
+	void saveList(String tickerListFilePath) {
 
 		PrintStream diskWriter = null;
 		try {
-			diskWriter = new PrintStream(new File(App.tickerListFilePath));
+			diskWriter = new PrintStream(new File(tickerListFilePath));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("Save settings to disk didn't work");
@@ -154,24 +153,24 @@ public class TickerList extends App{
 
 		Gson gson = new Gson(); // Initializes object
 
-		String settingsData = gson.toJson(tickerListData); // Takes static object variables and converts them
+		String tickerListDataJSON = gson.toJson(tickerListData); // Takes static object variables and converts them
 
 
-		diskWriter.print (settingsData); // Writes string to file
+		diskWriter.print(tickerListDataJSON); // Writes string to file
 		diskWriter.close();	// Closes process
 
         System.err.print("SaveList breakpoint");
     }
 
 
-    static void loadList(){
+	static void loadList(String tickerListFilePath) {
 
-		File config = new File(App.tickerListFilePath);
+		File config = new File(tickerListFilePath);
 
 		if(config.exists()){
 
 			try {
-				String diskReaderInput = Utils.readFile(App.tickerListFilePath);
+				String diskReaderInput = Utils.readFile(tickerListFilePath);
 
 				Gson gson = new Gson(); // Initializes object
 
