@@ -18,7 +18,7 @@ public class TickerList extends App{
 	ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
 	/** Sets up ticker index object*/
 	TickerInfo indexTicker;
-	private String indexSymbol; // You would think it would be in TickerList, you'd be right
+
 	// TODO replace all calls to index symbol with indexTicker.getSymbol()
 
 	private static TickerList singletonRef; // This stores the state of the singleton, and blocks additional ones from being created
@@ -105,21 +105,7 @@ public class TickerList extends App{
 		}
 	}
 
-	String getIndexSymbol() {
-		//FIXME Clicking cancel erased string from object
-		return indexSymbol;
-	}
 
-
-	void setIndexSymbol(String indexSymbolIN) {
-		indexSymbol = indexSymbolIN;
-	}
-
-	/** Only sets string value, doesn't actually set object*/
-	void setIndexSymbolGUI(){
-		// TODO Might need to get moved or reworked
-		indexSymbol = JOptionPane.showInputDialog("Set Index Symbol", App.tickerList.getIndexSymbol());
-	}
 
 
 	void saveList(String tickerListFilePath) {

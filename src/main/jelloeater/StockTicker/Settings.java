@@ -31,6 +31,8 @@ class Settings extends App{
 	private int refreshIntervalSeconds;
 	private boolean sourceGoogle; // Used for selection logic
 	//private boolean refreshEnabled; // Might enable in the future
+	private String indexSymbol; // You would think it would be in settingsProperties,
+		// you'd be right
 	
 	private Settings(){ // You can't access the constructor
 		setDefaults(); // But it does set the defaults
@@ -51,8 +53,24 @@ class Settings extends App{
 		setSourceGoogle(true); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
     	// Yes it's a magic number, yes I don't care -_-
-    	App.tickerList.setIndexSymbol("GOOG"); // default index symbol
+    	setIndexSymbol("GOOG"); // default index symbol
 		setTickerListFilePath("stockList.cfg");
+	}
+
+	String getIndexSymbol() {
+		//FIXME Clicking cancel erased string from object
+		return indexSymbol;
+	}
+
+
+	void setIndexSymbol(String indexSymbolIN) {
+		indexSymbol = indexSymbolIN;
+	}
+
+	/** Only sets string value, doesn't actually set object*/
+	void setIndexSymbolGUI(){
+		// TODO Might need to get moved or reworked
+		indexSymbol = JOptionPane.showInputDialog("Set Index Symbol", getIndexSymbol());
 	}
 
 	public boolean isSourceGoogle() {
