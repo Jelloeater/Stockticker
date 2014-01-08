@@ -15,9 +15,9 @@ import java.util.ArrayList;
  */
 public class TickerList extends App{
 	/** Holds all the tickerInfo Objects */
-	ArrayList<TickerInfo> tickerList = new ArrayList<TickerInfo>();
+	private ArrayList<TickerInfo> tickerListHolder = new ArrayList<TickerInfo>();
 	/** Sets up ticker index object*/
-	TickerInfo indexTicker;
+	private TickerInfo indexTicker;
 
 	// TODO replace all calls to index symbol with indexTicker.getSymbol()
 
@@ -37,6 +37,28 @@ public class TickerList extends App{
 	// FIXME write load method
 	// FIXME write save method
 
+	void setupIndexTicker(){
+
+		indexTicker=indexTicker.makeTickerObject(settingsProperties.getIndexSymbol());
+
+	}
+
+	void updateIndexTickerInfo(){
+		indexTicker=indexTicker.updateTickerObject(indexTicker);
+		// FIXME This SHOULD work?!?
+	}
+
+	void outputIndexTickerConsole(){
+		if (App.debugMode){
+			//tickerList.indexTicker.getTickerInfoDataGUI(indexTicker); // full path of object
+
+			indexTicker.getTickerInfoDataConsole(indexTicker);
+			// use getTickerInfoDataConsole for output
+
+		}
+	}
+
+
 	void addStockToListGUI() {
 		// FIXME Add check to see if duplicate symbols exist
 		String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
@@ -52,7 +74,7 @@ public class TickerList extends App{
 			duplicateSymbol = isSymbolDuplicate(myStock.getTickerSymbol());
 		} while (duplicateSymbol == true);
 
-		tickerList.add(myStock);
+		tickerListHolder.add(myStock);
 
 	}
 
@@ -62,19 +84,19 @@ public class TickerList extends App{
 
 		// LOOP GOES HERE
 
-		tickerList.remove(stockLocationToRemove);
+		tickerListHolder.remove(stockLocationToRemove);
 	}
 
 
 	/**
-	 * Updates tickerList using for loop
+	 * Updates tickerListHolder using for loop
 	 * @throws Exception
 	 */
 	void updateTickerList() {
-		for (int i = 0; i < tickerList.size(); i++) {
-			TickerInfo myStock = tickerList.get(i);
+		for (int i = 0; i < tickerListHolder.size(); i++) {
+			TickerInfo myStock = tickerListHolder.get(i);
 			myStock=myStock.updateTickerObject(myStock);
-			tickerList.set(i, myStock);
+			tickerListHolder.set(i, myStock);
 		}
 	}
 
@@ -95,9 +117,9 @@ public class TickerList extends App{
 
 	void outputTickerListToConsole() {
 		if (App.debugMode){
-			for (int i = 0; i < tickerList.size(); i++) {
-				// Get tickerList contents with for loop
-				TickerInfo x = tickerList.get(i);
+			for (int i = 0; i < tickerListHolder.size(); i++) {
+				// Get tickerListHolder contents with for loop
+				TickerInfo x = tickerListHolder.get(i);
 				x.getTickerInfoDataConsole(x); // use getTickerInfoDataConsole for output
 				System.out.println();
 
@@ -121,9 +143,9 @@ public class TickerList extends App{
 		ArrayList<String> tickerListData = new ArrayList<String>();
 		// Initialize array for storing ticker symbols
 
-		for (int i = 0; i < tickerList.size(); i++) {
-			// Get tickerList contents with for loop
-			TickerInfo x = tickerList.get(i);
+		for (int i = 0; i < tickerListHolder.size(); i++) {
+			// Get tickerListHolder contents with for loop
+			TickerInfo x = tickerListHolder.get(i);
 			String symbolToStore = x.getTickerSymbol(); // use getTickerSymbol for output
 			tickerListData.add(symbolToStore);
 		}
@@ -131,7 +153,7 @@ public class TickerList extends App{
 		if (debugMode){
 			System.err.println("Contents of TickerList Symbols");
 		for (int i = 0; i < tickerListData.size(); i++) {
-			// Get tickerList contents with for loop
+			// Get tickerListHolder contents with for loop
 			String x = tickerListData.get(i);
 			System.out.println(x);
 		}
@@ -160,56 +182,45 @@ public class TickerList extends App{
 
 				Gson gson = new Gson(); // Initializes object
 
+				ArrayList tickerSymbolList = new ArrayList();
+
+				tickerSymbolList = gson.fromJson(diskReaderInput, ArrayList.class);
 
 
 
+				ArrayList<String> tickerListData = new ArrayList<String>();
+				// Initialize array for storing ticker symbols
+
+				for (int i = 0; i < tickerSymbolList.size(); i++) {
+					// Get tickerListHolder contents with for loop
+
+					String stockToAdd = (String) tickerSymbolList.get(i);
+					// Gets value from last and casts it to a string
+
+					App.tickerList.addStockToList(stockToAdd); // Add to list in App class
+				}
+
+				JOptionPane.showMessageDialog(null,"List loaded","Attention",0);
+				// TODO bind all popboxes to a global value
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                System.err.print("break here");
-            } catch (IOException e) {
+			} catch (IOException  e) {
+				// FIXME handle corrupt JSON file
 				e.printStackTrace();
+				//failsafeLoadSettings();
+				JOptionPane.showMessageDialog(null, "List Corrupt, defaults set");
 			}
 
+
+
 		}else{
-			// load the settings fail safe, this is in case the file path is set wrong
-
-			 // TODO might need to tweak this down the road
-			//tickerList.setDefaults();
-			//tickerList.saveSettings("settings.cfg");
-			//App.tickerListFilePath = "settings.cfg";
-
+			 // FIXME Set empty list
 
 			JOptionPane.showMessageDialog(null, "Portfolio missing, defaults set.");
 		}
+
 	}
+
 
 	private void deleteList(String configFilePath){
 		File file = new File(configFilePath);

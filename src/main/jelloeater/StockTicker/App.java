@@ -45,7 +45,7 @@ class App {
 		App.startupScript();
 
 
-		//tickerList.addStockToList("JCP");
+		//tickerListHolder.addStockToList("JCP");
 
 
 		do {
@@ -63,7 +63,7 @@ class App {
 
 
 		Scheduler myScheduler = new Scheduler(); // Starts up Scheduler
-		// Starts Scheduler and runs updates to tickerList
+		// Starts Scheduler and runs updates to tickerListHolder
 
 
 		//addStockToListGUI(); // Should get called by + button in GUI
@@ -114,8 +114,9 @@ class App {
 
 		// TODO remove comment out
 		tickerList.loadList(settingsProperties.getTickerListFilePath());
+		// Should call file path to allow for multi lists in the future
 
-		tickerList.indexTicker = TickerInfo.makeTickerObject(settingsProperties.getIndexSymbol());
+		 tickerList.setupIndexTicker();
 		// The index ticker object is stored in TickerList, as that's the type of object
 		// The symbol to get saved and loaded at the start and end is stored in settingsProperties, as it's easier to retrieve via JSON
 
