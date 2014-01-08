@@ -160,11 +160,38 @@ public class TickerList extends App{
 
 				Gson gson = new Gson(); // Initializes object
 
-                ArrayList <TickerList> tickerList = gson.fromJson(diskReaderInput, ArrayList.class);
 
-                //App.tickerList=tickerList;
 
-                // FIXME ---(1)--- Fix casting problem when loading list from file                     ----------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 System.err.print("break here");
             } catch (IOException e) {

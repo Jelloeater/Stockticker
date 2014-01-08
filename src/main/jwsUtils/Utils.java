@@ -1,7 +1,9 @@
 package jwsUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
@@ -32,6 +34,21 @@ public class Utils {
 	        scanner.close();
 	    }
 	}
+
+	public static void writeFile(String pathname, String stringDataToWrite) throws IOException {
+
+		PrintStream diskWriter = null;
+
+		try {
+			diskWriter = new PrintStream(new File(pathname));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("Save data to disk didn't work");
+		} // Makes new file / overwrites and assigns object
+
+		diskWriter.print (stringDataToWrite); // Writes string to file
+		diskWriter.close();	// Closes process
+	}
 	
-	
+
 }
