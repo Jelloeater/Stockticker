@@ -171,7 +171,7 @@ public class TickerList extends App{
     }
 
 
-	static void loadList(String tickerListFilePath) {
+	void loadList(String tickerListFilePath) {
 
 		File config = new File(tickerListFilePath);
 
@@ -187,7 +187,6 @@ public class TickerList extends App{
 				tickerSymbolList = gson.fromJson(diskReaderInput, ArrayList.class);
 
 
-
 				ArrayList<String> tickerListData = new ArrayList<String>();
 				// Initialize array for storing ticker symbols
 
@@ -200,7 +199,7 @@ public class TickerList extends App{
 					App.tickerList.addStockToList(stockToAdd); // Add to list in App class
 				}
 
-				JOptionPane.showMessageDialog(null,"List loaded","Attention",0);
+				if (debugMode) JOptionPane.showMessageDialog(null,"List loaded","Attention",0);
 				// TODO bind all popboxes to a global value
 
 

@@ -17,6 +17,8 @@ class App {
 	static boolean debugMode = true;
 
 
+	/** Global configuration file path, used for various settings operations */
+	static String configFilePath = "settings.cfg"; // Fail safe default
 
 	/** Holds the ticker list, kinda important, should always load first*/
 	static TickerList tickerList = TickerList.makeSingleton();
@@ -26,8 +28,7 @@ class App {
 	// Got a null pointer exception, because I tried to set a variable that didn't exist yet
 	// Well fuck me right?
 
-	/** Global configuration file path, used for various settings operations */
-    static String configFilePath = "settings.cfg"; // Fail safe default
+
 
 
 	// Cannot initialize early, nothing to load at this point -_-

@@ -54,7 +54,7 @@ class Settings extends App{
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
     	// Yes it's a magic number, yes I don't care -_-
     	setIndexSymbol("GOOG"); // default index symbol
-		setTickerListFilePath("stockList.cfg");
+		setTickerListFilePath("stockList.cfg"); // default list path
 	}
 
 	String getIndexSymbol() {
