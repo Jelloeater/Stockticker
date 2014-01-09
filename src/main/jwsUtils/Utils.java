@@ -18,31 +18,44 @@ public class Utils {
 	 * @return String
 	 * @throws IOException
 	 */
-	public static String readFile(String pathname) throws IOException {
+	public static String readFile(String pathname, boolean debugMode){
 
 	    File file = new File(pathname);
 	    StringBuilder fileContents = new StringBuilder((int)file.length());
-	    Scanner scanner = new Scanner(file);
-	    String lineSeparator = System.getProperty("line.separator");
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			// FIXME handle file not found exception
+			if(debugMode) e.printStackTrace();
+
+		}
+		String lineSeparator = System.getProperty("line.separator");
 
 	    try {
 	        while(scanner.hasNextLine()) {        
 	            fileContents.append(scanner.nextLine() + lineSeparator);
 	        }
 	        return fileContents.toString();
-	    } finally {
+
+
+	    }
+		finally {
 	        scanner.close();
 	    }
 	}
 
-	public static void writeFile(String pathname, String stringDataToWrite) throws IOException {
+	public static void writeFile(String pathname, String stringDataToWrite, boolean debugModeFlag){
 
 		PrintStream diskWriter = null;
 
 		try {
 			diskWriter = new PrintStream(new File(pathname));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			// FIXME what to do if file not found
+
+
+			if (debugModeFlag) e.printStackTrace();
 			System.err.println("Save data to disk didn't work");
 		} // Makes new file / overwrites and assigns object
 

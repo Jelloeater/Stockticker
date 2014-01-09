@@ -50,7 +50,7 @@ class Settings extends App{
 
 	/** Sets defaults for settings */
 	void setDefaults(){
-		setSourceGoogle(true); // default setting for quote source Google
+		setSourceGoogle(); // default setting for quote source Google
     	setRefreshIntervalSeconds(30); // default interval 30 seconds
     	// Yes it's a magic number, yes I don't care -_-
     	setIndexSymbol("GOOG"); // default index symbol
@@ -77,7 +77,7 @@ class Settings extends App{
 		return sourceGoogle;
 	}
 
-	public void setSourceGoogle(boolean sourceGoogle) {
+	public void setSourceGoogle() {
 		this.sourceGoogle = true; //Changed to self reference
 	}
 
@@ -154,21 +154,11 @@ class Settings extends App{
 		File config = new File(App.configFilePath);
 		 
 		  if(config.exists()){
-	
-			try {
-				String diskReaderInput = Utils.readFile(App.configFilePath);
-				  
-				  Gson gson = new Gson(); // Initializes object
-				  
-				  settingsProperties = gson.fromJson(diskReaderInput, Settings.class);
-				  
-			} catch (IOException  e) {
-				// FIXME handle corrupt JSON file
-				e.printStackTrace();
-				//failsafeLoadSettings();
-				JOptionPane.showMessageDialog(null, "Config Corrupt, defaults set");
-			}
-			  
+
+			String diskReaderInput = Utils.readFile(App.configFilePath,debugMode);
+			Gson gson = new Gson(); // Initializes object
+			settingsProperties = gson.fromJson(diskReaderInput, Settings.class);
+
 		  }else{ 
 			  // load the settings fail safe, this is in case the file path is set wrong
 			  failsafeLoadSettings();

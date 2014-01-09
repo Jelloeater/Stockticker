@@ -132,13 +132,7 @@ public class TickerList extends App{
 
 	void saveList(String tickerListFilePath) {
 
-		PrintStream diskWriter = null;
-		try {
-			diskWriter = new PrintStream(new File(tickerListFilePath));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.err.println("Save settings to disk didn't work");
-		} // Makes new file / overwrites and assigns object
+
 
 		ArrayList<String> tickerListData = new ArrayList<String>();
 		// Initialize array for storing ticker symbols
@@ -164,8 +158,7 @@ public class TickerList extends App{
 		String tickerListDataJSON = gson.toJson(tickerListData); // Takes static object variables and converts them
 
 
-		diskWriter.print(tickerListDataJSON); // Writes string to file
-		diskWriter.close();	// Closes process
+		Utils.writeFile(tickerListFilePath,tickerListDataJSON,debugMode);
 
         System.err.print("SaveList breakpoint");
     }
@@ -177,39 +170,30 @@ public class TickerList extends App{
 
 		if(config.exists()){
 
-			try {
-				String diskReaderInput = Utils.readFile(tickerListFilePath);
+			String diskReaderInput = Utils.readFile(tickerListFilePath,debugMode);
 
-				Gson gson = new Gson(); // Initializes object
+			Gson gson = new Gson(); // Initializes object
 
-				ArrayList tickerSymbolList = new ArrayList();
+			ArrayList tickerSymbolList = new ArrayList();
 
-				tickerSymbolList = gson.fromJson(diskReaderInput, ArrayList.class);
-
-
-				ArrayList<String> tickerListData = new ArrayList<String>();
-				// Initialize array for storing ticker symbols
-
-				for (int i = 0; i < tickerSymbolList.size(); i++) {
-					// Get tickerListHolder contents with for loop
-
-					String stockToAdd = (String) tickerSymbolList.get(i);
-					// Gets value from last and casts it to a string
-
-					App.tickerList.addStockToList(stockToAdd); // Add to list in App class
-				}
-
-				if (debugMode) JOptionPane.showMessageDialog(null,"List loaded","Attention",0);
-				// TODO bind all popboxes to a global value
+			tickerSymbolList = gson.fromJson(diskReaderInput, ArrayList.class);
 
 
-			} catch (IOException  e) {
-				// FIXME handle corrupt JSON file
-				e.printStackTrace();
-				//failsafeLoadSettings();
-				JOptionPane.showMessageDialog(null, "List Corrupt, defaults set");
+			ArrayList<String> tickerListData = new ArrayList<String>();
+			// Initialize array for storing ticker symbols
+
+			for (int i = 0; i < tickerSymbolList.size(); i++) {
+				// Get tickerListHolder contents with for loop
+
+				String stockToAdd = (String) tickerSymbolList.get(i);
+				// Gets value from last and casts it to a string
+
+				App.tickerList.addStockToList(stockToAdd); // Add to list in App class
 			}
 
+			if (!tickerListFilePath.equals(settingsProperties.getTickerListFilePath())) {
+				JOptionPane.showMessageDialog(null,"Custom list loaded");}
+				// Will not popup if loading main list, useful for loading custom lists
 
 
 		}else{
