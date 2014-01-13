@@ -18,16 +18,16 @@ public class Utils {
 	 * @return String
 	 * @throws IOException
 	 */
-	public static String readFile(String pathname, boolean debugMode){
+	public static String readFile(String pathname) {
 
-	    File file = new File(pathname);
+		File file = new File(pathname);
 	    StringBuilder fileContents = new StringBuilder((int)file.length());
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(file);
 		} catch (FileNotFoundException e) {
 			// FIXME handle file not found exception
-			if(debugMode) e.printStackTrace();
+			e.printStackTrace();
 
 		}
 		String lineSeparator = System.getProperty("line.separator");
@@ -45,7 +45,7 @@ public class Utils {
 	    }
 	}
 
-	public static void writeFile(String pathname, String stringDataToWrite, boolean debugModeFlag){
+	public static void writeFile(String pathname, String stringDataToWrite) {
 
 		PrintStream diskWriter = null;
 
@@ -54,8 +54,7 @@ public class Utils {
 		} catch (FileNotFoundException e) {
 			// FIXME what to do if file not found
 
-
-			if (debugModeFlag) e.printStackTrace();
+			e.printStackTrace();
 			System.err.println("Save data to disk didn't work");
 		} // Makes new file / overwrites and assigns object
 

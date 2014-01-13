@@ -14,7 +14,10 @@ import java.util.concurrent.CountDownLatch;
 class App {
 
 	/** Debug flag*/
-	static boolean debugMode = true;
+	static int debugMode = 2;
+	// 0 = off, 1 = console only 2 = testing mode
+
+	static boolean shutdownFlag;
 
 
 	/** Global configuration file path, used for various settings operations */
@@ -48,8 +51,8 @@ class App {
 
 		//tickerListHolder.addStockToList("JCP");
 
-
-		do {
+		if (debugMode <= 2) {
+			do {
 			int exit = JOptionPane.showConfirmDialog(null, "Add stock to list", null,
 					JOptionPane.YES_NO_OPTION);
 			if (exit == 1) break;
@@ -59,6 +62,7 @@ class App {
 
 		tickerList.outputTickerListToConsole();
 		tickerList.outputIndexToConsole();
+		}
 		// Good up until here
 		// Simulate loading list from file
 
@@ -69,19 +73,17 @@ class App {
 
 		//addStockToListGUI(); // Should get called by + button in GUI
 
-		//TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
-
-		myScheduler.shutdownThread(); // Shuts down the scheduler
-		// TODO move to shutdown script when done testing
+		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
 
 
-		//App.shutdownScript();
+		while (shutdownFlag) myScheduler.shutdownThread(); // Shuts down the scheduler when flag is set
+		// TODO is there a better way to do this?
+		myScheduler.updateListTask();
+
 
 		System.err.println("end of main");
 
 		//TODO re-enable when GUI is working
-		//System.exit(0); // Makes sure program ends
-
 
 
 		final CountDownLatch latch = new CountDownLatch(1);
@@ -127,11 +129,13 @@ class App {
 	private static void shutdownScript() {
 		settingsProperties.saveSettings();
 		System.err.println("shutdownScript");
-
-        // FIXME fix casting problem
 		tickerList.saveList(settingsProperties.getTickerListFilePath());
+		shutdownFlag = true;
 
 		// TODO Add code for shutting down threads
+
+		// TODO move to shutdown script when done testing
+
 	}
 
 

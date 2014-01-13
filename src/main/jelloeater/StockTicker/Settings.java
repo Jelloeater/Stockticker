@@ -155,8 +155,8 @@ class Settings extends App{
 		 
 		  if(config.exists()){
 
-			String diskReaderInput = Utils.readFile(App.configFilePath,debugMode);
-			Gson gson = new Gson(); // Initializes object
+			  String diskReaderInput = Utils.readFile(App.configFilePath);
+			  Gson gson = new Gson(); // Initializes object
 			settingsProperties = gson.fromJson(diskReaderInput, Settings.class);
 
 		  }else{ 

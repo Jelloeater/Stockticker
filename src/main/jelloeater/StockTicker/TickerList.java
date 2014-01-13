@@ -5,9 +5,6 @@ import jwsUtils.Utils;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 
 /**
@@ -49,7 +46,7 @@ public class TickerList extends App{
 	}
 
 	void outputIndexTickerConsole(){
-		if (App.debugMode){
+		if (debugMode <= 1) {
 			//tickerList.indexTicker.getTickerInfoDataGUI(indexTicker); // full path of object
 
 			indexTicker.getTickerInfoDataConsole(indexTicker);
@@ -61,7 +58,7 @@ public class TickerList extends App{
 
 	void addStockToListGUI() {
 		// FIXME Add check to see if duplicate symbols exist
-		String tickerSymbolInput = JOptionPane.showInputDialog("Set Symbol", "GOOG");
+		String tickerSymbolInput = JOptionPane.showInputDialog("Enter Symbol", "GOOG");
 		addStockToList(tickerSymbolInput);
 	}
 
@@ -116,7 +113,7 @@ public class TickerList extends App{
 	}
 
 	void outputTickerListToConsole() {
-		if (App.debugMode){
+		if (debugMode <= 1) {
 			for (int i = 0; i < tickerListHolder.size(); i++) {
 				// Get tickerListHolder contents with for loop
 				TickerInfo x = tickerListHolder.get(i);
@@ -144,7 +141,7 @@ public class TickerList extends App{
 			tickerListData.add(symbolToStore);
 		}
 
-		if (debugMode){
+		if (debugMode <= 1) {
 			System.err.println("Contents of TickerList Symbols");
 		for (int i = 0; i < tickerListData.size(); i++) {
 			// Get tickerListHolder contents with for loop
@@ -158,9 +155,9 @@ public class TickerList extends App{
 		String tickerListDataJSON = gson.toJson(tickerListData); // Takes static object variables and converts them
 
 
-		Utils.writeFile(tickerListFilePath,tickerListDataJSON,debugMode);
+		Utils.writeFile(tickerListFilePath, tickerListDataJSON);
 
-        System.err.print("SaveList breakpoint");
+		System.err.print("SaveList breakpoint");
     }
 
 
@@ -170,7 +167,7 @@ public class TickerList extends App{
 
 		if(config.exists()){
 
-			String diskReaderInput = Utils.readFile(tickerListFilePath,debugMode);
+			String diskReaderInput = Utils.readFile(tickerListFilePath);
 
 			Gson gson = new Gson(); // Initializes object
 

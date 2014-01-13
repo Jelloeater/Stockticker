@@ -1,15 +1,16 @@
 package jelloeater.StockTicker;
-import static java.util.concurrent.TimeUnit.*;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 
-	/**
-	 * Sets up threads and runs tasks
-	 * @author Jesse
-	 *
-	 */
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+/**
+ * Sets up threads and runs tasks
+ * @author Jesse
+ *
+ */
 class Scheduler extends App{
 
 	private final ScheduledExecutorService schedulerController =
@@ -67,7 +68,7 @@ class Scheduler extends App{
 			e.printStackTrace();
 		}
 		schedulerController.shutdown();
-    	if (debugMode) System.err.println("shutdownThread");
+	    if (debugMode <= 1) System.err.println("shutdownThread");
     }
 
     }

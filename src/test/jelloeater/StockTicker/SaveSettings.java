@@ -1,17 +1,17 @@
 package jelloeater.StockTicker;
 
-import static org.junit.Assert.*;
-
+import jwsUtils.UtilsGUI;
 import org.junit.Test;
-import jwsUtils.*;
+
+import static org.junit.Assert.assertNotNull;
 
 public class SaveSettings extends App{
 
 	@Test
 	public void testNoFile() {
 		UtilsGUI.setLookAndFeel();
-		debugMode= true;
-		
+		debugMode = 2;
+
 		settingsProperties.setDefaults();
 		settingsProperties.saveSettings();
 		settingsProperties.loadSettings();
