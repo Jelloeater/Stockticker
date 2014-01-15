@@ -1,25 +1,12 @@
 package jelloeater.StockTicker;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-
-import javax.swing.JTextPane;
-import javax.swing.JScrollBar;
-import javax.swing.JButton;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
 //import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.ButtonGroup;
 
 class TickerWindow extends App{
 
@@ -64,10 +51,22 @@ class TickerWindow extends App{
 		mainWindow = new JFrame();
 		mainWindow.setBounds(100, 100, 250, 450);
 		mainWindow.getContentPane().setLayout(new MigLayout("", "[grow][]", "[211.00,grow][bottom]"));
-		JTextPane textPane = new JTextPane();
-		mainWindow.getContentPane().add(textPane, "cell 0 0,grow");
-		
-		
+		JTextPane tickerWindow = new JTextPane();
+		mainWindow.getContentPane().add(tickerWindow, "cell 0 0,grow");
+
+		JPopupMenu popupMenu = new JPopupMenu();
+		addPopup(tickerWindow, popupMenu);
+
+		JMenuItem mntmRefreshList = new JMenuItem("Refresh");
+		mntmRefreshList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tickerList.updateTickerList();
+			}
+		});
+		mntmRefreshList.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+		popupMenu.add(mntmRefreshList);
+
+
 		/**
 		 * On a window close, spawns dialogue box to check if you really want to close that window
 		 * NOTE if you close all the windows, the shutdown hooks will kick in
@@ -88,19 +87,20 @@ class TickerWindow extends App{
 			
 		JScrollBar scrollBar = new JScrollBar();
 		mainWindow.getContentPane().add(scrollBar, "cell 1 0,alignx right,growy");
-		
-		JTextPane textPane_1 = new JTextPane();
-		mainWindow.getContentPane().add(textPane_1, "flowx,cell 0 1,growx,aligny bottom");
-		
-		JButton btnNewButton = new JButton("+");
-		btnNewButton.addActionListener(new ActionListener() {
+
+		JTextPane indexWindow = new JTextPane();
+		mainWindow.getContentPane().add(indexWindow, "flowx,cell 0 1,growx,aligny bottom");
+
+		JButton addNewStock = new JButton("+");
+		addNewStock.setToolTipText("Add a new symbol to the list");
+		addNewStock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				tickerList.addStockToListGUI();}
 			});
 
-			mainWindow.getContentPane().add(btnNewButton, "cell 0 1,alignx right,aligny bottom");
-			
-			JMenuBar menuBar = new JMenuBar();
+		mainWindow.getContentPane().add(addNewStock, "cell 0 1,alignx right,aligny bottom");
+
+		JMenuBar menuBar = new JMenuBar();
 			mainWindow.setJMenuBar(menuBar);
 			
 			JMenu mnFile = new JMenu("File");
@@ -110,7 +110,8 @@ class TickerWindow extends App{
 			 * When clicked, opens shutdown window
 			 */
 			JMenuItem mntmExit = new JMenuItem("Exit");
-			mntmExit.addActionListener(new ActionListener() {
+		mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
+		mntmExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (App.shutdownWindow()== 0) System.exit(0); // Ends up calling hooks
 				}
@@ -121,7 +122,8 @@ class TickerWindow extends App{
 			menuBar.add(mnSettings);
 			
 			JMenuItem mntmSetRefresh = new JMenuItem("Set Refresh...");
-			mntmSetRefresh.addActionListener(new ActionListener() {
+		mntmSetRefresh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
+		mntmSetRefresh.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					settingsProperties.setRefreshIntervalSecondsGUI();
 				}
@@ -129,24 +131,26 @@ class TickerWindow extends App{
 			mnSettings.add(mntmSetRefresh);
 									
 			JMenuItem mntmSetIndex = new JMenuItem("Set Index...");
-			mntmSetIndex.addActionListener(new ActionListener() {
+		mntmSetIndex.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
+		mntmSetIndex.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					settingsProperties.setIndexSymbolGUI();
 				}
 			});
 			mnSettings.add(mntmSetIndex);
-			
-			JMenu mnNewMenu = new JMenu("Quote Source");
-			mnSettings.add(mnNewMenu);
-			
-			JRadioButtonMenuItem rdbtnmntmGoogle = new JRadioButtonMenuItem("Google",settingsProperties.isSourceGoogle());
-			rdbtnmntmGoogle.addActionListener(new ActionListener() {
+
+		JMenu mnQuoteSource = new JMenu("Quote Source");
+		mnSettings.add(mnQuoteSource);
+
+		JRadioButtonMenuItem rdbtnmntmGoogle = new JRadioButtonMenuItem("Google",settingsProperties.isSourceGoogle());
+		rdbtnmntmGoogle.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.CTRL_MASK));
+		rdbtnmntmGoogle.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					settingsProperties.setSourceGoogle();
 				}
 			});
 			buttonGroup.add(rdbtnmntmGoogle);
-			mnNewMenu.add(rdbtnmntmGoogle);
+		mnQuoteSource.add(rdbtnmntmGoogle);
 			
 			/*
 			JRadioButtonMenuItem rdbtnmntmNewRadioItem = new JRadioButtonMenuItem("Yahoo");
@@ -164,7 +168,8 @@ class TickerWindow extends App{
 			menuBar.add(mnHelp);
 			
 			JMenuItem mntmHelpContents = new JMenuItem("Help Contents");
-			mnHelp.add(mntmHelpContents);
+		mntmHelpContents.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+		mnHelp.add(mntmHelpContents);
 			
 			JMenuItem mntmRestoreDefaults = new JMenuItem("Restore Defaults");
 			mntmRestoreDefaults.addActionListener(new ActionListener() {
@@ -185,6 +190,25 @@ class TickerWindow extends App{
 			});
 			mnHelp.add(mntmAbout);
 	}
-	
+
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 }
 
