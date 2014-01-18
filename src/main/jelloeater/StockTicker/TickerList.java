@@ -117,14 +117,27 @@ public class TickerList extends App{
 			for (int i = 0; i < tickerListHolder.size(); i++) {
 				// Get tickerListHolder contents with for loop
 				TickerInfo x = tickerListHolder.get(i);
-				x.getTickerInfoDataConsole(x); // use getTickerInfoDataConsole for output
-				System.out.println();
+				x.getTickerInfoDataConsole(x); // print individual ticker item to console
+				System.out.println(); // Blank line
 
 			}
 		}
 	}
 
+	String outputTickerListToString() {
+		String outputString = "";
 
+		for (int i = 0; i < tickerListHolder.size(); i++) {
+			// Get tickerListHolder contents with for loop
+			TickerInfo tickerToGet = tickerListHolder.get(i);
+			outputString = outputString + tickerToGet.getTickerSymbol() + "\n" + "Price: "
+					               + tickerToGet.getPrice() + "\n" + "% Change: "
+					               + tickerToGet.getPercentChange() + "%" + "\n"
+					               + "Price Change: " + tickerToGet.getPriceChange() + "\n" + "\n";
+
+		}
+		return outputString;
+	}
 
 
 	void saveList(String tickerListFilePath) {

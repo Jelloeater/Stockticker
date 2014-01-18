@@ -63,6 +63,11 @@ class App {
 		tickerList.outputTickerListToConsole();
 		tickerList.outputIndexToConsole();
 		}
+
+
+		if (debugMode <= 1) System.out.print(tickerList.outputTickerListToString()); // For testing window output
+
+
 		// Good up until here
 		// Simulate loading list from file
 
@@ -72,6 +77,7 @@ class App {
 
 
 		//addStockToListGUI(); // Should get called by + button in GUI
+
 
 		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
 

@@ -11,7 +11,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * @author Jesse
  *
  */
-class Scheduler extends App{
+class Scheduler extends TickerWindow {
 
 	private final ScheduledExecutorService schedulerController =
 					Executors.newScheduledThreadPool(1);
@@ -34,6 +34,9 @@ class Scheduler extends App{
 				//TickerList.updateTickerList(); // Call update
 				//TickerList.updateIndexInfo(); // What it says on the tin
 				// FIXME update index along with arrayList
+
+
+				TickerWindow.updateGuiWindowText();
 
 				System.err.print("party!");
 			}

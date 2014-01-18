@@ -35,6 +35,13 @@ class TickerWindow extends App{
 		});
 	}
 
+	static void updateGuiWindowText() {
+		tickerList.updateTickerList();
+		// FIXME set tickerString to GUI window
+
+	}
+
+
 	/**
 	 * Create the application.
 	 */
@@ -51,16 +58,17 @@ class TickerWindow extends App{
 		mainWindow = new JFrame();
 		mainWindow.setBounds(100, 100, 250, 450);
 		mainWindow.getContentPane().setLayout(new MigLayout("", "[grow][]", "[211.00,grow][bottom]"));
-		JTextPane tickerWindow = new JTextPane();
+		final JTextPane tickerWindow = new JTextPane();
 		mainWindow.getContentPane().add(tickerWindow, "cell 0 0,grow");
 
 		JPopupMenu popupMenu = new JPopupMenu();
 		addPopup(tickerWindow, popupMenu);
 
-		JMenuItem mntmRefreshList = new JMenuItem("Refresh");
+		JMenuItem mntmRefreshList = new JMenuItem("Refresh");                       // REFRESH POPUP
 		mntmRefreshList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tickerList.updateTickerList();
+				tickerWindow.setText(tickerList.outputTickerListToString());
 			}
 		});
 		mntmRefreshList.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
