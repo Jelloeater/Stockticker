@@ -38,7 +38,7 @@ class Scheduler extends TickerWindow {
 
 				TickerWindow.updateGuiWindowText();
 
-				System.err.print("party!");
+				if (debugMode >= 1) System.err.print("party!");
 			}
 		};
 
@@ -71,7 +71,7 @@ class Scheduler extends TickerWindow {
 			e.printStackTrace();
 		}
 		schedulerController.shutdown();
-	    if (debugMode <= 1) System.err.println("shutdownThread");
+	    if (debugMode >= 1) System.err.println("shutdownThread");
     }
 
     }

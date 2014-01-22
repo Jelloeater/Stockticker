@@ -118,7 +118,7 @@ class Settings extends App{
 				inputFail = false;
 				} 
 			catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Please enter a valid number", null, 0);
+				JOptionPane.showMessageDialog(null, "Please enter a valid number", null, JOptionPane.INFORMATION_MESSAGE);
 				inputFail = true;
 				}
 		} while (inputFail);
@@ -135,7 +135,7 @@ class Settings extends App{
 			diskWriter = new PrintStream(new File(App.configFilePath));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			System.err.println("Save settings to disk didn't work");
+			JOptionPane.showMessageDialog(null, "Save settings to disk didn't work", null, JOptionPane.ERROR_MESSAGE);
 		} // Makes new file / overwrites and assigns object
 		
 		Gson gson = new Gson(); // Initializes object
@@ -162,7 +162,7 @@ class Settings extends App{
 		  }else{ 
 			  // load the settings fail safe, this is in case the file path is set wrong
 			  failsafeLoadSettings();
-			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.");
+			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.", null, JOptionPane.INFORMATION_MESSAGE);
 		  }	
 	}
 
@@ -177,13 +177,13 @@ class Settings extends App{
 	private void deleteSettingsFile(){
 		File file = new File(App.configFilePath);
 		file.delete();
-		JOptionPane.showMessageDialog(null, "Config file removed");
+		JOptionPane.showMessageDialog(null, "Config file removed", null, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	
 	void restoreDefaultsGUI(){
-		int option = JOptionPane.showConfirmDialog(null, "Restore Defaults?", null, 2);
-		
+		int option = JOptionPane.showConfirmDialog(null, "Restore Defaults?", null, JOptionPane.YES_NO_OPTION);
+
 		switch (option) {
 		case 0:
 			settingsProperties.deleteSettingsFile();

@@ -46,7 +46,7 @@ public class TickerList extends App{
 	}
 
 	void outputIndexTickerConsole(){
-		if (debugMode <= 1) {
+		if (debugMode >= 1) {
 			//tickerList.indexTicker.getTickerInfoDataGUI(indexTicker); // full path of object
 
 			indexTicker.getTickerInfoDataConsole(indexTicker);
@@ -113,7 +113,7 @@ public class TickerList extends App{
 	}
 
 	void outputTickerListToConsole() {
-		if (debugMode <= 1) {
+		if (debugMode >= 1) {
 			for (int i = 0; i < tickerListHolder.size(); i++) {
 				// Get tickerListHolder contents with for loop
 				TickerInfo x = tickerListHolder.get(i);
@@ -154,7 +154,7 @@ public class TickerList extends App{
 			tickerListData.add(symbolToStore);
 		}
 
-		if (debugMode <= 1) {
+		if (debugMode >= 1) {
 			System.err.println("Contents of TickerList Symbols");
 		for (int i = 0; i < tickerListData.size(); i++) {
 			// Get tickerListHolder contents with for loop
@@ -170,8 +170,8 @@ public class TickerList extends App{
 
 		Utils.writeFile(tickerListFilePath, tickerListDataJSON);
 
-		System.err.print("SaveList breakpoint");
-    }
+		if (debugMode >= 1) System.err.print("SaveList breakpoint");
+	}
 
 
 	void loadList(String tickerListFilePath) {

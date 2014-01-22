@@ -14,8 +14,8 @@ import java.util.concurrent.CountDownLatch;
 class App {
 
 	/** Debug flag*/
-	static int debugMode = 2;
-	// 0 = off, 1 = console only 2 = testing mode
+	static int debugMode = 0;
+	// 0 = off, 1 = console output only 2 = testing mode
 
 	static boolean shutdownFlag;
 
@@ -51,7 +51,7 @@ class App {
 
 		//tickerListHolder.addStockToList("JCP");
 
-		if (debugMode <= 2) {
+		if (debugMode >= 2) {
 			do {
 			int exit = JOptionPane.showConfirmDialog(null, "Add stock to list", null,
 					JOptionPane.YES_NO_OPTION);
@@ -65,7 +65,7 @@ class App {
 		}
 
 
-		if (debugMode <= 1) System.out.print(tickerList.outputTickerListToString()); // For testing window output
+		if (debugMode >= 1) System.out.print(tickerList.outputTickerListToString()); // For testing window output
 
 
 		// Good up until here
@@ -78,21 +78,21 @@ class App {
 
 		//addStockToListGUI(); // Should get called by + button in GUI
 
-
-		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
-
-
 		while (shutdownFlag) myScheduler.shutdownThread(); // Shuts down the scheduler when flag is set
 		// TODO is there a better way to do this?
 		myScheduler.updateListTask();
 
 
-		System.err.println("end of main");
+		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
+
+
+		if (debugMode >= 1) System.err.println("end of main");
 
 		//TODO re-enable when GUI is working
 
+		if (debugMode >= 2) {
 
-		final CountDownLatch latch = new CountDownLatch(1);
+			final CountDownLatch latch = new CountDownLatch(1);
 		final Thread t = new Thread(new Runnable() {
 			public void run() {
 				System.out.println("qwerty");
@@ -105,7 +105,7 @@ class App {
 
 		System.out.println("absolutely sure, qwerty as been printed");
 
-
+		}
 
 
 	}
@@ -134,7 +134,7 @@ class App {
 
 	private static void shutdownScript() {
 		settingsProperties.saveSettings();
-		System.err.println("shutdownScript");
+		if (debugMode >= 1) System.err.println("shutdownScript");
 		tickerList.saveList(settingsProperties.getTickerListFilePath());
 		shutdownFlag = true;
 
