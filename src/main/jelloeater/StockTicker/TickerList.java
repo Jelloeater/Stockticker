@@ -40,10 +40,11 @@ public class TickerList extends App{
 
 	}
 
-	void updateIndexTickerInfo(){
-		indexTicker=indexTicker.updateTickerObject(indexTicker);
-		// FIXME This SHOULD work?!?
+
+	void updateIndexInfo() {
+		indexTicker = indexTicker.updateTickerObject(indexTicker);
 	}
+
 
 	void outputIndexTickerConsole(){
 		if (debugMode >= 1) {
@@ -54,7 +55,6 @@ public class TickerList extends App{
 
 		}
 	}
-
 
 	void addStockToListGUI() {
 		// FIXME Add check to see if duplicate symbols exist
@@ -75,6 +75,7 @@ public class TickerList extends App{
 
 	}
 
+
 	void removeStockFromList(String stockToRemove){
 		int stockLocationToRemove=0;
 		// TODO write loop to match string and remove object from array
@@ -83,7 +84,6 @@ public class TickerList extends App{
 
 		tickerListHolder.remove(stockLocationToRemove);
 	}
-
 
 	/**
 	 * Updates tickerListHolder using for loop
@@ -97,8 +97,14 @@ public class TickerList extends App{
 		}
 	}
 
-	void updateIndexInfo() {
-		indexTicker = indexTicker.updateTickerObject(indexTicker);
+	public void clearList() {
+		// TODO Auto-generated method stub
+
+	}
+
+	void deleteList(String listFilePath) {
+		File file = new File(listFilePath);
+		file.delete();
 	}
 
 	boolean isSymbolDuplicate(String tickerSymbol) {
@@ -124,18 +130,31 @@ public class TickerList extends App{
 		}
 	}
 
+
 	String outputTickerListToString() {
 		String outputString = "";
 
 		for (int i = 0; i < tickerListHolder.size(); i++) {
 			// Get tickerListHolder contents with for loop
 			TickerInfo tickerToGet = tickerListHolder.get(i);
-			outputString = outputString + tickerToGet.getTickerSymbol() + "\n" + "Price: "
+			outputString = outputString + tickerToGet.getTickerSymbol() + ":\n" + "Price: "
 					               + tickerToGet.getPrice() + "\n" + "% Change: "
 					               + tickerToGet.getPercentChange() + "%" + "\n"
 					               + "Price Change: " + tickerToGet.getPriceChange() + "\n" + "\n";
 
 		}
+		return outputString;
+	}
+
+
+	String outputIndexToString() {
+		String outputString = "";
+
+		TickerInfo tickerToGet = indexTicker;
+		outputString = tickerToGet.getTickerSymbol() + ":  $" +
+				               tickerToGet.getPrice() + "  " +
+				               tickerToGet.getPercentChange() + "%  $" +
+				               tickerToGet.getPriceChange();
 		return outputString;
 	}
 
@@ -212,12 +231,6 @@ public class TickerList extends App{
 			JOptionPane.showMessageDialog(null, "Portfolio missing, defaults set.");
 		}
 
-	}
-
-
-	private void deleteList(String configFilePath){
-		File file = new File(configFilePath);
-		file.delete();
 	}
 
 }

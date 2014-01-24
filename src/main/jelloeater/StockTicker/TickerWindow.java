@@ -61,19 +61,6 @@ class TickerWindow extends App{
 		final JTextPane tickerWindow = new JTextPane();
 		mainWindow.getContentPane().add(tickerWindow, "cell 0 0,grow");
 
-		JPopupMenu popupMenu = new JPopupMenu();
-		addPopup(tickerWindow, popupMenu);
-
-		JMenuItem mntmRefreshList = new JMenuItem("Refresh");                       // REFRESH POPUP
-		mntmRefreshList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tickerList.updateTickerList();
-				tickerWindow.setText(tickerList.outputTickerListToString());
-			}
-		});
-		mntmRefreshList.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
-		popupMenu.add(mntmRefreshList);
-
 
 		/**
 		 * On a window close, spawns dialogue box to check if you really want to close that window
@@ -82,9 +69,9 @@ class TickerWindow extends App{
 		 */
 		mainWindow.addComponentListener(new ComponentAdapter() {
 			@Override
-			public void componentHidden(ComponentEvent e){
-				if (App.shutdownWindow()== 0) {
-					((JFrame)(e.getComponent())).dispose();
+			public void componentHidden(ComponentEvent e) {
+				if (App.shutdownWindow() == 0) {
+					((JFrame) (e.getComponent())).dispose();
 				} else {
 					e.getComponent().setVisible(true);
 					// You only need to cast once
@@ -96,7 +83,7 @@ class TickerWindow extends App{
 		JScrollBar scrollBar = new JScrollBar();
 		mainWindow.getContentPane().add(scrollBar, "cell 1 0,alignx right,growy");
 
-		JTextPane indexWindow = new JTextPane();
+		final JTextPane indexWindow = new JTextPane();
 		mainWindow.getContentPane().add(indexWindow, "flowx,cell 0 1,growx,aligny bottom");
 
 		JButton addNewStock = new JButton("+");
@@ -120,23 +107,35 @@ class TickerWindow extends App{
 			JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		mntmExit.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (App.shutdownWindow()== 0) System.exit(0); // Ends up calling hooks
-				}
-			});
-			mnFile.add(mntmExit);
+			public void actionPerformed(ActionEvent e) {
+				if (App.shutdownWindow() == 0) System.exit(0); // Ends up calling hooks
+			}
+		});
+		mnFile.add(mntmExit);
 			
 			JMenu mnSettings = new JMenu("Settings");
 			menuBar.add(mnSettings);
-			
-			JMenuItem mntmSetRefresh = new JMenuItem("Set Refresh...");
+
+		JMenuItem mntmSetRefresh = new JMenuItem("Set Refresh...");                               // REFRESH LIST //
 		mntmSetRefresh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
 		mntmSetRefresh.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					settingsProperties.setRefreshIntervalSecondsGUI();
 				}
 			});
-			mnSettings.add(mntmSetRefresh);
+
+		JMenuItem mntmRefresh = new JMenuItem("Refresh");
+		mntmRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tickerList.updateTickerList();
+				tickerWindow.setText(tickerList.outputTickerListToString());
+				tickerList.updateIndexInfo();
+				indexWindow.setText(tickerList.outputIndexToString());
+			}
+		});
+		mntmRefresh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+		mnSettings.add(mntmRefresh);
+		mnSettings.add(mntmSetRefresh);
 									
 			JMenuItem mntmSetIndex = new JMenuItem("Set Index...");
 		mntmSetIndex.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
@@ -146,6 +145,15 @@ class TickerWindow extends App{
 				}
 			});
 			mnSettings.add(mntmSetIndex);
+
+		JMenuItem mntmClearList = new JMenuItem("Clear List");
+		mntmClearList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tickerList.deleteList(settingsProperties.getTickerListFilePath());
+				// Deletes the main list
+			}
+		});
+		mnSettings.add(mntmClearList);
 
 		JMenu mnQuoteSource = new JMenu("Quote Source");
 		mnSettings.add(mnQuoteSource);
