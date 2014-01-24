@@ -17,8 +17,6 @@ import java.util.regex.Pattern;
  * Setters are private
  * But getters are default viability
  * 
- * @param symbol
- *            1-4 Letter stock identifier
  * @author Jesse
  * 
  */

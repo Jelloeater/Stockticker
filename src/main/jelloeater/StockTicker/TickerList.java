@@ -31,21 +31,19 @@ public class TickerList extends App{
 	}
 
 
-	// FIXME write load method
-	// FIXME write save method
+
 
 	void setupIndexTicker(){
-
 		indexTicker=indexTicker.makeTickerObject(settingsProperties.getIndexSymbol());
-
 	}
 
+	void setIndexTickerSymbol(String symbolToSet){
+		indexTicker=indexTicker.makeTickerObject(symbolToSet);
+	}
 
 	void updateIndexInfo() {
 		indexTicker = indexTicker.updateTickerObject(indexTicker);
 	}
-
-
 	void outputIndexTickerConsole(){
 		if (debugMode >= 1) {
 			//tickerList.indexTicker.getTickerInfoDataGUI(indexTicker); // full path of object
@@ -97,12 +95,12 @@ public class TickerList extends App{
 		}
 	}
 
-	public void clearList() {
-		// TODO Auto-generated method stub
+	void clearList() {
+		// FIXME Write list clear method USE LOOP? :)
 
 	}
 
-	void deleteList(String listFilePath) {
+	void deleteListFIle(String listFilePath) {
 		File file = new File(listFilePath);
 		file.delete();
 	}

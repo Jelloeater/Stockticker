@@ -141,7 +141,8 @@ class TickerWindow extends App{
 		mntmSetIndex.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
 		mntmSetIndex.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					settingsProperties.setIndexSymbolGUI();
+					settingsProperties.setIndexSymbolGUI(); // Set it in settings only
+					tickerList.setIndexTickerSymbol(settingsProperties.getIndexSymbol());
 				}
 			});
 			mnSettings.add(mntmSetIndex);
@@ -149,8 +150,10 @@ class TickerWindow extends App{
 		JMenuItem mntmClearList = new JMenuItem("Clear List");
 		mntmClearList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tickerList.deleteList(settingsProperties.getTickerListFilePath());
-				// Deletes the main list
+				tickerList.deleteListFIle(settingsProperties.getTickerListFilePath());
+				// Deletes the main list file
+				tickerList.clearList();
+
 			}
 		});
 		mnSettings.add(mntmClearList);
