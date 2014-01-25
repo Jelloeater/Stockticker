@@ -8,8 +8,6 @@ import jwsUtils.Utils;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
 
 //import java.util.Map;
 //import java.util.Scanner;
@@ -127,40 +125,29 @@ class Settings extends App{
 	 * Writes the App singleton settingsProperties to the specified configuration file path
 	 */
 	void saveSettings(){
-			
-		PrintStream diskWriter = null;
-		try {
-			diskWriter = new PrintStream(new File(App.configFilePath));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Save settings to disk didn't work", null, JOptionPane.ERROR_MESSAGE);
-		} // Makes new file / overwrites and assigns object
-		
 		Gson gson = new Gson(); // Initializes object
 		
 		String settingsData = gson.toJson(settingsProperties); // Takes static object variables and converts them
+		Utils.writeFile(App.configFilePath, settingsData);
 
-		diskWriter.print (settingsData); // Writes string to file
-		diskWriter.close();	// Closes process
 	}
 
 	/**Reads settings from configuration file and copies them to the singleton in App class
 	 */
 	void loadSettings(){
-	
 		File config = new File(App.configFilePath);
-		 
-		  if(config.exists()){
 
-			  String diskReaderInput = Utils.readFile(App.configFilePath);
-			  Gson gson = new Gson(); // Initializes object
+		if (config.exists()) {
+
+			String diskReaderInput = Utils.readFile(App.configFilePath);
+			Gson gson = new Gson(); // Initializes object
 			settingsProperties = gson.fromJson(diskReaderInput, Settings.class);
 
-		  }else{ 
-			  // load the settings fail safe, this is in case the file path is set wrong
-			  failsafeLoadSettings();
-			  JOptionPane.showMessageDialog(null, "Config missing, defaults set.", null, JOptionPane.INFORMATION_MESSAGE);
-		  }	
+		} else {
+			// load the settings fail safe, this is in case the file path is set wrong
+			failsafeLoadSettings();
+			JOptionPane.showMessageDialog(null, "Config missing, defaults set.", null, JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 
 

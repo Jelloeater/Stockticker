@@ -34,16 +34,18 @@ public class TickerList extends App{
 
 
 	void setupIndexTicker(){
-		indexTicker=indexTicker.makeTickerObject(settingsProperties.getIndexSymbol());
+		indexTicker = TickerInfo.makeTickerObject(settingsProperties.getIndexSymbol());
 	}
 
 	void setIndexTickerSymbol(String symbolToSet){
-		indexTicker=indexTicker.makeTickerObject(symbolToSet);
+		indexTicker = TickerInfo.makeTickerObject(symbolToSet);
 	}
 
 	void updateIndexInfo() {
 		indexTicker = indexTicker.updateTickerObject(indexTicker);
 	}
+
+	/*
 	void outputIndexTickerConsole(){
 		if (debugMode >= 1) {
 			//tickerList.indexTicker.getTickerInfoDataGUI(indexTicker); // full path of object
@@ -53,6 +55,7 @@ public class TickerList extends App{
 
 		}
 	}
+	*/
 
 	void addStockToListGUI() {
 		// FIXME Add check to see if duplicate symbols exist
@@ -67,7 +70,7 @@ public class TickerList extends App{
 		do {
 			myStock = TickerInfo.makeTickerObject(stockToAdd);
 			duplicateSymbol = isSymbolDuplicate(myStock.getTickerSymbol());
-		} while (duplicateSymbol == true);
+		} while (duplicateSymbol);
 
 		tickerListHolder.add(myStock);
 
@@ -76,7 +79,7 @@ public class TickerList extends App{
 
 	void removeStockFromList(String stockToRemove){
 		int stockLocationToRemove=0;
-		// TODO write loop to match string and remove object from array
+		// FIXME write loop to match string and remove object from array
 
 		// LOOP GOES HERE
 
@@ -85,7 +88,6 @@ public class TickerList extends App{
 
 	/**
 	 * Updates tickerListHolder using for loop
-	 * @throws Exception
 	 */
 	void updateTickerList() {
 		for (int i = 0; i < tickerListHolder.size(); i++) {
@@ -97,6 +99,8 @@ public class TickerList extends App{
 
 	void clearList() {
 		// FIXME Write list clear method USE LOOP? :)
+
+		// FIXME Set empty list
 
 	}
 
@@ -146,7 +150,7 @@ public class TickerList extends App{
 
 
 	String outputIndexToString() {
-		String outputString = "";
+		String outputString;
 
 		TickerInfo tickerToGet = indexTicker;
 		outputString = tickerToGet.getTickerSymbol() + ":  $" +
@@ -201,16 +205,12 @@ public class TickerList extends App{
 
 			Gson gson = new Gson(); // Initializes object
 
-			ArrayList tickerSymbolList = new ArrayList();
+			ArrayList tickerSymbolList; // Initialize array for storing ticker symbols
 
 			tickerSymbolList = gson.fromJson(diskReaderInput, ArrayList.class);
 
 
-			ArrayList<String> tickerListData = new ArrayList<String>();
-			// Initialize array for storing ticker symbols
-
-			for (int i = 0; i < tickerSymbolList.size(); i++) {
-				// Get tickerListHolder contents with for loop
+			for (int i = 0; i < tickerSymbolList.size(); i++) { // Get tickerListHolder contents with for loop
 
 				String stockToAdd = (String) tickerSymbolList.get(i);
 				// Gets value from last and casts it to a string
@@ -223,8 +223,9 @@ public class TickerList extends App{
 				// Will not popup if loading main list, useful for loading custom lists
 
 
-		}else{
-			 // FIXME Set empty list
+		} else {
+
+			tickerList.clearList();
 
 			JOptionPane.showMessageDialog(null, "Portfolio missing, defaults set.");
 		}

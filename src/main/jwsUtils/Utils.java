@@ -24,7 +24,7 @@ public class Utils {
 		try {
 			scanner = new Scanner(file);
 		} catch (FileNotFoundException e) {
-			// FIXME handle file not found exception
+			System.err.println("FILE PATH INVALID");
 			e.printStackTrace();
 
 		}

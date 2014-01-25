@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import javax.swing.JOptionPane;
-
+import javax.swing.*;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,14 +30,27 @@ class TickerInfo extends App {
 
 
 	/**
+	 * Creates ticker object, due to constructor being private
+	 * Flag on call sets popup logic
+	 *
+	 * @param tickerSymbolInput
+	 * @return TickerInfo
+	 */
+	public static TickerInfo makeTickerObject(String tickerSymbolInput) {
+
+		return new TickerInfo(tickerSymbolInput, false);
+	}
+
+
+	/**
 	 * When fed a tickerSymbol, parses net for info for setup
-	 * @param displayGUI 
+	 * @param displayGUI
 	 */
 	private TickerInfo(String tickerSymbol, boolean displayGUI){
 		this.symbol = tickerSymbol;
 		int retryCounter = 0;
 		int maxRetry = 3;
-		
+
 		if (settingsProperties.isSourceGoogle()){
 
 			do {
@@ -68,9 +80,9 @@ class TickerInfo extends App {
 			this.priceChange = tempObj.getPriceChange();
 			}else{
 				if (displayGUI) JOptionPane.showMessageDialog(null, "Internet Connection Failure", "Error", JOptionPane.ERROR_MESSAGE);
-			}	
+			}
 		}
-		
+
 		else{ // If quote source is not set in settingsProperties
 			this.percentChange="err";
 			this.price="err";
@@ -78,18 +90,7 @@ class TickerInfo extends App {
 			if (displayGUI) JOptionPane.showMessageDialog(null, "Quote source error", "Error", 0);
 		}
 	}
-	
 
-	
-	/**Creates ticker object, due to constructor being private
-     * Flag on call sets popup logic
-	 * @param tickerSymbolInput
-	 * @return TickerInfo*/
-	public static TickerInfo makeTickerObject(String tickerSymbolInput) {
-
-        return new TickerInfo(tickerSymbolInput, false);
-	}
-	
 	// FIXME Validate ticker method
 	public boolean validateSymbol(String tickerSymbol) {
 		boolean isSymbolVaild = false;

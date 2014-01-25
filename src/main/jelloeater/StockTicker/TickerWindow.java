@@ -47,6 +47,12 @@ class TickerWindow extends App{
 	 */
 	TickerWindow() {
 		initialize();
+
+	}
+
+	void refreshGUI() {
+		// FIXME move code here to consolidate update methods
+
 	}
 
 	/**
@@ -127,6 +133,8 @@ class TickerWindow extends App{
 		JMenuItem mntmRefresh = new JMenuItem("Refresh");
 		mntmRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// FIXME move code to method
+				refreshGUI();
 				tickerList.updateTickerList();
 				tickerWindow.setText(tickerList.outputTickerListToString());
 				tickerList.updateIndexInfo();
@@ -210,24 +218,5 @@ class TickerWindow extends App{
 			mnHelp.add(mntmAbout);
 	}
 
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-	}
 }
 

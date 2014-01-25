@@ -124,11 +124,12 @@ class App {
 		// TODO remove comment out
 		tickerList.loadList(settingsProperties.getTickerListFilePath());
 		// Should call file path to allow for multi lists in the future
+		tickerList.updateTickerList();
 
-		 tickerList.setupIndexTicker();
+		tickerList.setupIndexTicker();
 		// The index ticker object is stored in TickerList, as that's the type of object
 		// The symbol to get saved and loaded at the start and end is stored in settingsProperties, as it's easier to retrieve via JSON
-
+		tickerList.updateIndexInfo();
 	}
 
 
