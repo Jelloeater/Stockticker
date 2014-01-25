@@ -2,7 +2,6 @@ package jwsUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -13,10 +12,9 @@ import java.util.Scanner;
  */
 public class Utils {
 	/**
-	 * Just a handy method for reading text files to strings
-	 * @param pathname
+	 * Just a handy method for reading text files to strings, takes pathname
+	 * @param pathname Path to file
 	 * @return String
-	 * @throws IOException
 	 */
 	public static String readFile(String pathname) {
 
@@ -32,19 +30,25 @@ public class Utils {
 		}
 		String lineSeparator = System.getProperty("line.separator");
 
-	    try {
-	        while(scanner.hasNextLine()) {        
-	            fileContents.append(scanner.nextLine() + lineSeparator);
-	        }
-	        return fileContents.toString();
+		try {
+			if (scanner != null) {
+				while (scanner.hasNextLine()) {
+					fileContents.append(scanner.nextLine()).append(lineSeparator);
+				}
+			}
+			return fileContents.toString();
 
-
-	    }
-		finally {
-	        scanner.close();
-	    }
+		} finally {
+			if (scanner != null) scanner.close();
+		}
 	}
 
+	/**
+	 * Just a handy method for writing text files to strings, takes pathname
+	 *
+	 * @param pathname          Path to file
+	 * @param stringDataToWrite Data to be written in the form of a String
+	 */
 	public static void writeFile(String pathname, String stringDataToWrite) {
 
 		PrintStream diskWriter = null;
@@ -58,8 +62,10 @@ public class Utils {
 			System.err.println("Save data to disk didn't work");
 		} // Makes new file / overwrites and assigns object
 
-		diskWriter.print (stringDataToWrite); // Writes string to file
-		diskWriter.close();	// Closes process
+		if (diskWriter != null) {
+			diskWriter.print(stringDataToWrite); // Writes string to file
+			diskWriter.close();	// Closes process
+		}
 	}
 	
 

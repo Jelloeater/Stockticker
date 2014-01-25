@@ -9,7 +9,6 @@ import jwsUtils.Utils;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintStream;
 
 //import java.util.Map;
@@ -21,7 +20,6 @@ import java.io.PrintStream;
  Settings are something that there should only be one of, no need to make more then one object container in the main App class.
  It is "OBJECT Oriented Programming" after all.
  Rather then having to pass multiple values through getters, we can just pass the "bag" object
- @method
  */
 class Settings extends App{
 	// TODO eventually remove extends, is it really needed?
@@ -108,8 +106,8 @@ class Settings extends App{
 		refreshIntervalSeconds = refreshIntervalSecondsIN;
 	}
 
-	void setRefreshIntervalSecondsGUI(){	
-		boolean inputFail = false;
+	void setRefreshIntervalSecondsGUI(){
+		boolean inputFail;
 		do {
 			String refreshIntervalSecondsIN = JOptionPane.showInputDialog("Set Interval", settingsProperties.getRefreshIntervalSeconds());
 	
@@ -141,13 +139,12 @@ class Settings extends App{
 		Gson gson = new Gson(); // Initializes object
 		
 		String settingsData = gson.toJson(settingsProperties); // Takes static object variables and converts them
-		
+
 		diskWriter.print (settingsData); // Writes string to file
 		diskWriter.close();	// Closes process
 	}
 
 	/**Reads settings from configuration file and copies them to the singleton in App class
-	 * @throws IOException 
 	 */
 	void loadSettings(){
 	
@@ -176,8 +173,10 @@ class Settings extends App{
 
 	private void deleteSettingsFile(){
 		File file = new File(App.configFilePath);
-		file.delete();
-		JOptionPane.showMessageDialog(null, "Config file removed", null, JOptionPane.INFORMATION_MESSAGE);
+		boolean errorCode;
+		errorCode = file.delete();
+		if (errorCode)
+			JOptionPane.showMessageDialog(null, "Config file removed", null, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	
@@ -188,7 +187,7 @@ class Settings extends App{
 		case 0:
 			settingsProperties.deleteSettingsFile();
 			settingsProperties.failsafeLoadSettings();
-			JOptionPane.showMessageDialog(null, "Defaults Restored.");
+			JOptionPane.showMessageDialog(null, "Defaults Restored.", null, JOptionPane.INFORMATION_MESSAGE);
 			break;
 		default:
 			break;
