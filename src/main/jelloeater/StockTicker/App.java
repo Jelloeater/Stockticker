@@ -24,7 +24,7 @@ class App {
 	static String configFilePath = "settings.cfg"; // Fail safe default
 
 	/** Holds the ticker list, kinda important, should always load first*/
-	static TickerList tickerList = TickerList.makeSingleton();
+	static TickerList tickerListController = TickerList.makeSingleton();
 
 	/** Holds all the settings for the application in a singleton object */
 	static Settings settingsProperties = Settings.makeSingleton();
@@ -56,16 +56,16 @@ class App {
 			int exit = JOptionPane.showConfirmDialog(null, "Add stock to list", null,
 					JOptionPane.YES_NO_OPTION);
 			if (exit == 1) break;
-            tickerList.addStockToListGUI();
+            tickerListController.addStockToListGUI();
 		}
 		while (true);
 
-		tickerList.outputTickerListToConsole();
-		tickerList.outputIndexToConsole();
+		tickerListController.outputTickerListToConsole();
+		tickerListController.outputIndexToConsole();
 		}
 
 
-		if (debugMode >= 1) System.out.print(tickerList.outputTickerListToString()); // For testing window output
+		if (debugMode >= 1) System.out.print(tickerListController.outputTickerListToString()); // For testing window output
 
 
 		// Good up until here
@@ -122,21 +122,21 @@ class App {
 
 
 		// TODO remove comment out
-		tickerList.loadList(settingsProperties.getTickerListFilePath());
+		tickerListController.loadList(settingsProperties.getTickerListFilePath());
 		// Should call file path to allow for multi lists in the future
-		tickerList.updateTickerList();
+		tickerListController.updateTickerList();
 
-		tickerList.setupIndexTicker();
+		tickerListController.setupIndexTicker();
 		// The index ticker object is stored in TickerList, as that's the type of object
 		// The symbol to get saved and loaded at the start and end is stored in settingsProperties, as it's easier to retrieve via JSON
-		tickerList.updateIndexInfo();
+		tickerListController.updateIndexInfo();
 	}
 
 
 	private static void shutdownScript() {
 		settingsProperties.saveSettings();
 		if (debugMode >= 1) System.err.println("shutdownScript");
-		tickerList.saveList(settingsProperties.getTickerListFilePath());
+		tickerListController.saveList(settingsProperties.getTickerListFilePath());
 		shutdownFlag = true;
 
 		// TODO Add code for shutting down threads

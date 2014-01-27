@@ -18,7 +18,7 @@ class TickerWindow extends App{
 	 * Launch the application. Main GUI Class
 	 */
 	static void launchGui(String[] args) {
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -26,7 +26,7 @@ class TickerWindow extends App{
 					window.mainWindow.setVisible(true);
 
 
-                    // TODO Task loop goes here?
+					// TODO Task loop goes here?
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,12 +35,12 @@ class TickerWindow extends App{
 		});
 	}
 
-	static void updateGuiWindowText() {
-		tickerList.updateTickerList();
-		// FIXME set tickerString to GUI window
-
+	public void updateTickerWindowGUI(JTextPane tickerWindow, JTextPane indexWindow) {
+		tickerListController.updateTickerList();
+		tickerWindow.setText(tickerListController.outputTickerListToString());
+		tickerListController.updateIndexInfo();
+		indexWindow.setText(tickerListController.outputIndexToString());
 	}
-
 
 	/**
 	 * Create the application.
@@ -50,17 +50,12 @@ class TickerWindow extends App{
 
 	}
 
-	void refreshGUI() {
-		// FIXME move code here to consolidate update methods
-
-	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
-		
+
+
 		mainWindow = new JFrame();
 		mainWindow.setBounds(100, 100, 250, 450);
 		mainWindow.getContentPane().setLayout(new MigLayout("", "[grow][]", "[211.00,grow][bottom]"));
@@ -84,8 +79,8 @@ class TickerWindow extends App{
 				}
 			}
 		});
-		
-			
+
+
 		JScrollBar scrollBar = new JScrollBar();
 		mainWindow.getContentPane().add(scrollBar, "cell 1 0,alignx right,growy");
 
@@ -96,17 +91,20 @@ class TickerWindow extends App{
 		addNewStock.setToolTipText("Add a new symbol to the list");
 		addNewStock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				tickerList.addStockToListGUI();}
+				tickerListController.addStockToListGUI();
+				updateTickerWindowGUI(tickerWindow, indexWindow);
+				// FIXME add ticker window update method call``
+			}
 			});
 
 		mainWindow.getContentPane().add(addNewStock, "cell 0 1,alignx right,aligny bottom");
 
 		JMenuBar menuBar = new JMenuBar();
 			mainWindow.setJMenuBar(menuBar);
-			
+
 			JMenu mnFile = new JMenu("File");
 			menuBar.add(mnFile);
-			
+
 			/**
 			 * When clicked, opens shutdown window
 			 */
@@ -118,7 +116,7 @@ class TickerWindow extends App{
 			}
 		});
 		mnFile.add(mntmExit);
-			
+
 			JMenu mnSettings = new JMenu("Settings");
 			menuBar.add(mnSettings);
 
@@ -134,23 +132,19 @@ class TickerWindow extends App{
 		mntmRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// FIXME move code to method
-				refreshGUI();
-				tickerList.updateTickerList();
-				tickerWindow.setText(tickerList.outputTickerListToString());
-				tickerList.updateIndexInfo();
-				indexWindow.setText(tickerList.outputIndexToString());
+				updateTickerWindowGUI(tickerWindow, indexWindow);
 			}
 		});
 		mntmRefresh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 		mnSettings.add(mntmRefresh);
 		mnSettings.add(mntmSetRefresh);
-									
+
 			JMenuItem mntmSetIndex = new JMenuItem("Set Index...");
 		mntmSetIndex.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
 		mntmSetIndex.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					settingsProperties.setIndexSymbolGUI(); // Set it in settings only
-					tickerList.setIndexTickerSymbol(settingsProperties.getIndexSymbol());
+					tickerListController.setIndexTickerSymbol(settingsProperties.getIndexSymbol());
 				}
 			});
 			mnSettings.add(mntmSetIndex);
@@ -158,9 +152,10 @@ class TickerWindow extends App{
 		JMenuItem mntmClearList = new JMenuItem("Clear List");
 		mntmClearList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tickerList.deleteListFIle(settingsProperties.getTickerListFilePath());
+				tickerListController.deleteListFIle(settingsProperties.getTickerListFilePath());
 				// Deletes the main list file
-				tickerList.clearList();
+				tickerListController.clearList();
+				// Clears the
 
 			}
 		});
@@ -178,26 +173,26 @@ class TickerWindow extends App{
 			});
 			buttonGroup.add(rdbtnmntmGoogle);
 		mnQuoteSource.add(rdbtnmntmGoogle);
-			
+
 			/*
 			JRadioButtonMenuItem rdbtnmntmNewRadioItem = new JRadioButtonMenuItem("Yahoo");
 			buttonGroup.add(rdbtnmntmNewRadioItem);
 			mnNewMenu.add(rdbtnmntmNewRadioItem);
-			
+
 			JRadioButtonMenuItem rdbtnmntmMarketwatch = new JRadioButtonMenuItem("MarketWatch");
 			mnNewMenu.add(rdbtnmntmMarketwatch);
-			
+
 			JCheckBoxMenuItem chckbxmntmNewCheckItem = new JCheckBoxMenuItem("Refresh Enabled");
 			mnSettings.add(chckbxmntmNewCheckItem);
 			*/
-			
+
 			JMenu mnHelp = new JMenu("Help");
 			menuBar.add(mnHelp);
-			
+
 			JMenuItem mntmHelpContents = new JMenuItem("Help Contents");
 		mntmHelpContents.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mnHelp.add(mntmHelpContents);
-			
+
 			JMenuItem mntmRestoreDefaults = new JMenuItem("Restore Defaults");
 			mntmRestoreDefaults.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -205,10 +200,10 @@ class TickerWindow extends App{
 				}
 			});
 			mnHelp.add(mntmRestoreDefaults);
-			
+
 			JSeparator separator_1 = new JSeparator();
 			mnHelp.add(separator_1);
-			
+
 			JMenuItem mntmAbout = new JMenuItem("About");
 			mntmAbout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -217,6 +212,7 @@ class TickerWindow extends App{
 			});
 			mnHelp.add(mntmAbout);
 	}
+
 
 }
 

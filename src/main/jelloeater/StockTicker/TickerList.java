@@ -48,7 +48,7 @@ public class TickerList extends App{
 	/*
 	void outputIndexTickerConsole(){
 		if (debugMode >= 1) {
-			//tickerList.indexTicker.getTickerInfoDataGUI(indexTicker); // full path of object
+			//tickerListController.indexTicker.getTickerInfoDataGUI(indexTicker); // full path of object
 
 			indexTicker.getTickerInfoDataConsole(indexTicker);
 			// use getTickerInfoDataConsole for output
@@ -98,10 +98,7 @@ public class TickerList extends App{
 	}
 
 	void clearList() {
-		// FIXME Write list clear method USE LOOP? :)
-
-		// FIXME Set empty list
-
+		tickerListHolder.clear();
 	}
 
 	void deleteListFIle(String listFilePath) {
@@ -215,7 +212,7 @@ public class TickerList extends App{
 				String stockToAdd = (String) tickerSymbolList.get(i);
 				// Gets value from last and casts it to a string
 
-				App.tickerList.addStockToList(stockToAdd); // Add to list in App class
+				App.tickerListController.addStockToList(stockToAdd); // Add to list in App class
 			}
 
 			if (!tickerListFilePath.equals(settingsProperties.getTickerListFilePath())) {
@@ -225,7 +222,7 @@ public class TickerList extends App{
 
 		} else {
 
-			tickerList.clearList();
+			tickerListController.clearList();
 
 			JOptionPane.showMessageDialog(null, "Portfolio missing, defaults set.");
 		}
