@@ -35,6 +35,7 @@ class TickerWindow extends App{
 		});
 	}
 
+	/** Takes GUI windows to be updated */
 	public void updateTickerWindowGUI(JTextPane tickerWindow, JTextPane indexWindow) {
 		tickerListController.updateTickerList();
 		tickerWindow.setText(tickerListController.outputTickerListToString());
@@ -57,10 +58,12 @@ class TickerWindow extends App{
 
 
 		mainWindow = new JFrame();
+		mainWindow.setIconImage(Toolkit.getDefaultToolkit().getImage(TickerWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+		mainWindow.setTitle("Stock Ticker");
 		mainWindow.setBounds(100, 100, 250, 450);
 		mainWindow.getContentPane().setLayout(new MigLayout("", "[grow][]", "[211.00,grow][bottom]"));
 		final JTextPane tickerWindow = new JTextPane();
-		mainWindow.getContentPane().add(tickerWindow, "cell 0 0,grow");
+		mainWindow.getContentPane().add(tickerWindow, "flowx,cell 0 0,grow");
 
 
 		/**
@@ -79,25 +82,35 @@ class TickerWindow extends App{
 				}
 			}
 		});
-
-
-		JScrollBar scrollBar = new JScrollBar();
-		mainWindow.getContentPane().add(scrollBar, "cell 1 0,alignx right,growy");
+		
+		
+				JScrollBar scrollBar = new JScrollBar();
+				mainWindow.getContentPane().add(scrollBar, "cell 1 0,alignx right,growy");
 
 		final JTextPane indexWindow = new JTextPane();
 		mainWindow.getContentPane().add(indexWindow, "flowx,cell 0 1,growx,aligny bottom");
-
-		JButton addNewStock = new JButton("+");
-		addNewStock.setToolTipText("Add a new symbol to the list");
-		addNewStock.addActionListener(new ActionListener() {
+		
+				JButton addStockToList = new JButton("+");
+				addStockToList.setToolTipText("Add a new symbol to the list");
+				addStockToList.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						tickerListController.addStockToListGUI();
+						updateTickerWindowGUI(tickerWindow, indexWindow);
+						// FIXME add ticker window update method call``
+					}
+					});
+				
+						mainWindow.getContentPane().add(addStockToList, "cell 0 1,alignx right,aligny bottom");
+		
+		JButton removeStockFromList = new JButton("-");
+		removeStockFromList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				tickerListController.addStockToListGUI();
+				tickerListController.removeStockFromListGUI();
 				updateTickerWindowGUI(tickerWindow, indexWindow);
-				// FIXME add ticker window update method call``
 			}
-			});
-
-		mainWindow.getContentPane().add(addNewStock, "cell 0 1,alignx right,aligny bottom");
+		});
+		removeStockFromList.setToolTipText("Remove a symbol to the list");
+		mainWindow.getContentPane().add(removeStockFromList, "cell 0 1");
 
 		JMenuBar menuBar = new JMenuBar();
 			mainWindow.setJMenuBar(menuBar);

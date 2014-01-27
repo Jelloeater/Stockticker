@@ -38,6 +38,7 @@ class Scheduler extends TickerWindow {
 				// CALL UPDATE METHOD HERE
 
 
+
 				if (debugMode >= 1) System.err.print("party!");
 			}
 		};

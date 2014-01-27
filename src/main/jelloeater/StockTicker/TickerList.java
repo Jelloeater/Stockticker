@@ -77,13 +77,17 @@ public class TickerList extends App{
 	}
 
 
-	void removeStockFromList(String stockToRemove){
-		int stockLocationToRemove=0;
-		// FIXME write loop to match string and remove object from array
+	void removeStockFromListGUI(){
+		String tickerSymbolInput = JOptionPane.showInputDialog("Enter Symbol", "GOOG");
 
-		// LOOP GOES HERE
-
-		tickerListHolder.remove(stockLocationToRemove);
+		for (int i = 0; i < tickerListHolder.size(); i++) {
+			TickerInfo myStock = tickerListHolder.get(i);
+			String symbolLookup= myStock.getTickerSymbol();
+			if (tickerSymbolInput.equals(symbolLookup)){
+				tickerListHolder.remove(i);
+				break;
+			}
+		}
 	}
 
 	/**
