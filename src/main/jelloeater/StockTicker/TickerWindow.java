@@ -10,7 +10,7 @@ import java.awt.event.*;
 
 class TickerWindow extends App{
 
-	private JFrame mainWindow;
+	private JFrame mainWindowFrame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 
@@ -22,10 +22,10 @@ class TickerWindow extends App{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TickerWindow window = new TickerWindow();
-					window.mainWindow.setVisible(true);
+					TickerWindow mainGUIwindow = new TickerWindow();
+					mainGUIwindow.mainWindowFrame.setVisible(true);
 
-
+					
 					// TODO Task loop goes here?
 
 				} catch (Exception e) {
@@ -33,6 +33,14 @@ class TickerWindow extends App{
 				}
 			}
 		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	TickerWindow() {
+		initialize();
+
 	}
 
 	/** Takes GUI windows to be updated */
@@ -44,26 +52,18 @@ class TickerWindow extends App{
 	}
 
 	/**
-	 * Create the application.
-	 */
-	TickerWindow() {
-		initialize();
-
-	}
-
-	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 
 
-		mainWindow = new JFrame();
-		mainWindow.setIconImage(Toolkit.getDefaultToolkit().getImage(TickerWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		mainWindow.setTitle("Stock Ticker");
-		mainWindow.setBounds(100, 100, 250, 450);
-		mainWindow.getContentPane().setLayout(new MigLayout("", "[grow][]", "[211.00,grow][bottom]"));
+		mainWindowFrame = new JFrame();
+		mainWindowFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(TickerWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+		mainWindowFrame.setTitle("Stock Ticker");
+		mainWindowFrame.setBounds(100, 100, 250, 450);
+		mainWindowFrame.getContentPane().setLayout(new MigLayout("", "[grow][]", "[211.00,grow][bottom]"));
 		final JTextPane tickerWindow = new JTextPane();
-		mainWindow.getContentPane().add(tickerWindow, "flowx,cell 0 0,grow");
+		mainWindowFrame.getContentPane().add(tickerWindow, "flowx,cell 0 0,grow");
 
 
 		/**
@@ -71,7 +71,7 @@ class TickerWindow extends App{
 		 * NOTE if you close all the windows, the shutdown hooks will kick in
 		 * It listens to the status of the specified JFrame
 		 */
-		mainWindow.addComponentListener(new ComponentAdapter() {
+		mainWindowFrame.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent e) {
 				if (App.shutdownWindow() == 0) {
@@ -85,10 +85,10 @@ class TickerWindow extends App{
 		
 		
 				JScrollBar scrollBar = new JScrollBar();
-				mainWindow.getContentPane().add(scrollBar, "cell 1 0,alignx right,growy");
+				mainWindowFrame.getContentPane().add(scrollBar, "cell 1 0,alignx right,growy");
 
 		final JTextPane indexWindow = new JTextPane();
-		mainWindow.getContentPane().add(indexWindow, "flowx,cell 0 1,growx,aligny bottom");
+		mainWindowFrame.getContentPane().add(indexWindow, "flowx,cell 0 1,growx,aligny bottom");
 		
 				JButton addStockToList = new JButton("+");
 				addStockToList.setToolTipText("Add a new symbol to the list");
@@ -100,7 +100,7 @@ class TickerWindow extends App{
 					}
 					});
 				
-						mainWindow.getContentPane().add(addStockToList, "cell 0 1,alignx right,aligny bottom");
+						mainWindowFrame.getContentPane().add(addStockToList, "cell 0 1,alignx right,aligny bottom");
 		
 		JButton removeStockFromList = new JButton("-");
 		removeStockFromList.addActionListener(new ActionListener() {
@@ -110,10 +110,10 @@ class TickerWindow extends App{
 			}
 		});
 		removeStockFromList.setToolTipText("Remove a symbol to the list");
-		mainWindow.getContentPane().add(removeStockFromList, "cell 0 1");
+		mainWindowFrame.getContentPane().add(removeStockFromList, "cell 0 1");
 
 		JMenuBar menuBar = new JMenuBar();
-			mainWindow.setJMenuBar(menuBar);
+			mainWindowFrame.setJMenuBar(menuBar);
 
 			JMenu mnFile = new JMenu("File");
 			menuBar.add(mnFile);

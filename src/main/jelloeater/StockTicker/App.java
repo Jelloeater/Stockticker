@@ -71,6 +71,8 @@ class App {
 		// Good up until here
 		// Simulate loading list from file
 
+		/*
+		// TODO TESTING NO SCHEDULER!
 
 		Scheduler myScheduler = new Scheduler(); // Starts up Scheduler
 		// Starts Scheduler and runs updates to tickerListHolder
@@ -85,6 +87,7 @@ class App {
 
 		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
 
+		*/
 
 		if (debugMode >= 1) System.err.println("end of main");
 

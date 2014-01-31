@@ -35,7 +35,9 @@ class Scheduler extends TickerWindow {
 				//TickerList.updateIndexInfo(); // What it says on the tin
 				// FIXME update index along with arrayList
 
+
 				// CALL UPDATE METHOD HERE
+
 
 
 
