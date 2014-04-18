@@ -29,7 +29,7 @@ class App {
 	/** Holds all the settings for the application in a singleton object */
 	static Settings settingsProperties = Settings.makeSingleton();
 	// Got a null pointer exception, because I tried to set a variable that didn't exist yet
-	// Well fuck me right?
+	// Well fuck me right??
 
 
 
