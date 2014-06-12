@@ -15,11 +15,11 @@ import java.io.File;
 /**
  This class allows us to manipulate any settings objects we create.
  Settings are dependent throughout the program, they are private so we can sanitize data
- Settings are something that there should only be one of, no need to make more then one object container in the main App class.
+ Settings are something that there should only be one of, no need to make more then one object container in the main main class.
  It is "OBJECT Oriented Programming" after all.
  Rather then having to pass multiple values through getters, we can just pass the "bag" object
  */
-class Settings extends App{
+class Settings extends main {
 	// TODO eventually remove extends, is it really needed?
 
 	private String tickerListFilePath = "stockList.cfg"; // Fail safe default
@@ -122,24 +122,24 @@ class Settings extends App{
 	
 	
 	/**
-	 * Writes the App singleton settingsProperties to the specified configuration file path
+	 * Writes the main singleton settingsProperties to the specified configuration file path
 	 */
 	void saveSettings(){
 		Gson gson = new Gson(); // Initializes object
 		
 		String settingsData = gson.toJson(settingsProperties); // Takes static object variables and converts them
-		Utils.writeFile(App.configFilePath, settingsData);
+		Utils.writeFile(main.configFilePath, settingsData);
 
 	}
 
-	/**Reads settings from configuration file and copies them to the singleton in App class
+	/**Reads settings from configuration file and copies them to the singleton in main class
 	 */
 	void loadSettings(){
-		File config = new File(App.configFilePath);
+		File config = new File(main.configFilePath);
 
 		if (config.exists()) {
 
-			String diskReaderInput = Utils.readFile(App.configFilePath);
+			String diskReaderInput = Utils.readFile(main.configFilePath);
 			Gson gson = new Gson(); // Initializes object
 			settingsProperties = gson.fromJson(diskReaderInput, Settings.class);
 
@@ -153,13 +153,13 @@ class Settings extends App{
 
 	private void failsafeLoadSettings() {
 		settingsProperties.setDefaults();
-		App.configFilePath = "settings.cfg";
+		main.configFilePath = "settings.cfg";
 		settingsProperties.saveSettings();
 	}
 
 
 	private void deleteSettingsFile(){
-		File file = new File(App.configFilePath);
+		File file = new File(main.configFilePath);
 		boolean errorCode;
 		errorCode = file.delete();
 		if (errorCode)

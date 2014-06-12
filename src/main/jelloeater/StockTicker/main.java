@@ -11,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
 /*
  * This is a basic stock ticker application. It ticks stocks n stuff
  */
-class App {
+class main {
 
 	/** Debug flag*/
 	static int debugMode = 0;
@@ -24,7 +24,7 @@ class App {
 	static String configFilePath = "settings.cfg"; // Fail safe default
 
 	/** Holds the ticker list, kinda important, should always load first*/
-	static TickerList tickerListController = TickerList.makeSingleton();
+	static TickerController tickerListController = TickerController.makeSingleton();
 
 	/** Holds all the settings for the application in a singleton object */
 	static Settings settingsProperties = Settings.makeSingleton();
@@ -46,7 +46,7 @@ class App {
 		// TODO Write update method to loop getting info
 		// TODO IDEA Get Symbols from JSON, load into ArrayList?
 
-		App.startupScript();
+		main.startupScript();
 
 
 		//tickerListHolder.addStockToList("JCP");
@@ -83,7 +83,7 @@ class App {
 		myScheduler.updateListTask();
 
 
-		TickerWindow.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
+		TickerView.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
 
 
 		if (debugMode >= 1) System.err.println("end of main");
@@ -127,7 +127,7 @@ class App {
 		tickerListController.updateTickerList();
 
 		tickerListController.setupIndexTicker();
-		// The index ticker object is stored in TickerList, as that's the type of object
+		// The index ticker object is stored in TickerController, as that's the type of object
 		// The symbol to get saved and loaded at the start and end is stored in settingsProperties, as it's easier to retrieve via JSON
 		tickerListController.updateIndexInfo();
 	}

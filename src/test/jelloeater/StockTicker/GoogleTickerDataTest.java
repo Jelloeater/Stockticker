@@ -1,12 +1,6 @@
 package jelloeater.StockTicker;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -15,13 +9,13 @@ import static org.junit.Assert.fail;
 //import java.util.Scanner;
 
 
-public class GoogleTickerDataTest extends App{
+public class GoogleTickerDataTest extends main {
 
     @Test
     public void testTickerOnline() throws Throwable {
         // Tests if ticker parser still works by looking for positive number *NOTE: Needs to be online*
         double priceMin = .01;
-        TickerInfo test = TickerInfo.makeTickerObject("GOOG");
+        TickerModel test = TickerModel.makeTickerObject("GOOG");
         String p = test.getPrice();
         double price = Double.parseDouble(p.replaceAll(",","")); // Remove commas & parse
 
@@ -42,10 +36,10 @@ public class GoogleTickerDataTest extends App{
 		// Reads raw file to string
 		// It's a mess to try storing it in software,
 		// JSON has lots of escape characters that makes java throw up
-		// String rawQuertyString = TickerInfo.GoogleTickerData.cleanGoogleJSONdata(dirtyQuertyString);
+		// String rawQuertyString = TickerModel.GoogleTickerData.cleanGoogleJSONdata(dirtyQuertyString);
         
 		
-		TickerInfo.GoogleTickerData dataStore = new TickerInfo.GoogleTickerData();
+		TickerModel.GoogleTickerData dataStore = new TickerModel.GoogleTickerData();
 		// Creates dataStore Objects
 
 		dataStore=GoogleTickerData.mapJsonDataToObject(rawQuertyString);

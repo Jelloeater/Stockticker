@@ -11,7 +11,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * @author Jesse
  *
  */
-class Scheduler extends TickerWindow {
+class Scheduler extends TickerView {
 
 	private final ScheduledExecutorService schedulerController =
 					Executors.newScheduledThreadPool(1);
@@ -31,8 +31,8 @@ class Scheduler extends TickerWindow {
 	public void updateListTask() {
 		final Runnable taskToRun = new Runnable() {
 			public void run() {
-				//TickerList.updateTickerList(); // Call update
-				//TickerList.updateIndexInfo(); // What it says on the tin
+				//TickerController.updateTickerList(); // Call update
+				//TickerController.updateIndexInfo(); // What it says on the tin
 				// FIXME update index along with arrayList
 
 				// CALL UPDATE METHOD HERE

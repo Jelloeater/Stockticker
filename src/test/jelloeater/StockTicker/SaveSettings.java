@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 
-public class SaveSettings extends App{
+public class SaveSettings extends main {
 
 	@Test
 	public void testNoFile() {
