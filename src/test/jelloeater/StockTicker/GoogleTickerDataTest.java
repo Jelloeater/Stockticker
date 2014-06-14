@@ -9,7 +9,7 @@ import static org.junit.Assert.fail;
 //import java.util.Scanner;
 
 
-public class GoogleTickerDataTest extends Main {
+public class GoogleTickerDataTest extends TickerListController {
 
     @Test
     public void testTickerOnline() throws Throwable {

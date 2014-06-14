@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class SaveSettings extends Main {
 
+
 	@Test
 	public void testNoFile() {
 		UtilsGUI.setLookAndFeel();
