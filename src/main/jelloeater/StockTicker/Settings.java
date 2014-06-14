@@ -19,7 +19,7 @@ import java.io.File;
  It is "OBJECT Oriented Programming" after all.
  Rather then having to pass multiple values through getters, we can just pass the "bag" object
  */
-class Settings extends main {
+class Settings extends Main {
 	// TODO eventually remove extends, is it really needed?
 
 	private String tickerListFilePath = "stockList.cfg"; // Fail safe default
@@ -128,18 +128,18 @@ class Settings extends main {
 		Gson gson = new Gson(); // Initializes object
 		
 		String settingsData = gson.toJson(settingsProperties); // Takes static object variables and converts them
-		Utils.writeFile(main.configFilePath, settingsData);
+		Utils.writeFile(Main.configFilePath, settingsData);
 
 	}
 
 	/**Reads settings from configuration file and copies them to the singleton in main class
 	 */
 	void loadSettings(){
-		File config = new File(main.configFilePath);
+		File config = new File(Main.configFilePath);
 
 		if (config.exists()) {
 
-			String diskReaderInput = Utils.readFile(main.configFilePath);
+			String diskReaderInput = Utils.readFile(Main.configFilePath);
 			Gson gson = new Gson(); // Initializes object
 			settingsProperties = gson.fromJson(diskReaderInput, Settings.class);
 
@@ -153,13 +153,13 @@ class Settings extends main {
 
 	private void failsafeLoadSettings() {
 		settingsProperties.setDefaults();
-		main.configFilePath = "settings.cfg";
+		Main.configFilePath = "settings.cfg";
 		settingsProperties.saveSettings();
 	}
 
 
 	private void deleteSettingsFile(){
-		File file = new File(main.configFilePath);
+		File file = new File(Main.configFilePath);
 		boolean errorCode;
 		errorCode = file.delete();
 		if (errorCode)

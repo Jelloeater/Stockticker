@@ -30,29 +30,18 @@ class TickerModel extends TickerController {
 	private String rawData;
 
 
-	/**
-	 * Creates ticker object, due to constructor being private
-	 * Flag on call sets popup logic
-	 *
-	 * @param tickerSymbolInput
-	 * @return TickerModel
-	 */
-	public static TickerModel makeTickerObject(String tickerSymbolInput) {
-
-		return new TickerModel(tickerSymbolInput, false);
-	}
 
 
 	/**
 	 * When fed a tickerSymbol, parses net for info for setup
-	 * @param displayGUI
+	 * @param tickerSymbol
 	 */
-	private TickerModel(String tickerSymbol, boolean displayGUI){
+	TickerModel(String tickerSymbol) {
 		this.symbol = tickerSymbol;
 		int retryCounter = 0;
 		int maxRetry = 3;
 
-		if (settingsProperties.isSourceGoogle()){
+		if (settingsProperties.isSourceGoogle()) {
 
 			do {
 				try {
@@ -62,7 +51,7 @@ class TickerModel extends TickerController {
 				} catch (IOException e) {
 					//e.printStackTrace();
 					System.err.println("Connection Failure - Retry: " + retryCounter);
-					retryCounter ++;
+					retryCounter++;
 					try {
 						Thread.sleep(2000); // Wait 2 seconds
 						// TODO is this okay when we go multi-thread?
@@ -74,111 +63,46 @@ class TickerModel extends TickerController {
 				}
 			} while (retryCounter <= maxRetry);
 
-			if (retryCounter <= maxRetry ){
-			GoogleTickerData tempObj = GoogleTickerData.mapJsonDataToObject(rawData);
-			this.percentChange = tempObj.getPercentChange();
-			this.price = tempObj.getPrice();
-			this.priceChange = tempObj.getPriceChange();
-			}else{
-				if (displayGUI) JOptionPane.showMessageDialog(null, "Internet Connection Failure", "Error", JOptionPane.ERROR_MESSAGE);
+			if (retryCounter <= maxRetry) {
+				GoogleTickerData tempObj = GoogleTickerData.mapJsonDataToObject(rawData);
+				this.percentChange = tempObj.getPercentChange();
+				this.price = tempObj.getPrice();
+				this.priceChange = tempObj.getPriceChange();
+			} else { // If quote source is not set in settingsProperties
+				this.percentChange = "err";
+				this.price = "err";
+				this.priceChange = "err";
 			}
 		}
-
-		else{ // If quote source is not set in settingsProperties
-			this.percentChange="err";
-			this.price="err";
-			this.priceChange="err";
-			if (displayGUI) JOptionPane.showMessageDialog(null, "Quote source error", "Error", 0);
-		}
 	}
 
-	// FIXME Validate ticker method
-	public boolean validateSymbol(String tickerSymbol) {
-		boolean isSymbolVaild = false;
+	// FIXME Write validate ticker method
 
-		if (settingsProperties.isSourceGoogle()) {
-			
-			
-		}
-
-		return isSymbolVaild;
-	}
-
-	/**
-	 * Updates TickerModel objects. Each source will have its own unique flow.
-	 * 
-	 * @param myStock
-	 * @return myStock object with updated data
-	 * @throws Exception
-	 */
-	public TickerModel updateTickerObject(TickerModel myStock) {
-		String symbol = myStock.getTickerSymbol();
-        myStock = new TickerModel(symbol,false);
-
-		return myStock;
-	}
 
 	// Getters and Setters below
 	String getTickerSymbol() {
-		return symbol;
+		return this.symbol;
 	}
 
 	String getPrice() {
-		return price;
+		return this.price;
 	}
 
 	String getPercentChange() {
-		return percentChange;
+		return this.percentChange;
 	}
 
 	String getPriceChange() {
-		return priceChange;
-	}
-	
-	/*
-	private String getRawData() {
-		return rawData;
+		return this.priceChange;
 	}
 
-	private void setTickerSymbol(String symbol) {
-		this.symbol = symbol;
-	}
-	*/
-	
-	private void setPrice(String price) {
-		this.price = price;
-	}
 
-	private void setPercentChange(String percentChange) {
-		this.percentChange = percentChange;
-	}
-
-	private void setPriceChange(String priceChange) {
-		this.priceChange = priceChange;
-	}
-
-	/**
-	 * Pop-up window that displays data from myStock Object
-	 * 
-	 * @param myStock
-	 *            Object from TickerModel
-	 */
-	void getTickerInfoDataGUI(TickerModel myStock) {
-		JOptionPane.showMessageDialog(
-				null,
-				"Symbol: " + myStock.getTickerSymbol() + "\n" + "Price: "
-						+ myStock.getPrice() + "\n" + "% Change: "
-						+ myStock.getPercentChange() + "%" + "\n"
-						+ "Price Change: " + myStock.getPriceChange(),
-				"LOL OUTPUT", JOptionPane.PLAIN_MESSAGE);
-	}
-	
-	void getTickerInfoDataConsole(TickerModel myStock) {
+	void getTickerInfoDataConsole() {
 		System.out.println(
-				"Symbol: " + myStock.getTickerSymbol() + "\n" + "Price: "
-						+ myStock.getPrice() + "\n" + "% Change: "
-						+ myStock.getPercentChange() + "%" + "\n"
-						+ "Price Change: " + myStock.getPriceChange());
+				"Symbol: " + this.getTickerSymbol() + "\n" + "Price: "
+						+ this.getPrice() + "\n" + "% Change: "
+						+ this.getPercentChange() + "%" + "\n"
+						+ "Price Change: " + this.getPriceChange());
 	}
 
 	/**
@@ -195,16 +119,6 @@ class TickerModel extends TickerController {
 		private String c;
 		private String cp;
 
-		/*
-		 * //Unused but useful JSON values private String id; private String t;
-		 * private String e; private String l_fix; private String l_cur; private
-		 * String s; private String ltt; private String lt; private String ccol;
-		 */
-		/**
-		 * Constructor used to set up object variables
-		 */
-		GoogleTickerData() {
-		}
 
 		/**
 		 * Maps JSON data to Google Ticker object using Gson library. Uses
@@ -261,13 +175,12 @@ class TickerModel extends TickerController {
 					Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 			Matcher m = p.matcher(jsonDirtyIN); // INPUT
 			if (m.find()) {
-				String sbraces1 = m.group(1);
-				jsonCleanOut = sbraces1.toString(); // OUTPUT
+				jsonCleanOut = m.group(1); // OUTPUT
 			}
 			// </regex vodo>
 
 
-
+			assert jsonCleanOut != null;
 			return jsonCleanOut.replace("[", "").replace("]", "");
 			// Clean off brackets
 		}

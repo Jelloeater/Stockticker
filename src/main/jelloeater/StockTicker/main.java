@@ -2,6 +2,7 @@ package jelloeater.StockTicker;
 
 // import java.net.*; // To be used for net connection checking
 
+import com.sun.xml.internal.bind.v2.TODO;
 import jwsUtils.UtilsGUI;
 
 import javax.swing.*;
@@ -11,27 +12,31 @@ import java.util.concurrent.CountDownLatch;
 /*
  * This is a basic stock ticker application. It ticks stocks n stuff
  */
-class main {
+class Main {
 
-	/** Debug flag*/
+	/**
+	 * Debug flag
+	 */
 	static int debugMode = 0;
 	// 0 = off, 1 = console output only 2 = testing mode
 
 	static boolean shutdownFlag;
 
 
-	/** Global configuration file path, used for various settings operations */
+	/**
+	 * Global configuration file path, used for various settings operations
+	 */
 	static String configFilePath = "settings.cfg"; // Fail safe default
 
 	/** Holds the ticker list, kinda important, should always load first*/
-	static TickerController tickerListController = TickerController.makeSingleton();
+	// TODO Maybe use singleton
 
-	/** Holds all the settings for the application in a singleton object */
+	/**
+	 * Holds all the settings for the application in a singleton object
+	 */
 	static Settings settingsProperties = Settings.makeSingleton();
 	// Got a null pointer exception, because I tried to set a variable that didn't exist yet
 	// Well fuck me right??
-
-
 
 
 	// Cannot initialize early, nothing to load at this point -_-
@@ -40,75 +45,28 @@ class main {
 	/**
 	 * This runs first
 	 * There should be a minimal amount of methods here, variables should be in objects
+	 *
 	 * @throws Throwable
 	 */
 	public static void main(String[] args) throws Throwable {
 		// TODO Write update method to loop getting info
 		// TODO IDEA Get Symbols from JSON, load into ArrayList?
 
-		main.startupScript();
+		Main.startupScript();
+
 
 
 		//tickerListHolder.addStockToList("JCP");
+		TickerModel stock = new TickerModel("JCP");
 
-		if (debugMode >= 2) {
-			do {
-			int exit = JOptionPane.showConfirmDialog(null, "Add stock to list", null,
-					JOptionPane.YES_NO_OPTION);
-			if (exit == 1) break;
-            tickerListController.addStockToListGUI();
-		}
-		while (true);
-
-		tickerListController.outputTickerListToConsole();
-		tickerListController.outputIndexToConsole();
-		}
-
-
-		if (debugMode >= 1) System.out.print(tickerListController.outputTickerListToString()); // For testing window output
-
-
-		// Good up until here
-		// Simulate loading list from file
-
-
-		Scheduler myScheduler = new Scheduler(); // Starts up Scheduler
-		// Starts Scheduler and runs updates to tickerListHolder
-
-
-		//addStockToListGUI(); // Should get called by + button in GUI
-
-		while (shutdownFlag) myScheduler.shutdownThread(); // Shuts down the scheduler when flag is set
-		// TODO is there a better way to do this?
-		myScheduler.updateListTask();
-
-
-		TickerView.launchGui(null); // FIRE ZE INTERFACE!!! Off to GUI GUI land
-
-
-		if (debugMode >= 1) System.err.println("end of main");
-
-		//TODO re-enable when GUI is working
-
-		if (debugMode >= 2) {
-
-			final CountDownLatch latch = new CountDownLatch(1);
-		final Thread t = new Thread(new Runnable() {
-			public void run() {
-				System.out.println("qwerty");
-				latch.countDown();
-			}
-		});
-
-		t.start();
-		latch.await();
-
-		System.out.println("absolutely sure, qwerty as been printed");
-
-		}
-
-
+		stock.getTickerInfoDataConsole();
+		System.out.print("EOP");
 	}
+
+
+	// Good up until here
+	// Simulate loading list from file
+
 
 	//////////////////////////////////////////////////////
 
@@ -122,21 +80,22 @@ class main {
 
 
 		// TODO remove comment out
-		tickerListController.loadList(settingsProperties.getTickerListFilePath());
-		// Should call file path to allow for multi lists in the future
-		tickerListController.updateTickerList();
 
-		tickerListController.setupIndexTicker();
-		// The index ticker object is stored in TickerController, as that's the type of object
+		// TODO Load List
+		// Should call file path to allow for multi lists in the future
+		//TODO Setup list
+
+		//TODO Setup index
+		// The index ticker object is stored in mainGuiController, as that's the type of object
 		// The symbol to get saved and loaded at the start and end is stored in settingsProperties, as it's easier to retrieve via JSON
-		tickerListController.updateIndexInfo();
+		//TODO update Index
 	}
 
 
 	private static void shutdownScript() {
 		settingsProperties.saveSettings();
 		if (debugMode >= 1) System.err.println("shutdownScript");
-		tickerListController.saveList(settingsProperties.getTickerListFilePath());
+		// TODO Save List
 		shutdownFlag = true;
 
 		// TODO Add code for shutting down threads

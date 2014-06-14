@@ -9,13 +9,13 @@ import static org.junit.Assert.fail;
 //import java.util.Scanner;
 
 
-public class GoogleTickerDataTest extends main {
+public class GoogleTickerDataTest extends Main {
 
     @Test
     public void testTickerOnline() throws Throwable {
         // Tests if ticker parser still works by looking for positive number *NOTE: Needs to be online*
         double priceMin = .01;
-        TickerModel test = TickerModel.makeTickerObject("GOOG");
+        TickerModel test = new TickerModel("GOOG");
         String p = test.getPrice();
         double price = Double.parseDouble(p.replaceAll(",","")); // Remove commas & parse
 
