@@ -2,11 +2,10 @@ package jelloeater.StockTicker;
 
 // import java.net.*; // To be used for net connection checking
 
-import com.sun.xml.internal.bind.v2.TODO;
 import jwsUtils.UtilsGUI;
 
 import javax.swing.*;
-import java.util.concurrent.CountDownLatch;
+import java.util.ArrayList;
 
 
 /*
@@ -56,10 +55,13 @@ class Main {
 
 
 
-		//tickerListHolder.addStockToList("JCP");
-		TickerModel stock = new TickerModel("JCP");
+		TickerListController.addTickerToList("JCP");
+		TickerListController.addTickerToList("GOOG");
+		TickerListView.printTickersFromList();
 
-		stock.getTickerInfoDataConsole();
+		TickerListController.removeTickerFromList("JCP");
+		TickerListView.printTickersFromList();
+
 		System.out.print("EOP");
 	}
 

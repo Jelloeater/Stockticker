@@ -5,4 +5,5 @@ package jelloeater.StockTicker;
  */
 public class TickerController extends TickerListController {
 
+
 }
